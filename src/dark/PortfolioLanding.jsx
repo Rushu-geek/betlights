@@ -15,7 +15,8 @@ import Slider from 'react-slick';
 import { slideSlick } from '../page-demo/script';
 import ModalVideo from 'react-modal-video';
 import { FaInstagram, FaTelegram } from 'react-icons/fa';
-
+import { collection } from 'firebase/firestore';
+import db from "../firebase";
 
 const image1 = "/assets/images/bg/8.png";
 const image2 = "/assets/images/bg/7.png";
@@ -213,6 +214,37 @@ const PortfolioLanding = () => {
     const [phone1, setPhone1] = useState("");
     const [phone2, setPhone2] = useState("");
     const [isOpen, setIsOpen] = useState(false);
+    const [carouselImages, setCarouselImages] = useState();
+
+
+
+
+    let details = navigator.userAgent;
+
+    let regexp = /android|iphone|kindle|ipad/i;
+
+    /* Using test() method to search regexp in details
+    it returns boolean value*/
+    let isMobileDevice = regexp.test(details);
+
+
+    const getCarouselImages = async () => {
+        const carouselRef = collection(db, 'carousel');
+        const dbService = new UserDataService();
+
+        const data = await dbService.getAllData(carouselRef);
+        let tmpArray = [];
+
+        data.forEach((doc) => {
+            let obj = doc.data();
+
+            obj.id = doc.id;
+            tmpArray.push(obj);
+        });
+        console.log(tmpArray);
+        setCarouselImages(tmpArray);
+
+    }
 
     useEffect(async () => {
         const service = new UserDataService();
@@ -223,15 +255,8 @@ const PortfolioLanding = () => {
             setPhone1(doc.data().phone1);
             setPhone2(doc.data().phone2);
         })
+        getCarouselImages();
     }, []);
-
-    let details = navigator.userAgent;
-
-    let regexp = /android|iphone|kindle|ipad/i;
-
-    /* Using test() method to search regexp in details
-    it returns boolean value*/
-    let isMobileDevice = regexp.test(details);
 
     return (
         <div className="active-light">
@@ -243,34 +268,52 @@ const PortfolioLanding = () => {
             <div id='home' className="slider-wrapper">
                 {!isMobileDevice && <div style={{ top: 80 }} className="slider-activation">
                     <Slider {...slideSlick}>
-                        {SlideList.map((value, index) => (
-                            <div style={{ opacity: 1 }} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image ${value.bgImage}`} key={index}>
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col-lg-12">
-                                            <div className={``}>
-                                            </div>
-                                        </div>
+                        {carouselImages?.map((value, index) => (
+                            // <div style={{ opacity: 1 }} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image ${value.bgImage}`} key={index}>
+                            //     <div className="container">
+                            //         <div className="row">
+                            //             <div className="col-lg-12">
+                            //                 <div className={``}>
+                            //                 </div>
+                            //             </div>
+                            //         </div>
+                            //     </div>
+                            // </div>
+                            <>
+                                {value?.carouselType == 'web' && <>
+                                    <div key={`${index}`} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image`}>
+                                        <img style={{ opacity: 1 }}
+                                            src={value?.url} alt={`${index}`} />
                                     </div>
-                                </div>
-                            </div>
+                                </>}
+                            </>
                         ))}
                     </Slider>
                 </div>}
 
                 {isMobileDevice && <div style={{ top: 80 }} className="slider-activation">
                     <Slider {...slideSlick}>
-                        {SlideListMob.map((value, index) => (
-                            <div style={{ opacity: 1 }} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image ${value.bgImage}`} key={index}>
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col-lg-12">
-                                            <div className={``}>
-                                            </div>
-                                        </div>
-                                    </div>
+                        {carouselImages?.map((value, index) => (
+                            // <div style={{ opacity: 1 }} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image ${value.bgImage}`} key={index}>
+                            //     <div className="container">
+                            //         <div className="row">
+                            //             <div className="col-lg-12">
+                            //                 <div className={``}>
+                            //                 </div>
+                            //             </div>
+                            //         </div>
+                            //     </div>
+                            // </div>
+
+                            <>
+                            {value?.carouselType == 'mobile' && <>
+                                <div key={`${index}`} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image`}>
+                                    <img style={{ opacity: 1 }}
+                                        src={value?.url} alt={`${index}`} />
                                 </div>
-                            </div>
+                            </>}
+                        </>
+
                         ))}
                     </Slider>
                 </div>}
@@ -689,8 +732,8 @@ const PortfolioLanding = () => {
 
                 {isMobileDevice && <div className="col-12 text-center mt-3">
                     <button onClick={() => {
-                            window.open(`https://www.instagram.com/betlights365?igshid=MzRlODBiNWFlZA==`, "_blank");
-                        }} className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON INSTAGRAM <FaInstagram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
+                        window.open(`https://www.instagram.com/betlights365?igshid=MzRlODBiNWFlZA==`, "_blank");
+                    }} className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON INSTAGRAM <FaInstagram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
                 </div>}
             </div>
 

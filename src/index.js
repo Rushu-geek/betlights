@@ -56,75 +56,81 @@ import ContactForm from "./blocks/ContactForm";
 import GoogleMap from "./blocks/GoogleMap";
 import Columns from "./blocks/Columns";
 import PricingTable from "./blocks/PricingTable";
-import { BrowserRouter, Switch, Route  } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import Dashboard from './home/Dashboard';
 import Admin from './home/Admin';
 import UserList from './home/UserList';
 import PaymentReq from './home/PaymentReq';
 import AdminPassword from './home/AdminPassword';
+import Carousel from './component/admin/Carousel';
 
-class Root extends Component{
-    render(){
-        return(
+class Root extends Component {
+    render() {
+        return (
             <BrowserRouter basename={'/'}>
                 <PageScrollTop>
                     <Switch>
-                        <Route exact path={`/`} component={DarkPortfolioLanding}/>
-                        <Route exact path={`/demo`} component={Demo}/>
-                        <Route exact path={`/main-demo`} component={MainDemo}/>
-                        <Route exact path={`/dark-main-demo`} component={DarkMainDemo}/>
-                        <Route exact path={`/startup`} component={Startup}/>
-                        <Route exact path={`/paralax`} component={Paralax}/>
-                        { localStorage.getItem('currentUser') && <Route exact path={`/dashboard`} component={Dashboard}/>}
-                        {<Route exact path={`/admin`} component={Admin}/>}
-                        {<Route exact path={`/admin/password`} component={AdminPassword}/>}
-                        {<Route exact path={`/admin/users`} component={UserList}/>}
-                        {<Route exact path={`/admin/req`} component={PaymentReq}/>}
+                        <Route exact path={`/`} component={DarkPortfolioLanding} />
+                        <Route exact path={`/demo`} component={Demo} />
+                        <Route exact path={`/main-demo`} component={MainDemo} />
+                        <Route exact path={`/dark-main-demo`} component={DarkMainDemo} />
+                        <Route exact path={`/startup`} component={Startup} />
+                        <Route exact path={`/paralax`} component={Paralax} />
+                        {localStorage.getItem('currentUser') && <Route exact path={`/dashboard`} component={Dashboard} />}
+                        {<Route exact path={`/admin`} component={Admin} />}
+                        {<Route exact path={`/admin/password`} component={AdminPassword} />}
 
-                        <Route exact path={`/digital-agency`} component={DigitalAgency}/>
-                        <Route exact path={`/creative-agency`} component={CreativeAgency}/>
-                        <Route exact path={`/personal-portfolio`} component={PersonalPortfolio}/>
-                        <Route exact path={`/studio-agency`} component={StudioAgency}/>
-                        <Route exact path={`/business`} component={Business}/>
-                        <Route exact path={`/portfolio-home`} component={HomePortfolio}/>
-                        <Route exact path={`/portfolio-landing`} component={PortfolioLanding}/>
-                        <Route exact path={`/creative-landing`} component={CreativeLanding}/>
-                        <Route exact path={`/home-particles`} component={HomeParticles}/>
-                        <Route exact path={`/dark-portfolio-landing`} component={DarkPortfolioLanding}/>
-                        <Route exact path={`/designer-portfolio`} component={DesignerPortfolio}/>
-                        <Route exact path={`/creative-portfolio`} component={CreativePortfolio}/>
-                        <Route exact path={`/interior-landing`} component={InteriorLanding}/>
-                        <Route exact path={`/corporate-business`} component={CorporateBusiness}/>
-                        <Route exact path={`/interactive-agency`} component={InteractiveAgency}/>
+                        {
+                            <Route exact path={`/admin/carousel`} component={Carousel} />
+                        }
+
+                        {<Route exact path={`/admin/users`} component={UserList} />}
+                        {<Route exact path={`/admin/req`} component={PaymentReq} />}
+
+                        <Route exact path={`/digital-agency`} component={DigitalAgency} />
+                        <Route exact path={`/creative-agency`} component={CreativeAgency} />
+                        <Route exact path={`/personal-portfolio`} component={PersonalPortfolio} />
+                        <Route exact path={`/studio-agency`} component={StudioAgency} />
+                        <Route exact path={`/business`} component={Business} />
+                        <Route exact path={`/portfolio-home`} component={HomePortfolio} />
+                        <Route exact path={`/portfolio-landing`} component={PortfolioLanding} />
+                        <Route exact path={`/creative-landing`} component={CreativeLanding} />
+                        <Route exact path={`/home-particles`} component={HomeParticles} />
+                        <Route exact path={`/dark-portfolio-landing`} component={DarkPortfolioLanding} />
+                        <Route exact path={`/designer-portfolio`} component={DesignerPortfolio} />
+                        <Route exact path={`/creative-portfolio`} component={CreativePortfolio} />
+                        <Route exact path={`/interior-landing`} component={InteriorLanding} />
+                        <Route exact path={`/corporate-business`} component={CorporateBusiness} />
+                        <Route exact path={`/interactive-agency`} component={InteractiveAgency} />
 
                         {/* Element Layot */}
-                        <Route exact path={`/service`} component={Service}/>
-                        <Route exact path={`/service-details`} component={ServiceDetails}/>
-                        <Route exact path={`/contact`} component={Contact}/>
-                        <Route exact path={`/about`} component={About}/>
-                        <Route exact path={`/portfolio-details`} component={PortfolioDetails}/>
-                        <Route exact path={`/blog`} component={Blog}/>
-                        <Route exact path={`/blog-details`} component={BlogDetails}/>
+                        <Route exact path={`/service`} component={Service} />
+                        <Route exact path={`/service-details`} component={ServiceDetails} />
+                        <Route exact path={`/contact`} component={Contact} />
+                        <Route exact path={`/about`} component={About} />
+                        <Route exact path={`/portfolio-details`} component={PortfolioDetails} />
+                        <Route exact path={`/blog`} component={Blog} />
+                        <Route exact path={`/blog-details`} component={BlogDetails} />
 
                         {/* Blocks Elements  */}
-                        <Route exact path={`/team`} component={Team}/>
-                        <Route exact path={`/counters`} component={Counters}/>
-                        <Route exact path={`/testimonial`} component={Testimonial}/>
-                        <Route exact path={`/portfolio`} component={Portfolio}/>
-                        <Route exact path={`/video-popup`} component={VideoPopup}/>
-                        <Route exact path={`/gallery`} component={Gallery}/>
-                        <Route exact path={`/clint-logo`} component={Brand}/>
-                        <Route exact path={`/progressbar`} component={ProgressBar}/>
-                        <Route exact path={`/contact-form`} component={ContactForm}/>
-                        <Route exact path={`/google-map`} component={GoogleMap}/>
-                        <Route exact path={`/columns`} component={Columns}/>
-                        <Route exact path={`/pricing-table`} component={PricingTable}/>
+                        <Route exact path={`/team`} component={Team} />
+                        <Route exact path={`/counters`} component={Counters} />
+                        <Route exact path={`/testimonial`} component={Testimonial} />
+                        <Route exact path={`/portfolio`} component={Portfolio} />
+                        <Route exact path={`/video-popup`} component={VideoPopup} />
+                        <Route exact path={`/gallery`} component={Gallery} />
+                        <Route exact path={`/clint-logo`} component={Brand} />
+                        <Route exact path={`/progressbar`} component={ProgressBar} />
+                        <Route exact path={`/contact-form`} component={ContactForm} />
+                        <Route exact path={`/google-map`} component={GoogleMap} />
+                        <Route exact path={`/columns`} component={Columns} />
+                        <Route exact path={`/pricing-table`} component={PricingTable} />
 
 
-                        
-                        <Route path={`/404`} component={error404}/>
-                        <Route component={error404}/>
+
+                        <Route path={`/404`} component={error404} />
+                        <Route component={error404} />
 
                     </Switch>
                 </PageScrollTop>
@@ -133,5 +139,5 @@ class Root extends Component{
     }
 }
 
-ReactDOM.render(<Root/>, document.getElementById('root'));
+ReactDOM.render(<Root />, document.getElementById('root'));
 serviceWorker.register();

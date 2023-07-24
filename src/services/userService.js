@@ -10,9 +10,24 @@ const paymentDetailsRef = collection(db, 'paymentDetails');
 
 const websitesRef = collection(db, 'websites');
 
-class UserDataService{
+class UserDataService {
+
+    addData = (data, collection) => {
+        return addDoc(collection, data);
+    }
+
+    getAllData = (collection) => {
+        return getDocs(collection);
+    }
+
+    deleteData = (db, collection, id) => {
+        const data = doc(db, collection, id);
+        return deleteDoc(data);
+    }
+
+
     addUser = (newUser) => {
-        return addDoc(userCollectionRef, newUser);  
+        return addDoc(userCollectionRef, newUser);
     }
 
     updateUser = (userId, updatedUser) => {

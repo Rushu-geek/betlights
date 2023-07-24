@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import Dropdown from 'react-bootstrap/Dropdown';
+import { NavLink } from 'react-router-dom';
+
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { FiX, FiMenu } from "react-icons/fi";
 import Scrollspy from 'react-scrollspy'
@@ -23,7 +26,7 @@ class HeaderThree extends Component {
 
         //  this.subMetuTrigger = this.subMetuTrigger.bind(this);
         window.addEventListener('load', function () {
-            console.log('All assets are loaded');
+            // console.log('All assets are loaded');
         })
         this.state = {
             show: false,
@@ -48,20 +51,20 @@ class HeaderThree extends Component {
     async componentDidMount() {
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         let admin = JSON.parse(localStorage.getItem('isAdmin'));
-        console.log('currentUser', window.location);
+        // console.log('currentUser', window.location);
         currentUser ? this.setState({ isLoggedIn: true }) : this.setState({ isLoggedIn: false });
         admin ? this.setState({ isAdmin: true }) : this.setState({ isAdmin: false });
         const service = new userService();
         const data = await service.getAllPaymentRequests();
-        console.log("data >.> ", data);
+        // console.log("data >.> ", data);
         data.forEach((doc) => {
-            console.log(doc.data());
+            // console.log(doc.data());
         })
         const data2 = await service.getAllPaymentDetails();
 
         data2.forEach((doc) => {
-            console.log(doc.data());
-            this.setState({phone1: doc.data().phone1, phone2: doc.data().phone2})
+            // console.log(doc.data());
+            this.setState({ phone1: doc.data().phone1, phone2: doc.data().phone2 })
         })
     }
 
@@ -139,10 +142,10 @@ class HeaderThree extends Component {
                 return this.setState({ message: { display: true, msg: "User already exist", type: 'danger' } })
             }
 
-            console.log(userData);
+            // console.log(userData);
 
             const response = await this.setRecaptchaVerifier(userData.number);
-            console.log("response >>>> ", response);
+            // console.log("response >>>> ", response);
 
             this.setState({ confirmObj: response, showOtp: true, show: false })
             // const service = new userService()
@@ -163,12 +166,12 @@ class HeaderThree extends Component {
 
         try {
             let dbUser = {};
-            console.log(loginData);
+            // console.log(loginData);
             let user = await service.queryUserByPhone(loginData.number);
 
             console.log(user.size);
             user.forEach((doc) => {
-                console.log(doc.id, " => ", doc.data());
+                // console.log(doc.id, " => ", doc.data());
                 if (doc.id) {
                     dbUser = {
                         userId: doc.id,
@@ -197,10 +200,10 @@ class HeaderThree extends Component {
                         return
                     }
                     window.location.replace('/dashboard')
-                    console.log("navigation");
+                    // console.log("navigation");
                 }
             });
-            console.log(">>>>>>", dbUser)
+            // console.log(">>>>>>", dbUser)
             if (!this.state.message.display)
                 this.setState({ message: { display: true, msg: "User Doesn't Exist!", type: 'danger' } });
         } catch (e) {
@@ -216,7 +219,7 @@ class HeaderThree extends Component {
     }
 
     getIdNow() {
-        console.log("get id now");
+        // console.log("get id now");
         window.location.replace('/dashboard')
     }
 
@@ -242,7 +245,7 @@ class HeaderThree extends Component {
             }
             const service = new userService()
             const user = await service.addUser(userData);
-            console.log(user);
+            // console.log(user);
             this.setState({ message: { display: true, msg: "User created successfully!", type: 'success' } });
             setTimeout(() => {
                 this.setState({ showOtp: false, showLogin: true, message: { display: false, msg: "", type: '' } });
@@ -255,16 +258,16 @@ class HeaderThree extends Component {
 
     async sendFwpEmail(e) {
         e.preventDefault();
-        console.log(this.state.email);
+        // console.log(this.state.email);
 
         const service = new userService();
 
         const userData = await service.queryUser(this.state.email);
 
-        console.log(userData);
+        // console.log(userData);
 
         userData.forEach((doc) => {
-            console.log(doc.data());
+            // console.log(doc.data());
 
             let data = {
                 to: doc.data().email,
@@ -275,7 +278,7 @@ class HeaderThree extends Component {
 
             axios.post('https://highschoolbabysitters.com/api/parent/sendmail', data)
                 .then((data) => {
-                    console.log(data);
+                    // console.log(data);
                     this.setState({ message: { display: true, msg: "Password sent to your email", type: 'success' } });
                 })
                 .catch((e) => console.log(e))
@@ -328,6 +331,8 @@ class HeaderThree extends Component {
             { Social: <FaInstagram size={`${isMobileDevice ? 35 : 40}`} fill="white" />, link: 'https://www.instagram.com/betlights365?igshid=MzRlODBiNWFlZA==' }
         ]
 
+        const dynamicScreensData = [{ title: 'Carousel', link: "/admin/carousel" }, { title: 'Offers', link: "/admin/carousel" }, { title: 'Available Sites', link: "/admin/carousel" }, { title: 'Video', link: "/admin/carousel" }, { title: 'Video', link: "/admin/carousel" }, { title: 'Logo', link: "/admin/carousel" }, { title: 'Counts', link: "/admin/carousel" }, { title: 'Social Media', link: "/admin/carousel" }]
+
         return (
             <>
                 {!isMobileDevice && <header style={{
@@ -377,6 +382,39 @@ class HeaderThree extends Component {
                                         {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/admin/users">USERLIST</a></li>}
                                         {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/admin/req">APPROVE REQUEST</a></li>}
                                         {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/admin/password">CHANGE PASSWORD</a></li>}
+
+
+                                        {this.state.isLoggedIn && this.state.isAdmin && <li>
+
+                                            <div style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }}>
+
+                                                <Dropdown>
+                                                    <Dropdown.Toggle variant="transparent">
+                                                        <span style={{ color: "white" }}>  Site Settings </span>
+                                                    </Dropdown.Toggle>
+
+                                                    <Dropdown.Menu>
+                                                        {
+                                                            dynamicScreensData.map((elem) => {
+                                                                return (
+                                                                    <>
+                                                                        <Dropdown.Item>
+
+                                                                            <NavLink to={elem.link}>
+                                                                                {elem.title}
+                                                                            </NavLink>
+                                                                        </Dropdown.Item>
+                                                                    </>
+                                                                )
+                                                            })
+                                                        }
+                                                    </Dropdown.Menu>
+                                                </Dropdown>
+                                            </div>
+                                        </li>}
+
+
+
 
                                         {this.state.isLoggedIn && isMobileDevice && <div className="header-btn">
                                             <button onClick={() => this.onLogout()} type="button" className="rn-btn mt-3">
@@ -673,27 +711,27 @@ class HeaderThree extends Component {
                         <div className="col-6">
                             {isMobileDevice && <a style={{ marginLeft: -30 }} href={this.props.homeLink}>
                                 {logoUrl}
-                                
+
                             </a>}
-                            
+
                         </div>
-                        
+
                         <div className="col-6">
-                            
+
                             <div className="header-wrapper">
 
-                                
+
 
                                 {isMobileDevice && <div className="header-right">
 
-                                {!this.state.isAdmin && <div className="">
-                                            {SocialShare.map((val, i) => (
-                                               <a className="mr-3" onClick={() => {
+                                    {!this.state.isAdmin && <div className="">
+                                        {SocialShare.map((val, i) => (
+                                            <a className="mr-3" onClick={() => {
                                                 window.open(`${val.link}`, "_blank");
                                             }} style={{ color: '#ffffff', cursor: 'pointer', opacity: 1 }}>{val.Social}</a>
-                                            ))}
+                                        ))}
                                     </div>}
-                                    
+
 
                                     <div className="humberger-menu d-lg-none">
                                         <span onClick={this.menuTrigger} className="menutrigger text-white"><FiMenu color="#18b0c8" /></span>
