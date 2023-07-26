@@ -64,6 +64,8 @@ import UserList from './home/UserList';
 import PaymentReq from './home/PaymentReq';
 import AdminPassword from './home/AdminPassword';
 import Carousel from './component/admin/Carousel';
+import Logo from './component/admin/Logo';
+import Video from './component/admin/Video';
 
 class Root extends Component {
     render() {
@@ -83,6 +85,14 @@ class Root extends Component {
 
                         {
                             <Route exact path={`/admin/carousel`} component={Carousel} />
+                        }
+
+                        {
+                            <Route exact path={`/admin/logo`} component={Logo} />
+                        }
+
+                        {
+                            <Route exact path={`/admin/video`} component={Video} />
                         }
 
                         {<Route exact path={`/admin/users`} component={UserList} />}

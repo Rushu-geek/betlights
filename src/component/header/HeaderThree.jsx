@@ -15,6 +15,9 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { sendEmail } from "../../email";
 import axios from 'axios';
+import { collection } from 'firebase/firestore';
+import UserDataService from '../../services/userService';
+import db from "../../firebase";
 
 
 class HeaderThree extends Component {
@@ -44,11 +47,35 @@ class HeaderThree extends Component {
             confirmObj: "",
             otp: "",
             phone1: "",
-            phone2: ""
+            phone2: "",
+            logoImage: ""
         }
     }
 
+
     async componentDidMount() {
+
+
+        const getlogo = async () => {
+            const logoRef = collection(db, 'logo');
+            const dbService = new UserDataService();
+
+            const data = await dbService.getAllData(logoRef);
+            let tmpArray = [];
+
+            data.forEach((doc) => {
+                let obj = doc.data();
+
+                obj.id = doc.id;
+                tmpArray.push(obj);
+            });
+            if (tmpArray?.length == 1) {
+                console.log(tmpArray[0]?.url);
+                this.setState({ logoImage: tmpArray[0]?.url })
+            }
+        }
+
+        getlogo()
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         let admin = JSON.parse(localStorage.getItem('isAdmin'));
         // console.log('currentUser', window.location);
@@ -297,7 +324,10 @@ class HeaderThree extends Component {
             }
         }
         const { logo, color = 'default-color' } = this.props;
-        let logoUrl = <img height={100} src="/assets/images/logo/betNew.png" alt="Digital Agency" />;
+
+
+        // /assets/images/logo/betNew.png
+        let logoUrl = <img height={100} src={this.state.logoImage} alt="Digital Agency" />;
 
         let details = navigator.userAgent;
 
@@ -331,7 +361,7 @@ class HeaderThree extends Component {
             { Social: <FaInstagram size={`${isMobileDevice ? 35 : 40}`} fill="white" />, link: 'https://www.instagram.com/betlights365?igshid=MzRlODBiNWFlZA==' }
         ]
 
-        const dynamicScreensData = [{ title: 'Carousel', link: "/admin/carousel" }, { title: 'Offers', link: "/admin/carousel" }, { title: 'Available Sites', link: "/admin/carousel" }, { title: 'Video', link: "/admin/carousel" }, { title: 'Video', link: "/admin/carousel" }, { title: 'Logo', link: "/admin/carousel" }, { title: 'Counts', link: "/admin/carousel" }, { title: 'Social Media', link: "/admin/carousel" }]
+        const dynamicScreensData = [{ title: 'Carousel', link: "/admin/carousel" }, { title: 'Offers', link: "/admin/carousel" }, { title: 'Available Sites', link: "/admin/carousel" }, { title: 'Video', link: "/admin/video" }, { title: 'Logo', link: "/admin/logo" }, { title: 'Counts', link: "/admin/carousel" }, { title: 'Social Media', link: "/admin/carousel" }]
 
         return (
             <>

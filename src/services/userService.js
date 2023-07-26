@@ -12,17 +12,17 @@ const websitesRef = collection(db, 'websites');
 
 class UserDataService {
 
-    addData = (data, collection) => {
-        return addDoc(collection, data);
+    addData = async (data, collection) => {
+        return await addDoc(collection, data);
     }
 
     getAllData = (collection) => {
         return getDocs(collection);
     }
 
-    deleteData = (db, collection, id) => {
+    deleteData = async (db, collection, id) => {
         const data = doc(db, collection, id);
-        return deleteDoc(data);
+        return await deleteDoc(data);
     }
 
 

@@ -25,20 +25,25 @@ const Carousel = () => {
 
 
     const showCarouselImages = async () => {
-        const carouselRef = collection(db, 'carousel');
-        const dbService = new UserDataService();
+        try {
+            const carouselRef = collection(db, 'carousel');
+            const dbService = new UserDataService();
 
-        const data = await dbService.getAllData(carouselRef);
-        let tmpArray = [];
+            const data = await dbService.getAllData(carouselRef);
+            let tmpArray = [];
 
-        data.forEach((doc) => {
-            let obj = doc.data();
+            data.forEach((doc) => {
+                let obj = doc.data();
 
-            obj.id = doc.id;
-            tmpArray.push(obj);
-        });
-        console.log(tmpArray);
-        setCarouselImages(tmpArray);
+                obj.id = doc.id;
+                tmpArray.push(obj);
+            });
+            console.log(tmpArray);
+            setCarouselImages(tmpArray);
+        } catch (err) {
+            console.log(err);
+
+        }
     }
 
     const addCarouselImage = () => {
@@ -53,7 +58,7 @@ const Carousel = () => {
             console.log(Object.values(imageUpload));
 
             imagesArr.map((image) => {
-                const imageRef = ref(storage, `/rationalImages/${image.name}`);
+                const imageRef = ref(storage, `/carouselImages/${image.name}`);
                 uploadBytes(imageRef, image).then((snapshot) => {
                     getDownloadURL(snapshot.ref).then(async (url) => {
                         console.log(url);

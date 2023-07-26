@@ -208,16 +208,32 @@ const starndardService = [
 
 const PostList = BlogContent.slice(0, 3);
 
-
 const PortfolioLanding = () => {
 
     const [phone1, setPhone1] = useState("");
     const [phone2, setPhone2] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [carouselImages, setCarouselImages] = useState();
+    let [siteVideo, setVideo] = useState()
 
+    const getVideo = async () => {
+        const videoRef = collection(db, 'video');
+        const dbService = new UserDataService();
 
+        const data = await dbService.getAllData(videoRef);
+        let tmpArray = [];
 
+        data.forEach((doc) => {
+            let obj = doc.data();
+
+            obj.id = doc.id;
+            tmpArray.push(obj);
+        });
+        if (tmpArray?.length == 1) {
+            console.log(tmpArray[0]?.url);
+            setVideo(tmpArray[0]?.url);
+        }
+    }
 
     let details = navigator.userAgent;
 
@@ -256,6 +272,7 @@ const PortfolioLanding = () => {
             setPhone2(doc.data().phone2);
         })
         getCarouselImages();
+        getVideo();
     }, []);
 
     return (
@@ -306,13 +323,13 @@ const PortfolioLanding = () => {
                             // </div>
 
                             <>
-                            {value?.carouselType == 'mobile' && <>
-                                <div key={`${index}`} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image`}>
-                                    <img style={{ opacity: 1 }}
-                                        src={value?.url} alt={`${index}`} />
-                                </div>
-                            </>}
-                        </>
+                                {value?.carouselType == 'mobile' && <>
+                                    <div key={`${index}`} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image`}>
+                                        <img style={{ opacity: 1 }}
+                                            src={value?.url} alt={`${index}`} />
+                                    </div>
+                                </>}
+                            </>
 
                         ))}
                     </Slider>
@@ -419,8 +436,9 @@ const PortfolioLanding = () => {
 
             <div id='home1' style={{ position: 'relative', }}>
                 <div id='video-container' style={{ zIndex: -1 }}>
-                    <video autoPlay loop muted style={{ width: '100%', height: '50%' }}>
-                        {!isMobileDevice && <source id='mp4' src='/assets/images/preview/BET.mp4' type='video/mp4' />}
+
+                    <video autoPlay loop muted style={{ width: '100%', height: '50%' }} src={siteVideo}>
+                        {!isMobileDevice && <source id='mp4' src={siteVideo} type='video/mp4' />}
 
                         {isMobileDevice && <source id='mp4' src='/assets/images/preview/BET.mp4' type='video/mp4' />}
                     </video>
