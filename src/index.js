@@ -66,6 +66,7 @@ import AdminPassword from './home/AdminPassword';
 import Carousel from './component/admin/Carousel';
 import Logo from './component/admin/Logo';
 import Video from './component/admin/Video';
+import Offers from './component/admin/Offers';
 
 class Root extends Component {
     render() {
@@ -85,6 +86,9 @@ class Root extends Component {
 
                         {
                             <Route exact path={`/admin/carousel`} component={Carousel} />
+                        }
+                         {
+                            <Route exact path={`/admin/offers`} component={Offers} />
                         }
 
                         {

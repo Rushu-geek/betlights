@@ -361,7 +361,7 @@ class HeaderThree extends Component {
             { Social: <FaInstagram size={`${isMobileDevice ? 35 : 40}`} fill="white" />, link: 'https://www.instagram.com/betlights365?igshid=MzRlODBiNWFlZA==' }
         ]
 
-        const dynamicScreensData = [{ title: 'Carousel', link: "/admin/carousel" }, { title: 'Offers', link: "/admin/carousel" }, { title: 'Available Sites', link: "/admin/carousel" }, { title: 'Video', link: "/admin/video" }, { title: 'Logo', link: "/admin/logo" }, { title: 'Counts', link: "/admin/carousel" }, { title: 'Social Media', link: "/admin/carousel" }]
+        const dynamicScreensData = [{ title: 'Carousel', link: "/admin/carousel" }, { title: 'Offers', link: "/admin/offers" }, { title: 'Available Sites', link: "/admin/carousel" }, { title: 'Video', link: "/admin/video" }, { title: 'Logo', link: "/admin/logo" }, { title: 'Counts', link: "/admin/carousel" }, { title: 'Social Media', link: "/admin/carousel" }]
 
         return (
             <>

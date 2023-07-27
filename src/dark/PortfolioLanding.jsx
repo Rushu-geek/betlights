@@ -215,6 +215,7 @@ const PortfolioLanding = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [carouselImages, setCarouselImages] = useState();
     let [siteVideo, setVideo] = useState()
+    let [siteOffers, setOffers] = useState()
     const [mobileCarouselImages, setMobileCarouselImages] = useState();
     const [webCarouselImages, setWebCarouselImages] = useState();
 
@@ -237,6 +238,25 @@ const PortfolioLanding = () => {
             setVideo(tmpArray[0]?.url);
         }
     }
+
+
+    const getOffers = async () => {
+        const offersRef = collection(db, 'offers');
+        const dbService = new UserDataService();
+
+        const data = await dbService.getAllData(offersRef);
+        let tmpArray = [];
+
+        data.forEach((doc) => {
+            let obj = doc.data();
+
+            obj.id = doc.id;
+            tmpArray.push(obj);
+        });
+        console.log(tmpArray);
+        setOffers(tmpArray);
+    }
+
 
     let details = navigator.userAgent;
 
@@ -276,6 +296,7 @@ const PortfolioLanding = () => {
         })
         getCarouselImages();
         getVideo();
+        getOffers();
     }, []);
 
 
@@ -361,25 +382,36 @@ const PortfolioLanding = () => {
                 {/* <div className="container mt-5"> */}
                 <div className="row text-center p-5">
 
-                    {!isMobileDevice && <div className="col-6">
+                    <div className="container-fluid">
+
+
+                        {siteOffers?.length > 0 && <div>
+
+                            {siteOffers?.map((offer, index) => {
+                                return (<>
+                                    <img className='p-1 col-xl-6 col-md-6 col-lg-6 col-sm-12 col-12' src={offer?.url} alt="offer image" />
+                                </>)
+                            })}
+                        </div>}
+
+                        {/* <img onClick={() => {
+                            window.open(`https://api.whatsapp.com/send?phone=${phone1}&text=Hi! I want to get a free ID for 222`, "_blank");
+                        }} src='/assets/images/featured/1.png' style={{ cursor: 'pointer' }}/> */}
+                    </div>
+
+                    {/* {!isMobileDevice && <div className="col-6">
+                        <img src='/assets/images/featured/2.png'/>
+                    </div>} */}
+
+                    {/* {isMobileDevice && <div className="col-12">
                         <img onClick={() => {
                             window.open(`https://api.whatsapp.com/send?phone=${phone1}&text=Hi! I want to get a free ID for 222`, "_blank");
-                        }} src='/assets/images/featured/1.png' style={{ cursor: 'pointer' }}></img>
-                    </div>}
-
-                    {!isMobileDevice && <div className="col-6">
-                        <img src='/assets/images/featured/2.png'></img>
-                    </div>}
-
-                    {isMobileDevice && <div className="col-12">
-                        <img onClick={() => {
-                            window.open(`https://api.whatsapp.com/send?phone=${phone1}&text=Hi! I want to get a free ID for 222`, "_blank");
-                        }} src='/assets/images/featured/1.png' style={{ cursor: 'pointer' }}></img>
+                        }} src='/assets/images/featured/1.png' style={{ cursor: 'pointer' }} />
                     </div>}
 
                     {isMobileDevice && <div className="col-12 mt-3">
-                        <img src='/assets/images/featured/2.png'></img>
-                    </div>}
+                        <img src='/assets/images/featured/2.png' />
+                    </div>} */}
 
                 </div>
                 <div className="row" style={{ justifyContent: 'center', alignItems: 'center' }}>

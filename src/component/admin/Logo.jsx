@@ -113,7 +113,7 @@ const Logo = () => {
 
                                 )}
 
-                                <input className='mt-3' type="file" onChange={(e) => setLogoImage(e.target.files[0])} name="" id="" />
+                                <input accept='image/*' className='mt-3' type="file" onChange={(e) => setLogoImage(e.target.files[0])} name="" id="" />
                             </div>
                         )}
                     </div>

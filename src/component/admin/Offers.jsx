@@ -7,12 +7,7 @@ import db from "../../firebase";
 import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
-
-const Carousel = () => {
-
-    const [imageUpload, setImageUpload] = useState();
-    const [carouselImages, setCarouselImages] = useState();
-    const [carouselType, setCarouselType] = useState("web");
+const Offers = () => {
 
     let details = navigator.userAgent;
 
@@ -22,14 +17,16 @@ const Carousel = () => {
     it returns boolean value*/
     let isMobileDevice = regexp.test(details);
 
+    const [offerImageUpload, setOfferImageUpload] = useState();
+    const [offerImages, setOfferImages] = useState();
 
 
-    const showCarouselImages = async () => {
+    const showOfferImages = async () => {
         try {
-            const carouselRef = collection(db, 'carousel');
+            const offerRef = collection(db, 'offers');
             const dbService = new UserDataService();
 
-            const data = await dbService.getAllData(carouselRef);
+            const data = await dbService.getAllData(offerRef);
             let tmpArray = [];
 
             data.forEach((doc) => {
@@ -39,67 +36,62 @@ const Carousel = () => {
                 tmpArray.push(obj);
             });
             console.log(tmpArray);
-            setCarouselImages(tmpArray);
+            setOfferImages(tmpArray);
         } catch (err) {
             console.log(err);
-
         }
     }
 
-    const addCarouselImage = () => {
-        if (!imageUpload) {
+    const addOfferImage = () => {
+        if (!offerImageUpload) {
             return;
         }
         try {
 
-            const carouselRef = collection(db, 'carousel');
+            const carouselRef = collection(db, 'offers');
 
-            const imagesArr = Object.values(imageUpload);
-            console.log(Object.values(imageUpload));
+            const imagesArr = Object.values(offerImageUpload);
+            console.log(Object.values(offerImageUpload));
 
             imagesArr.map((image) => {
-                const imageRef = ref(storage, `/carouselImages/${image.name}`);
+                const imageRef = ref(storage, `/offerImages/${image.name}`);
                 uploadBytes(imageRef, image).then((snapshot) => {
                     getDownloadURL(snapshot.ref).then(async (url) => {
                         console.log(url);
                         const dbService = new UserDataService()
-                        let image = { url, carouselType }
+                        let image = { url }
                         const pushImage = await dbService.addData(image, carouselRef);
                         console.log(pushImage);
-                        showCarouselImages();
-                        // showImages();
+                        showOfferImages();
                     })
                 })
             })
-            showCarouselImages();
-            // showImages();
+            showOfferImages();
 
         } catch (err) {
             console.log(err);
         }
     }
 
-    const deleteCarouselImage = async (id) => {
+    const deleteOfferImage = async (id) => {
 
         try {
             const dbService = new UserDataService();
-            const data = await dbService.deleteData(db, 'carousel', id);
+            const data = await dbService.deleteData(db, 'offers', id);
 
             console.log(data)
-            showCarouselImages();
+            showOfferImages();
         } catch (err) {
             console.log(err);
         }
-
-
     }
 
     useEffect(() => {
-        showCarouselImages();
+        showOfferImages();
     }, []);
 
-
     return (
+
         <div className=''>
             <Helmet pageTitle="Admin" />
 
@@ -107,26 +99,24 @@ const Carousel = () => {
             <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
                 <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
-                    <h2 className='text-center'>Carousel Images</h2>
+                    <h2 className='text-center'>Offers</h2>
 
-                    <input accept='image/*' type='file' multiple onChange={(e) => setImageUpload(e.target.files)} />
-                    Mobile: <input style={{}} type="radio" name="carouselType" id="" value="mobile" onChange={(e) => { setCarouselType(e.target.value) }} />
-                    Web: <input type="radio" name="carouselType" id="" value="web" onChange={(e) => { setCarouselType(e.target.value) }} />
+                    <input accept='image/*' type='file' multiple onChange={(e) => setOfferImageUpload(e.target.files)} />
 
-                    <button className='mt-3' onClick={addCarouselImage}>Add Image</button>
+                    <button className='mt-3' onClick={addOfferImage}>Add Offers</button>
 
                     <div className='mt-3 row'>
 
                         {
-                            carouselImages?.map((imageObj) => {
+                            offerImages?.map((imageObj) => {
                                 return (
                                     <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
                                         <div>
-                                            <img height="300px" width="500px" src={imageObj.url} alt="carousel image" />
+                                            <img height="300px" width="500px" src={imageObj.url} alt="offer image" />
                                         </div>
                                         <div>
 
-                                            <button onClick={() => { deleteCarouselImage(imageObj?.id) }}>Delete</button>
+                                            <button onClick={() => { deleteOfferImage(imageObj?.id) }}>Delete</button>
                                             <p>{imageObj?.carouselType}</p>
                                         </div>
                                     </div>
@@ -135,11 +125,12 @@ const Carousel = () => {
                         }
                     </div>
 
+
+
                 </div>
             </div>
-
         </div>
     )
 }
 
-export default Carousel
+export default Offers

@@ -49,9 +49,11 @@ const Video = () => {
         try {
 
 
-            if (!video) {
+            if (!video || (video?.size * 0.000001) > 5) {
                 return;
             }
+
+            console.log(video)
 
             const videoRef = collection(db, 'video');
 
@@ -117,7 +119,7 @@ const Video = () => {
                                 <button className='mt-3' onClick={() => { uploadVideo(newvideo) }}>Change Video</button>
 
                             )}
-                            <input className='mt-3' type="file" onChange={(e) => setNewVideo(e.target.files[0])} name="" id="" />
+                            <input accept='video/*' className='mt-3' type="file" onChange={(e) => setNewVideo(e.target.files[0])} name="" id="" />
                         </div>
                     )}
                 </div>
