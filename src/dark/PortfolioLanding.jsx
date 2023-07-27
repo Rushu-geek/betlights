@@ -215,6 +215,9 @@ const PortfolioLanding = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [carouselImages, setCarouselImages] = useState();
     let [siteVideo, setVideo] = useState()
+    const [mobileCarouselImages, setMobileCarouselImages] = useState();
+    const [webCarouselImages, setWebCarouselImages] = useState();
+
 
     const getVideo = async () => {
         const videoRef = collection(db, 'video');
@@ -275,6 +278,23 @@ const PortfolioLanding = () => {
         getVideo();
     }, []);
 
+
+    useEffect(() => {
+
+        const webImages = carouselImages?.filter((image) => {
+            return image.carouselType == 'web';
+        })
+        const mobileImages = carouselImages?.filter((image) => {
+            return image.carouselType == 'mobile';
+        })
+        console.log(webImages)
+        setWebCarouselImages(webImages)
+        console.log(mobileImages)
+        setMobileCarouselImages(mobileImages)
+    }, [carouselImages])
+
+
+
     return (
         <div className="active-light">
             <Helmet pageTitle="Betlights" />
@@ -285,7 +305,7 @@ const PortfolioLanding = () => {
             <div id='home' className="slider-wrapper">
                 {!isMobileDevice && <div style={{ top: 80 }} className="slider-activation">
                     <Slider {...slideSlick}>
-                        {carouselImages?.map((value, index) => (
+                        {webCarouselImages?.map((value, index) => (
                             // <div style={{ opacity: 1 }} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image ${value.bgImage}`} key={index}>
                             //     <div className="container">
                             //         <div className="row">
@@ -310,7 +330,7 @@ const PortfolioLanding = () => {
 
                 {isMobileDevice && <div style={{ top: 80 }} className="slider-activation">
                     <Slider {...slideSlick}>
-                        {carouselImages?.map((value, index) => (
+                        {mobileCarouselImages?.map((value, index) => (
                             // <div style={{ opacity: 1 }} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image ${value.bgImage}`} key={index}>
                             //     <div className="container">
                             //         <div className="row">
