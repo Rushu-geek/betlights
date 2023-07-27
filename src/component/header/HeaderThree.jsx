@@ -361,7 +361,7 @@ class HeaderThree extends Component {
             { Social: <FaInstagram size={`${isMobileDevice ? 35 : 40}`} fill="white" />, link: 'https://www.instagram.com/betlights365?igshid=MzRlODBiNWFlZA==' }
         ]
 
-        const dynamicScreensData = [{ title: 'Carousel', link: "/admin/carousel" }, { title: 'Offers', link: "/admin/offers" }, { title: 'Available Sites', link: "/admin/carousel" }, { title: 'Video', link: "/admin/video" }, { title: 'Logo', link: "/admin/logo" }, { title: 'Counts', link: "/admin/carousel" }, { title: 'Social Media', link: "/admin/carousel" }]
+        const dynamicScreensData = [{ title: 'Carousel', link: "/admin/carousel" }, { title: 'Offers', link: "/admin/offers" }, { title: 'Available Sites', link: "/admin/sites" }, { title: 'Video', link: "/admin/video" }, { title: 'Video', link: "/admin/video" }, { title: 'Testimonials', link: "/admin/testimonials" }, { title: 'Counts', link: "/admin/carousel" }, { title: 'Social Media', link: "/admin/carousel" }]
 
         return (
             <>
@@ -470,7 +470,7 @@ class HeaderThree extends Component {
                                     <ModalHeader className="text-center" closeLabel="close" style={{ alignContent: 'center', justifyContent: 'center', backgroundImage: 'linear-gradient(#022c43,#18b0c8)', borderBottomColor: '#18b0c8' }} closeButton>
                                         {/* {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">ghg</Modal.Title>} */}
                                         <div className="text-center" style={{ paddingLeft: !isMobileDevice ? 120 : 70, backgroundColor: '' }}>
-                                            <img style={{ justifyContent: "center", alignItems: "center" }} height={130} width={'auto'} src="/assets/images/logo/betNew.png" alt="Digital Agency" />
+                                            <img style={{ justifyContent: "center", alignItems: "center" }} height={130} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
                                         </div>
                                     </ModalHeader>
                                     <form onSubmit={(e) => this.onRegister(e)}>
@@ -558,7 +558,7 @@ class HeaderThree extends Component {
                                     }} closeButton>
                                         {/* {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">Login hvvh</Modal.Title>} */}
                                         <div className="text-center ml-7">
-                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 120 }} height={130} width={'auto'} src="/assets/images/logo/betNew.png" alt="Digital Agency" />
+                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 120 }} height={130} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.onLogin(e)}>
@@ -609,7 +609,7 @@ class HeaderThree extends Component {
                                     }} closeButton>
                                         {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">Login hvvh</Modal.Title>}
                                         <div className="text-center ml-7">
-                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 0 }} height={150} width={'auto'} src="/assets/images/logo/betNew.png" alt="Digital Agency" />
+                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 0 }} height={150} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.verifyOtp(e)}>
@@ -646,7 +646,7 @@ class HeaderThree extends Component {
                                     }} closeButton>
                                         {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">Login hvvh</Modal.Title>}
                                         <div className="text-center ml-7">
-                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 0 }} height={150} width={'auto'} src="/assets/images/logo/betNew.png" alt="Digital Agency" />
+                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 0 }} height={150} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.sendFwpEmail(e)}>
@@ -809,7 +809,7 @@ class HeaderThree extends Component {
                                     <ModalHeader className="text-center" closeLabel="close" style={{ alignContent: 'center', justifyContent: 'center', backgroundImage: 'linear-gradient(#022c43,#18b0c8)', borderBottomColor: '#18b0c8' }} closeButton>
                                         {/* {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">ghg</Modal.Title>} */}
                                         <div className="text-center" style={{ paddingLeft: !isMobileDevice ? 120 : 70, backgroundColor: '' }}>
-                                            <img style={{ justifyContent: "center", alignItems: "center" }} height={130} width={'auto'} src="/assets/images/logo/betNew.png" alt="Digital Agency" />
+                                            <img style={{ justifyContent: "center", alignItems: "center" }} height={130} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
                                         </div>
                                     </ModalHeader>
                                     <form onSubmit={(e) => this.onRegister(e)}>
@@ -897,7 +897,7 @@ class HeaderThree extends Component {
                                     }} closeButton>
                                         {/* {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">Login hvvh</Modal.Title>} */}
                                         <div className="text-center ml-7">
-                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 120 }} height={130} width={'auto'} src="/assets/images/logo/betNew.png" alt="Digital Agency" />
+                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 120 }} height={130} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.onLogin(e)}>
@@ -948,7 +948,7 @@ class HeaderThree extends Component {
                                     }} closeButton>
                                         {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">Login hvvh</Modal.Title>}
                                         <div className="text-center ml-7">
-                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 0 }} height={150} width={'auto'} src="/assets/images/logo/betNew.png" alt="Digital Agency" />
+                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 0 }} height={150} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.verifyOtp(e)}>
@@ -985,7 +985,7 @@ class HeaderThree extends Component {
                                     }} closeButton>
                                         {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">Login hvvh</Modal.Title>}
                                         <div className="text-center ml-7">
-                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 0 }} height={150} width={'auto'} src="/assets/images/logo/betNew.png" alt="Digital Agency" />
+                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 0 }} height={150} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.sendFwpEmail(e)}>

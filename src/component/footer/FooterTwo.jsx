@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import { FaTwitter, FaInstagram, FaFacebookF, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
+import { collection } from 'firebase/firestore';
+import UserDataService from '../../services/userService';
+import db from "../../firebase";
+
 
 const FooterTwo = (props) => {
 
     const [show18, setShow18] = useState(false);
     const [showRest, setShowRest] = useState(false);
+    const [logoImage, setLogoImage] = useState("");
 
     const SocialShare = [
         { Social: <FaFacebookF />, link: 'https://www.facebook.com/' },
@@ -24,6 +29,28 @@ const FooterTwo = (props) => {
         setShowRest(false);
     }
 
+    const getLogo = async () => {
+        const logoRef = collection(db, 'logo');
+        const dbService = new UserDataService();
+
+        const data = await dbService.getAllData(logoRef);
+        let tmpArray = [];
+
+        data.forEach((doc) => {
+            let obj = doc.data();
+
+            obj.id = doc.id;
+            tmpArray.push(obj);
+        });
+        if (tmpArray?.length == 1) {
+            console.log(tmpArray[0]?.url);
+            setLogoImage(tmpArray[0]?.url)
+        }
+    }
+
+    useEffect(() => {
+        getLogo();
+    }, [])
 
     return (
         <div style={{ backgroundImage: 'linear-gradient(#022c43,#18b0c8)' }} className="footer-style-2 ptb--30">
@@ -62,8 +89,8 @@ const FooterTwo = (props) => {
                         <div className="inner">
                             <div className="logo text-center text-sm-left mb_sm--20">
                                 <a href="/home-one">
-                                    <img height={140} src="/assets/images/logo/betNew.png" alt="Logo images" />
-                                </a>
+
+                                    <img height={140} src={logoImage} alt="Logo images" />                                </a>
                             </div>
                         </div>
                     </div>

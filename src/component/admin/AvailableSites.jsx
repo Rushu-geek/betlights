@@ -7,7 +7,7 @@ import db from "../../firebase";
 import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
-const Offers = () => {
+const AvailableSites = () => {
 
     let details = navigator.userAgent;
 
@@ -17,16 +17,15 @@ const Offers = () => {
     it returns boolean value*/
     let isMobileDevice = regexp.test(details);
 
-    const [offerImageUpload, setOfferImageUpload] = useState();
-    const [offerImages, setOfferImages] = useState();
+    const [siteImageUpload, setSiteImageUpload] = useState();
+    const [siteImages, setSiteImages] = useState();
 
-
-    const showOfferImages = async () => {
+    const showSitesImages = async () => {
         try {
-            const offerRef = collection(db, 'offers');
+            const sitesRef = collection(db, 'sites');
             const dbService = new UserDataService();
 
-            const data = await dbService.getAllData(offerRef);
+            const data = await dbService.getAllData(sitesRef);
             let tmpArray = [];
 
             data.forEach((doc) => {
@@ -36,59 +35,80 @@ const Offers = () => {
                 tmpArray.push(obj);
             });
             console.log(tmpArray);
-            setOfferImages(tmpArray);
+            setSiteImages(tmpArray);
         } catch (err) {
             console.log(err);
         }
     }
 
-    const addOfferImage = () => {
-        if (!offerImageUpload) {
+    const addSitesImage = () => {
+        if (!siteImageUpload) {
             return;
         }
         try {
 
-            const carouselRef = collection(db, 'offers');
+            console.log(siteImageUpload)
+            const sitesRef = collection(db, 'sites');
 
-            const imagesArr = Object.values(offerImageUpload);
-            console.log(Object.values(offerImageUpload));
+            const imagesArr = Object.values(siteImageUpload);
+            console.log(Object.values(siteImageUpload));
 
             imagesArr.map((image) => {
-                const imageRef = ref(storage, `/offerImages/${image.name}`);
+
+
+                const img = new Image();
+                img.src = URL.createObjectURL(image);
+
+                
+                img.onload = () => {
+                    alert(img.height);
+                    alert(img.width);
+                };
+
+                img.onerror = (err) => {
+                    console.log("img error");
+                    console.error(err);
+                };
+
+
+                // -------------
+                const imageRef = ref(storage, `/siteImages/${image.name}`);
                 uploadBytes(imageRef, image).then((snapshot) => {
                     getDownloadURL(snapshot.ref).then(async (url) => {
                         console.log(url);
                         const dbService = new UserDataService()
                         let image = { url }
-                        const pushImage = await dbService.addData(image, carouselRef);
+                        const pushImage = await dbService.addData(image, sitesRef);
                         console.log(pushImage);
-                        showOfferImages();
+                        showSitesImages();
                     })
                 })
             })
-            showOfferImages();
+            showSitesImages();
 
         } catch (err) {
             console.log(err);
         }
     }
 
-    const deleteOfferImage = async (id) => {
+    const deleteSiteImage = async (id) => {
 
         try {
             const dbService = new UserDataService();
-            const data = await dbService.deleteData(db, 'offers', id);
+            const data = await dbService.deleteData(db, 'sites', id);
 
             console.log(data)
-            showOfferImages();
+            showSitesImages();
         } catch (err) {
             console.log(err);
         }
     }
 
     useEffect(() => {
-        showOfferImages();
+        showSitesImages();
     }, []);
+
+
 
     return (
 
@@ -99,24 +119,24 @@ const Offers = () => {
             <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
                 <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
-                    <h2 className='text-center'>Offers</h2>
+                    <h2 className='text-center'>Available Sites</h2>
 
-                    <input accept='image/*' type='file' multiple onChange={(e) => setOfferImageUpload(e.target.files)} />
+                    <input accept='image/*' type='file' multiple onChange={(e) => setSiteImageUpload(e.target.files)} />
 
-                    <button className='mt-3' onClick={addOfferImage}>Add Offers</button>
+                    <button className='mt-3' onClick={addSitesImage}>Add Sites</button>
 
                     <div className='mt-3 row'>
 
                         {
-                            offerImages?.map((imageObj) => {
+                            siteImages?.map((imageObj) => {
                                 return (
                                     <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
                                         <div>
-                                            <img height="300px" width="500px" src={imageObj.url} alt="offer image" />
+                                            <img src={imageObj.url} alt="offer image" />
                                         </div>
                                         <div>
 
-                                            <button onClick={() => { deleteOfferImage(imageObj?.id) }}>Delete</button>
+                                            <button onClick={() => { deleteSiteImage(imageObj?.id) }}>Delete</button>
                                         </div>
                                     </div>
                                 )
@@ -126,10 +146,11 @@ const Offers = () => {
 
 
 
+
                 </div>
             </div>
         </div>
     )
 }
 
-export default Offers
+export default AvailableSites

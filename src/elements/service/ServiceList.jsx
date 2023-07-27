@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { FiCast, FiLayers, FiUsers, FiMonitor } from "react-icons/fi";
+import { collection } from 'firebase/firestore';
+import db from "../../firebase";
+import UserDataService from '../../services/userService';
 
 const ServiceList = [
     {
@@ -36,7 +39,41 @@ const ServiceList = [
 
 
 class ServiceThree extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            sites: [],
+        }
+
+    }
+
+
+    async componentDidMount() {
+
+        const getSites = async () => {
+            const sitesRef = collection(db, 'sites');
+            const dbService = new UserDataService();
+
+            const data = await dbService.getAllData(sitesRef);
+            let tmpArray = [];
+
+            data.forEach((doc) => {
+                let obj = doc.data();
+
+                obj.id = doc.id;
+                tmpArray.push(obj);
+            });
+            console.log(tmpArray);
+            this.setState({ sites: tmpArray });
+        }
+        getSites();
+    }
+
+
     render() {
+
         const { column } = this.props;
         const ServiceContent = ServiceList.slice(0, this.props.item);
 
@@ -50,13 +87,15 @@ class ServiceThree extends Component {
 
         return (
             <React.Fragment>
-                <div className={`row ${!isMobileDevice ? 'ml-5' : ''}`}>
-                    {ServiceContent.map((val, i) => (
-                        <div className={`${column}`} key={i}>
+                {/* <div className={`row ${!isMobileDevice ? 'ml-5' : ''}`}> */}
+                <div className="row text-center">
+
+                    {this.state.sites?.map((val, i) => (
+                        <div className="col-lg-4 col-md-4 col-sm-12 col-12" key={i}>
                             <a style={{ cursor: 'pointer' }}>
-                                <div style={{width: 300, height: 200, boxShadow: '0 0 9px #1C74CB', backgroundImage: 'linear-gradient(#022c43,#18b0c8)'}} className="service service__style--2 text-center">
-                                    <div className={`${(isMobileDevice && i != 1) ? 'mt-4': ''}`}>
-                                        <img style={{height: i == 0 ? 60 : i == 3 ? 90 : i == 5 ? 80 : ''}} src={`/assets/images/icons/i${i + 1}.png`} />
+                                <div style={{ width: 300, height: 200, boxShadow: '0 0 9px #1C74CB', backgroundImage: 'linear-gradient(#022c43,#18b0c8)' }} className="service service__style--2 text-center">
+                                    <div className="">
+                                        <img style={{ height: i == 0 ? 60 : i == 3 ? 90 : i == 5 ? 80 : '' }} src={val?.url} />
                                     </div>
                                 </div>
                             </a>

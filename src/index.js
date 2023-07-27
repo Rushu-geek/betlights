@@ -67,6 +67,8 @@ import Carousel from './component/admin/Carousel';
 import Logo from './component/admin/Logo';
 import Video from './component/admin/Video';
 import Offers from './component/admin/Offers';
+import AvailableSites from './component/admin/AvailableSites';
+import Testimonials from './component/admin/Testimonials';
 
 class Root extends Component {
     render() {
@@ -87,7 +89,7 @@ class Root extends Component {
                         {
                             <Route exact path={`/admin/carousel`} component={Carousel} />
                         }
-                         {
+                        {
                             <Route exact path={`/admin/offers`} component={Offers} />
                         }
 
@@ -97,6 +99,12 @@ class Root extends Component {
 
                         {
                             <Route exact path={`/admin/video`} component={Video} />
+                        }
+                        {
+                            <Route exact path={`/admin/sites`} component={AvailableSites} />
+                        }
+                        {
+                            <Route exact path={`/admin/testimonials`} component={Testimonials} />
                         }
 
                         {<Route exact path={`/admin/users`} component={UserList} />}
