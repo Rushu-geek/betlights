@@ -3,12 +3,14 @@ import HeaderThree from '../component/header/HeaderThree';
 import UserDataService from '../services/userService';
 import DataTable from 'react-data-table-component'
 import styled from 'styled-components';
+import SideBar from '../component/admin/SideBar';
 
 
 function UserList() {
 
     const [users, setUsers] = useState([]);
     const [filterText, setFilterText] = useState("");
+    const [sideBarState, setSideBarState] = useState("open");
 
 
     useEffect(async () => {
@@ -67,7 +69,7 @@ function UserList() {
     const filteredItems = users.filter(
         item => item?.fullName?.toLowerCase().includes(filterText?.toLowerCase()) ||
             item?.email?.toLowerCase().includes(filterText?.toLowerCase()) ||
-            item?.websiteId?.toLowerCase().includes(filterText?.toLowerCase()) 
+            item?.websiteId?.toLowerCase().includes(filterText?.toLowerCase())
     );
 
     const FilterComponent = ({ filterText, onFilter }) => (
@@ -75,15 +77,15 @@ function UserList() {
             <input
                 id="search"
                 type="text"
-                style={{width: '100%'}}
+                style={{ width: '100%' }}
                 placeholder="Search by name or email"
                 aria-label="Search Input"
                 value={filterText}
                 onChange={onFilter}
                 autoFocus
             />
-            
-            <select onChange={onFilter} className='mt-3' style={{width: '100%'}}>
+
+            <select onChange={onFilter} className='mt-3' style={{ width: '100%' }}>
                 <option>Filter By Website</option>
                 <option value={'LordsExch'}>LordsExch</option>
                 <option value={'ParkerExch'}>ParkerExch</option>
@@ -112,24 +114,34 @@ function UserList() {
 
     return (
         <>
-            <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" />
 
-            <div style={{ marginLeft: 60, marginRight: 60, marginTop: 100, borderColor: 'black' }}>
+            <div className='row'>
+                {/* <div onClick={() => { sideBarState == "open" ? setSideBarState("close") : setSideBarState("open") }} className={sideBarState == "open" ? 'col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2' : 'col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2'}>
+                    <SideBar />
+                </div>
 
-                <h1>User List</h1>
+                <div className={sideBarState == "open" ? 'col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10' : 'col-xl-11 col-lg-11 col-md-11 col-sm-10 col-10'}>
 
-                <DataTable
-                    columns={columns}
-                    data={filteredItems}
-                    striped={true}
-                    fixedHeaderScrollHeight="400px"
-                    subHeader
-                    subHeaderAlign='left'
-                    subHeaderComponent={subHeaderComponentMemo}
-                    customStyles={customStyles}
-                />
+                    <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
+
+                <div style={{ marginLeft: 60, marginRight: 60, marginTop: 100, borderColor: 'black' }}>
+
+                    <h1>User List</h1>
+
+                    <DataTable
+                        columns={columns}
+                        data={filteredItems}
+                        striped={true}
+                        fixedHeaderScrollHeight="400px"
+                        subHeader
+                        subHeaderAlign='left'
+                        subHeaderComponent={subHeaderComponentMemo}
+                        customStyles={customStyles}
+                    />
+                </div>
+
             </div>
-
+            {/* </div> */}
         </>
     )
 }

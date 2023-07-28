@@ -6,6 +6,8 @@ import { collection } from 'firebase/firestore';
 import db from "../../firebase";
 import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import SideBar from './SideBar';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 const AvailableSites = () => {
 
@@ -19,6 +21,7 @@ const AvailableSites = () => {
 
     const [siteImageUpload, setSiteImageUpload] = useState();
     const [siteImages, setSiteImages] = useState();
+    const [sideBarState, setSideBarState] = useState("open");
 
     const showSitesImages = async () => {
         try {
@@ -120,48 +123,61 @@ const AvailableSites = () => {
     }
 
     useEffect(() => {
+        disableBodyScroll(document)
         showSitesImages();
     }, []);
 
 
 
+
     return (
 
-        <div className=''>
+        <div style={{ overflow: "hidden" }} className=''>
             <Helmet pageTitle="Admin" />
 
-            <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" />
-            <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
-                <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
-                    <h2 className='text-center'>Available Sites</h2>
+            {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
 
-                    <input accept='image/*' type='file' multiple onChange={(e) => setSiteImageUpload(e.target.files)} />
+            <div className='row'>
+                <div onClick={() => { sideBarState == "open" ? setSideBarState("close") : setSideBarState("open") }} className={sideBarState == "open" ? 'col-xl-3 col-lg-3 col-md-3 col-sm-2 col-2' : 'col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2'}>
+                    <SideBar />
+                </div>
 
-                    <button className='mt-3' onClick={addSitesImage}>Add Sites</button>
+                <div className={sideBarState == "open" ? 'col-xl-9 col-lg-9 col-md-9 col-sm-10 col-10' : 'col-xl-11 col-lg-11 col-md-11 col-sm-10 col-10'}>
 
-                    <div className='mt-3 row'>
+                    <div className="designer-portfolio-area ptb--70 bg_color--1">
+                        <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
-                        {
-                            siteImages?.map((imageObj) => {
-                                return (
-                                    <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
-                                        <div>
-                                            <img src={imageObj.url} alt="offer image" />
-                                        </div>
-                                        <div>
+                            <h2 className='text-center'>Available Sites</h2>
 
-                                            <button onClick={() => { deleteSiteImage(imageObj?.id) }}>Delete</button>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
+                            <input accept='image/*' type='file' multiple onChange={(e) => setSiteImageUpload(e.target.files)} />
+
+                            <button className='mt-3' onClick={addSitesImage}>Add Sites</button>
+
+                            <div style={{overflow:"scroll",overflowX:"hidden", height:"50vh"}} className='mt-3 row'>
+
+                                {
+                                    siteImages?.map((imageObj) => {
+                                        return (
+                                            <div className='col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12'>
+                                                <div>
+                                                    <img src={imageObj.url} alt="offer image" />
+                                                </div>
+                                                <div>
+
+                                                    <button onClick={() => { deleteSiteImage(imageObj?.id) }}>Delete</button>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+
+
+
+
+                        </div>
                     </div>
-
-
-
-
                 </div>
             </div>
         </div>

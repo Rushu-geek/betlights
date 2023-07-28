@@ -23,7 +23,7 @@ function AdminPassword() {
     return (
         <>
             <Helmet pageTitle="Admin" />
-            <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" />
+            {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
             <div className='col-6' style={{ marginTop: 100 }}>
                 <h1>Change Password</h1>
                 <h3>Enter New Password</h3>

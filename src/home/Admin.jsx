@@ -7,6 +7,7 @@ import ServiceOne from '../elements/service/ServiceOne';
 import { Button } from 'react-bootstrap';
 import storage from '../firebaseStorage';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
+import SideBar from '../component/admin/SideBar';
 
 
 function Admin() {
@@ -21,6 +22,7 @@ function Admin() {
     const [phone2, setPhone2] = useState("");
     const [paymentDetailId, setPaymentDetailId] = useState("");
     const [singleImage, setSingleImage] = useState("");
+    const [sideBarState, setSideBarState] = useState("open");
 
     useEffect(async () => {
         console.log("get all payment requestss.");
@@ -133,44 +135,56 @@ function Admin() {
     let isMobileDevice = regexp.test(details);
 
     return (
-        <div id='payInfo' className="active" style={{ backgroundColor: 'black' }}>
-            <Helmet pageTitle="Admin" />
-            <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" />
-            <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
-                <div className="wrapper plr--70 plr_sm--30 plr_md--30">
-                    {/* <ServiceOne payment={paymentReq} /> */}
-                    <h2>Update Payment Details</h2>
 
-                    <div className="row">
-                        <div className={`${isMobileDevice ? 'col-12' : 'col-6'}`}>
-                            <label>Bank Account Number</label>
-                            <input value={bankNo} onChange={(e) => setBankNo(e.target.value)} />
-                            <label>IFSC Code</label>
-                            <input value={ifsc} onChange={(e) => setIfsc(e.target.value)} />
-                            <label>Bank Account Holder Name</label>
-                            <input value={holder} onChange={(e) => setHolder(e.target.value)} />
-                            <label>Bank Name</label>
-                            <input value={bankName} onChange={(e) => setBankName(e.target.value)} />
-                            <label>UPI ID</label>
-                            <input value={upi} onChange={(e) => setUpi(e.target.value)} />
+        <div className='row'>
 
-                            <label>QR code</label>
-                            <input type='file' name='png' onChange={handleImage} />
+            {/* <div onClick={() => { sideBarState == "open" ? setSideBarState("close") : setSideBarState("open") }} className={sideBarState == "open" ? 'col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2' : 'col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2'}>
+                <SideBar />
+            </div> */}
 
-                            <label>Phone No 1</label>
-                            <input value={phone1} onChange={(e) => setPhone1(e.target.value)} />
+            {/* <div className={sideBarState == "open" ? 'col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10' : 'col-xl-11 col-lg-11 col-md-11 col-sm-10 col-10'}> */}
 
-                            <label>Phone No 2</label>
-                            <input value={phone2} onChange={(e) => setPhone2(e.target.value)} />
 
-                            <Button className='mt-3' variant="outline-dark" onClick={() => updatePayment()} >
-                                Save
-                            </Button>
+                <div id='payInfo' className="active" style={{ backgroundColor: 'black' }}>
+                    <Helmet pageTitle="Admin" />
+                    <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" />
+                    <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
+                        <div className="wrapper plr--70 plr_sm--30 plr_md--30">
+                            {/* <ServiceOne payment={paymentReq} /> */}
+                            <h2>Update Payment Details</h2>
+
+                            <div style={{ overflow: "scroll", overflowX: "hidden", height: "50vh" }} className="row">
+                                <div className={`${isMobileDevice ? 'col-12' : 'col-6'}`}>
+                                    <label>Bank Account Number</label>
+                                    <input value={bankNo} onChange={(e) => setBankNo(e.target.value)} />
+                                    <label>IFSC Code</label>
+                                    <input value={ifsc} onChange={(e) => setIfsc(e.target.value)} />
+                                    <label>Bank Account Holder Name</label>
+                                    <input value={holder} onChange={(e) => setHolder(e.target.value)} />
+                                    <label>Bank Name</label>
+                                    <input value={bankName} onChange={(e) => setBankName(e.target.value)} />
+                                    <label>UPI ID</label>
+                                    <input value={upi} onChange={(e) => setUpi(e.target.value)} />
+
+                                    <label>QR code</label>
+                                    <input type='file' name='png' onChange={handleImage} />
+
+                                    <label>Phone No 1</label>
+                                    <input value={phone1} onChange={(e) => setPhone1(e.target.value)} />
+
+                                    <label>Phone No 2</label>
+                                    <input value={phone2} onChange={(e) => setPhone2(e.target.value)} />
+
+                                    <Button className='mt-3' variant="outline-dark" onClick={() => updatePayment()} >
+                                        Save
+                                    </Button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-
                 </div>
-            </div>
+            {/* </div> */}
         </div>
     )
 }

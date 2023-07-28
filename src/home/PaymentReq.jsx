@@ -7,6 +7,7 @@ import ServiceOne from '../elements/service/ServiceOne';
 import { Button } from 'react-bootstrap';
 import storage from '../firebaseStorage';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
+import SideBar from '../component/admin/SideBar';
 
 
 function PaymentReq() {
@@ -19,6 +20,8 @@ function PaymentReq() {
     const [upi, setUpi] = useState("");
     const [paymentDetailId, setPaymentDetailId] = useState("");
     const [singleImage, setSingleImage] = useState("");
+    const [sideBarState, setSideBarState] = useState("open");
+
 
     useEffect(async () => {
         console.log("get all payment requestss.");
@@ -107,15 +110,27 @@ function PaymentReq() {
     let isMobileDevice = regexp.test(details);
 
     return (
-        <div id='payInfo' className="active" style={{ backgroundColor: 'black' }}>
-            <Helmet pageTitle="PaymentReq" />
-            <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" />
-            <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
-                <div className="wrapper plr--70 plr_sm--30 plr_md--30">
-                    <ServiceOne payment={paymentReq} />
+
+        <div className='row'>
+            {/* <div onClick={() => { sideBarState == "open" ? setSideBarState("close") : setSideBarState("open") }} className={sideBarState == "open" ? 'col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2' : 'col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2'}>
+            <SideBar />
+        </div>
+
+        <div className={sideBarState == "open" ? 'col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10' : 'col-xl-11 col-lg-11 col-md-11 col-sm-10 col-10'}> */}
+
+
+            <div id='payInfo' className="active" style={{ backgroundColor: 'black' }}>
+                <Helmet pageTitle="PaymentReq" />
+                {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
+                <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
+                    <div className="wrapper plr--70 plr_sm--30 plr_md--30">
+                        <ServiceOne payment={paymentReq} />
+                    </div>
                 </div>
             </div>
+
         </div>
+        // </div>
     )
 }
 
