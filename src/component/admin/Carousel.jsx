@@ -58,18 +58,46 @@ const Carousel = () => {
             console.log(Object.values(imageUpload));
 
             imagesArr.map((image) => {
-                const imageRef = ref(storage, `/carouselImages/${image.name}`);
-                uploadBytes(imageRef, image).then((snapshot) => {
-                    getDownloadURL(snapshot.ref).then(async (url) => {
-                        console.log(url);
-                        const dbService = new UserDataService()
-                        let image = { url, carouselType }
-                        const pushImage = await dbService.addData(image, carouselRef);
-                        console.log(pushImage);
-                        showCarouselImages();
-                        // showImages();
-                    })
-                })
+
+                // getting the dimensions of the Image.
+                const img = new Image();
+                img.src = URL.createObjectURL(image);
+
+                img.onload = () => {
+
+                    if ((img?.height == 1080 && img?.width == 1920) || (img?.width == 390 && img?.height == 300)) {
+                       
+                        if (image?.size * 0.001 <= 200) {
+                            const imageRef = ref(storage, `/carouselImages/${image.name}`);
+                            uploadBytes(imageRef, image).then((snapshot) => {
+                                getDownloadURL(snapshot.ref).then(async (url) => {
+                                    console.log(url);
+                                    const dbService = new UserDataService()
+                                    let image = { url, carouselType }
+                                    const pushImage = await dbService.addData(image, carouselRef);
+                                    console.log(pushImage);
+                                    showCarouselImages();
+                                    // showImages();
+                                })
+                            })
+
+                        } else {
+                            alert("Image size should not exceed 200 kb.")
+                        }
+
+
+                    } else {
+                        alert("Image width should be 1920 pixels and height should be 1080 pixels.");
+                    }
+                };
+
+                img.onerror = (err) => {
+                    console.log("img error");
+                    console.error(err);
+                };
+
+
+
             })
             showCarouselImages();
             // showImages();

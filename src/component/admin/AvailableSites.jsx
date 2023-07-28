@@ -59,10 +59,25 @@ const AvailableSites = () => {
                 const img = new Image();
                 img.src = URL.createObjectURL(image);
 
-                
+
                 img.onload = () => {
                     alert(img.height);
                     alert(img.width);
+
+                    if ((img?.height == 1080 && img?.width == 1920) || (img?.width == 390 && img?.height == 300)) {
+
+                        if (image?.size * 0.001 <= 200) {
+
+
+
+                        } else {
+                            alert("Image size should not exceed 200 kb.")
+
+                        }
+                    } else {
+                        alert("Image width should be 1920 pixels and height should be 1080 pixels.");
+                    }
+
                 };
 
                 img.onerror = (err) => {
