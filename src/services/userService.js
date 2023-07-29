@@ -25,6 +25,10 @@ class UserDataService {
         return await deleteDoc(data);
     }
 
+    updateData = async (db, collection, id, data) => {
+        const obj = doc(db, collection, id);
+        return await updateDoc(obj, data);
+    }
 
     addUser = (newUser) => {
         return addDoc(userCollectionRef, newUser);

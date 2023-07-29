@@ -17,6 +17,7 @@ import PaymentReq from '../../home/PaymentReq';
 import AdminPassword from '../../home/AdminPassword';
 import ManageTheme from './ManageTheme';
 import AvailableSites from './AvailableSites';
+import Offers from './Offers';
 
 const SideBar = () => {
     const [logo, setLogo] = useState("");
@@ -56,7 +57,7 @@ const SideBar = () => {
     return (
         <div id="app" style={({ height: "100%" }, { display: "flex" })}>
 
-            <Sidebar collapsed={false} backgroundColor='linear-gradient(#ffffff,#18b0c8)' style={{ height: "100vh", backgroundImage:'linear-gradient(#18b0c8,#022c43)' }}>
+            <Sidebar collapsed={false} backgroundColor='linear-gradient(#ffffff,#18b0c8)' style={{ height: "100vh", backgroundImage: 'linear-gradient(#18b0c8,#022c43)' }}>
                 <Menu>
                     <MenuItem
                         // icon={< />}
@@ -80,6 +81,9 @@ const SideBar = () => {
                     </MenuItem>
                     <MenuItem onClick={() => { setactiveTab("sites") }} icon={<ContactsOutlinedIcon />}>
                         AVAILABLE SITES
+                    </MenuItem>
+                    <MenuItem onClick={() => { setactiveTab("offers") }} icon={<ReceiptOutlinedIcon />}>
+                        OFFERS
                     </MenuItem>
                     <MenuItem onClick={() => { setactiveTab("password") }} icon={<ReceiptOutlinedIcon />}>
                         CHANGE PASSWORD
@@ -109,6 +113,9 @@ const SideBar = () => {
                 )}
                 {activeTab == "manageTheme" && (
                     <ManageTheme />
+                )}
+                {activeTab == "offers" && (
+                    <Offers />
                 )}
             </main>
 

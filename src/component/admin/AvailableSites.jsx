@@ -64,13 +64,21 @@ const AvailableSites = () => {
 
 
                 img.onload = () => {
-                    alert(img.height);
-                    alert(img.width);
-
-                    if ((img?.height == 1080 && img?.width == 1920) || (img?.width == 390 && img?.height == 300)) {
+                    if ((img?.height <= 200 && img?.width <= 386)) {
 
                         if (image?.size * 0.001 <= 200) {
 
+                            const imageRef = ref(storage, `/siteImages/${image.name}`);
+                            uploadBytes(imageRef, image).then((snapshot) => {
+                                getDownloadURL(snapshot.ref).then(async (url) => {
+                                    console.log(url);
+                                    const dbService = new UserDataService()
+                                    let image = { url }
+                                    const pushImage = await dbService.addData(image, sitesRef);
+                                    console.log(pushImage);
+                                    showSitesImages();
+                                })
+                            })
 
 
                         } else {
@@ -78,7 +86,7 @@ const AvailableSites = () => {
 
                         }
                     } else {
-                        alert("Image width should be 1920 pixels and height should be 1080 pixels.");
+                        alert("Image width and height should be less than or equal to 386 pixels and height should be 200 pixels.");
                     }
 
                 };
@@ -90,17 +98,6 @@ const AvailableSites = () => {
 
 
                 // -------------
-                const imageRef = ref(storage, `/siteImages/${image.name}`);
-                uploadBytes(imageRef, image).then((snapshot) => {
-                    getDownloadURL(snapshot.ref).then(async (url) => {
-                        console.log(url);
-                        const dbService = new UserDataService()
-                        let image = { url }
-                        const pushImage = await dbService.addData(image, sitesRef);
-                        console.log(pushImage);
-                        showSitesImages();
-                    })
-                })
             })
             showSitesImages();
 
@@ -138,48 +135,48 @@ const AvailableSites = () => {
 
             {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
 
-            <div className='row'>
-                {/* <div onClick={() => { sideBarState == "open" ? setSideBarState("close") : setSideBarState("open") }} className={sideBarState == "open" ? 'col-xl-3 col-lg-3 col-md-3 col-sm-2 col-2' : 'col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2'}>
+            {/* <div className='row'> */}
+            {/* <div onClick={() => { sideBarState == "open" ? setSideBarState("close") : setSideBarState("open") }} className={sideBarState == "open" ? 'col-xl-3 col-lg-3 col-md-3 col-sm-2 col-2' : 'col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2'}>
                     <SideBar />
                 </div> */}
 
-                <div className={sideBarState == "open" ? 'col-xl-9 col-lg-9 col-md-9 col-sm-10 col-10' : 'col-xl-11 col-lg-11 col-md-11 col-sm-10 col-10'}>
+            {/* <div className={ 'col-xl-9 col-lg-9 col-md-9 col-sm-10 col-10'}> */}
 
-                    <div className="designer-portfolio-area ptb--70 bg_color--1">
-                        <div className="wrapper plr--70 plr_sm--30 plr_md--30">
+            <div className="designer-portfolio-area ptb--70 bg_color--1">
+                <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
-                            <h2 className='text-center'>Available Sites</h2>
+                    <h2 className='text-center'>Available Sites</h2>
 
-                            <input accept='image/*' type='file' multiple onChange={(e) => setSiteImageUpload(e.target.files)} />
+                    <input accept='image/*' type='file' multiple onChange={(e) => setSiteImageUpload(e.target.files)} />
 
-                            <button className='mt-3' onClick={addSitesImage}>Add Sites</button>
+                    <button className='mt-3' onClick={addSitesImage}>Add Sites</button>
 
-                            <div style={{overflow:"scroll",overflowX:"hidden", height:"50vh"}} className='mt-3 row'>
+                    <div style={{ overflow: "scroll", overflowX: "hidden", height: "50vh" }} className='mt-3 row'>
 
-                                {
-                                    siteImages?.map((imageObj) => {
-                                        return (
-                                            <div className='col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12'>
-                                                <div>
-                                                    <img src={imageObj.url} alt="offer image" />
-                                                </div>
-                                                <div>
+                        {
+                            siteImages?.map((imageObj) => {
+                                return (
+                                    <div className='col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12'>
+                                        <div>
+                                            <img src={imageObj.url} alt="offer image" />
+                                        </div>
+                                        <div>
 
-                                                    <button onClick={() => { deleteSiteImage(imageObj?.id) }}>Delete</button>
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-
-
-
-
-                        </div>
+                                            <button onClick={() => { deleteSiteImage(imageObj?.id) }}>Delete</button>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
+
+
+
+
                 </div>
             </div>
+            {/* </div> */}
+            {/* </div> */}
         </div>
     )
 }

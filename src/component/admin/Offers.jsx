@@ -54,17 +54,45 @@ const Offers = () => {
             console.log(Object.values(offerImageUpload));
 
             imagesArr.map((image) => {
-                const imageRef = ref(storage, `/offerImages/${image.name}`);
-                uploadBytes(imageRef, image).then((snapshot) => {
-                    getDownloadURL(snapshot.ref).then(async (url) => {
-                        console.log(url);
-                        const dbService = new UserDataService()
-                        let image = { url }
-                        const pushImage = await dbService.addData(image, carouselRef);
-                        console.log(pushImage);
-                        showOfferImages();
-                    })
-                })
+
+                const img = new Image();
+                img.src = URL.createObjectURL(image);
+
+
+                img.onload = () => {
+                    if ((img?.height == 553 && img?.width == 1014)) {
+
+                        if (image?.size * 0.001 <= 200) {
+
+                            const imageRef = ref(storage, `/offerImages/${image.name}`);
+                            uploadBytes(imageRef, image).then((snapshot) => {
+                                getDownloadURL(snapshot.ref).then(async (url) => {
+                                    console.log(url);
+                                    const dbService = new UserDataService()
+                                    let image = { url }
+                                    const pushImage = await dbService.addData(image, carouselRef);
+                                    console.log(pushImage);
+                                    showOfferImages();
+                                })
+                            })
+
+                        } else {
+                            alert("Image size should not exceed 200 kb.")
+                        }
+                    } else {
+                        alert("Image width should be 1014 pixels and height should be 553 pixels.");
+                    }
+
+                };
+
+                img.onerror = (err) => {
+                    console.log("img error");
+                    console.error(err);
+                };
+
+
+                // --- 
+
             })
             showOfferImages();
 
@@ -95,8 +123,7 @@ const Offers = () => {
         <div className=''>
             <Helmet pageTitle="Admin" />
 
-            <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" />
-            <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
+            <div style={{ }} className="designer-portfolio-area bg_color--1">
                 <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
                     <h2 className='text-center'>Offers</h2>
@@ -112,7 +139,7 @@ const Offers = () => {
                                 return (
                                     <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
                                         <div>
-                                            <img height="300px" width="500px" src={imageObj.url} alt="offer image" />
+                                            <img src={imageObj.url} alt="offer image" />
                                         </div>
                                         <div>
 

@@ -66,7 +66,7 @@ const Carousel = () => {
                 img.onload = () => {
 
                     if ((img?.height == 1080 && img?.width == 1920) || (img?.width == 390 && img?.height == 300)) {
-                       
+
                         if (image?.size * 0.001 <= 200) {
                             const imageRef = ref(storage, `/carouselImages/${image.name}`);
                             uploadBytes(imageRef, image).then((snapshot) => {
@@ -134,7 +134,7 @@ const Carousel = () => {
             <div className="designer-portfolio-area bg_color--1">
                 <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
-                    <h2 className='text-center'>Carousel Images</h2>
+                    <h6 className='text-center'>Carousel Images</h6>
 
                     <input accept='image/*' type='file' multiple onChange={(e) => setImageUpload(e.target.files)} />
                     Mobile: <input style={{}} type="radio" name="carouselType" id="" value="mobile" onChange={(e) => { setCarouselType(e.target.value) }} />
@@ -147,9 +147,9 @@ const Carousel = () => {
                         {
                             carouselImages?.map((imageObj) => {
                                 return (
-                                    <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
+                                    <div className='col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12'>
                                         <div>
-                                            <img height="300px" width="500px" src={imageObj.url} alt="carousel image" />
+                                            <img height="100px" width="200px" src={imageObj.url} alt="carousel image" />
                                         </div>
                                         <div>
 

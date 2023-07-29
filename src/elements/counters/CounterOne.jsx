@@ -1,46 +1,80 @@
-import React, { Component , Fragment } from "react";
+import { collection } from "firebase/firestore";
+import React, { Component, Fragment } from "react";
 import CountUp from 'react-countup';
 import VisibilitySensor from 'react-visibility-sensor';
+import UserDataService from "../../services/userService";
+import db from "../../firebase";
 
 
 
+class CounterOne extends Component {
 
-class CounterOne extends Component{
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            countsData: [],
+        }
+    }
+
+    async componentDidMount() {
+
+
+        const getCounts = async () => {
+            const countRef = collection(db, 'counter');
+            const dbService = new UserDataService();
+
+            const data = await dbService.getAllData(countRef);
+            let tmpArray = [];
+
+            data.forEach((doc) => {
+                let obj = doc.data();
+
+                obj.id = doc.id;
+                tmpArray.push(obj);
+            });
+            console.log(tmpArray[0]?.counters);
+            this.setState({ countsData: tmpArray[0]?.counters })
+        }
+        getCounts()
+    }
+
+
     state = {
         didViewCountUp: false
     };
     onVisibilityChange = isVisible => {
         if (isVisible) {
-            this.setState({didViewCountUp: true});
+            this.setState({ didViewCountUp: true });
         }
     }
-    render(){
+    render() {
         let Data = [
             {
-                countNum : 250,
+                countNum: 250,
                 countTitle: 'Games',
             },
             {
-                countNum : 15000,
+                countNum: 15000,
                 countTitle: 'Active Players',
             },
             {
-                countNum : 5,
+                countNum: 5,
                 countTitle: 'Awarded most successful gaming platform',
             },
         ];
 
-        return(
+        return (
             <Fragment>
                 <div className="row">
-                    {Data.map( (value, index) => (
+                    {this.state.countsData?.map((value, index) => (
                         <div className="counterup_style--1 col-lg-4 col-md-4 col-sm-6 col-12" key={index}>
                             <h5 className="counter">
-                                <VisibilitySensor onChange={this.onVisibilityChange} offset={{top:10}} delayedCall>
-                                    <CountUp end={this.state.didViewCountUp ? value.countNum : 0} />
+                                <VisibilitySensor onChange={this.onVisibilityChange} offset={{ top: 10 }} delayedCall>
+                                    <CountUp end={this.state.didViewCountUp ? value?.count : 0} />
                                 </VisibilitySensor>
                             </h5>
-                            <p style={{color: '#1C74CB'}} className="description">{value.countTitle}</p>
+                            <p style={{ color: '#1C74CB' }} className="description">{value?.name}</p>
                         </div>
                     ))}
                 </div>
