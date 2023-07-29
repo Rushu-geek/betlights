@@ -147,13 +147,13 @@ function Admin() {
 
                 <div id='payInfo' className="active" style={{ backgroundColor: 'black' }}>
                     <Helmet pageTitle="Admin" />
-                    <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" />
-                    <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
+                    {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
+                    <div style={{  }} className="designer-portfolio-area bg_color--1">
                         <div className="wrapper plr--70 plr_sm--30 plr_md--30">
                             {/* <ServiceOne payment={paymentReq} /> */}
                             <h2>Update Payment Details</h2>
 
-                            <div style={{ overflow: "scroll", overflowX: "hidden", height: "50vh" }} className="row">
+                            <div style={{ overflow: "scroll", overflowX: "hidden", height: "87vh" }} className="row">
                                 <div className={`${isMobileDevice ? 'col-12' : 'col-6'}`}>
                                     <label>Bank Account Number</label>
                                     <input value={bankNo} onChange={(e) => setBankNo(e.target.value)} />

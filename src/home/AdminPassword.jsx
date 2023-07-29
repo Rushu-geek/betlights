@@ -24,7 +24,7 @@ function AdminPassword() {
         <>
             <Helmet pageTitle="Admin" />
             {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
-            <div className='col-6' style={{ marginTop: 100 }}>
+            <div className='col-6' style={{ marginTop: 0 }}>
                 <h1>Change Password</h1>
                 <h3>Enter New Password</h3>
                 <input type='password' onChange={(e) => setNewPassword(e.target.value)} />

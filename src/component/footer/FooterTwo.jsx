@@ -12,14 +12,7 @@ const FooterTwo = (props) => {
     const [show18, setShow18] = useState(false);
     const [showRest, setShowRest] = useState(false);
     const [logoImage, setLogoImage] = useState("");
-
-    const SocialShare = [
-        { Social: <FaFacebookF />, link: 'https://www.facebook.com/' },
-        { Social: <FaLinkedinIn />, link: 'https://www.linkedin.com/' },
-        { Social: <FaInstagram />, link: 'https://www.instagram.com/betlights365?igshid=MzRlODBiNWFlZA==' },
-        { Social: <FaTwitter />, link: 'https://twitter.com/' },
-        { Social: <FaWhatsapp />, link: `https://api.whatsapp.com/send?phone=${props.phone}&text=Hi I want to get ID!` }
-    ]
+    const [socialLinks, setSocialLinks] = useState([]);
 
     const handleClose = () => {
         setShow18(false);
@@ -48,9 +41,36 @@ const FooterTwo = (props) => {
         }
     }
 
+    const getSocialLinks = async () => {
+        try {
+            // alert("in footer" + props.phone)
+            const socialLinks = collection(db, 'social');
+            const dbService = new UserDataService();
+            const data = await dbService.getAllData(socialLinks);
+            let tmpArray = [];
+            data.forEach((doc) => {
+                let obj = doc.data();
+                obj.id = doc.id;
+                tmpArray.push(obj);
+            });
+            console.log(props.phone);
+            const SocialShare = [
+                { Social: <FaFacebookF />, link: tmpArray[0].social.fb },
+                { Social: <FaLinkedinIn />, link: tmpArray[0].social.lin },
+                { Social: <FaInstagram />, link: tmpArray[0].social.insta },
+                { Social: <FaWhatsapp />, link: `https://api.whatsapp.com/send?phone=${props.phone}&text=Hi I want to get ID!` }
+            ];
+            setSocialLinks(SocialShare)
+        } catch (err) {
+            console.log(err);
+
+        }
+    }
+
     useEffect(() => {
         getLogo();
-    }, [])
+        getSocialLinks();
+    }, [props.phone])
 
     return (
         <div style={{ backgroundImage: 'linear-gradient(#022c43,#18b0c8)' }} className="footer-style-2 ptb--30">
@@ -97,7 +117,7 @@ const FooterTwo = (props) => {
                     <div className="col-lg-4 col-md-6 col-sm-6 col-12">
                         <div className="inner text-center">
                             <ul className="social-share rn-lg-size d-flex justify-content-center liststyle">
-                                {SocialShare.map((val, i) => (
+                                {socialLinks.map((val, i) => (
                                     <li key={i}><a href={`${val.link}`} target='_blank'>{val.Social}</a></li>
                                 ))}
                             </ul>

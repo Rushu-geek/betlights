@@ -139,9 +139,9 @@ const AvailableSites = () => {
             {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
 
             <div className='row'>
-                <div onClick={() => { sideBarState == "open" ? setSideBarState("close") : setSideBarState("open") }} className={sideBarState == "open" ? 'col-xl-3 col-lg-3 col-md-3 col-sm-2 col-2' : 'col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2'}>
+                {/* <div onClick={() => { sideBarState == "open" ? setSideBarState("close") : setSideBarState("open") }} className={sideBarState == "open" ? 'col-xl-3 col-lg-3 col-md-3 col-sm-2 col-2' : 'col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2'}>
                     <SideBar />
-                </div>
+                </div> */}
 
                 <div className={sideBarState == "open" ? 'col-xl-9 col-lg-9 col-md-9 col-sm-10 col-10' : 'col-xl-11 col-lg-11 col-md-11 col-sm-10 col-10'}>
 

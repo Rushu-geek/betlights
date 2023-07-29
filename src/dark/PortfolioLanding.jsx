@@ -22,140 +22,6 @@ const image1 = "/assets/images/bg/8.png";
 const image2 = "/assets/images/bg/7.png";
 const image3 = "/assets/images/bg/pm.png";
 
-const SlideList = [
-    {
-        textPosition: 'text-right',
-        bgImage: 'bg_image--33',
-        category: '',
-        title: '',
-        description: '',
-        buttonText: '',
-        buttonLink: ''
-    },
-    {
-        textPosition: 'text-right',
-        bgImage: 'bg_image--36',
-        category: '',
-        title: '',
-        description: '',
-        buttonText: '',
-        buttonLink: ''
-    },
-    {
-        textPosition: 'text-left',
-        bgImage: 'bg_image--34',
-        category: '',
-        title: '',
-        description: '',
-        buttonText: '',
-        buttonLink: ''
-    },
-    {
-        textPosition: 'text-left',
-        bgImage: 'bg_image--35',
-        category: '',
-        title: '',
-        description: '',
-        buttonText: '',
-        buttonLink: ''
-    },
-    // {
-    //     textPosition: 'text-left',
-    //     bgImage: 'bg_image--37',
-    //     category: '',
-    //     title: '',
-    //     description: '',
-    //     buttonText: '',
-    //     buttonLink: ''
-    // },
-    // {
-    //     textPosition: 'text-left',
-    //     bgImage: 'bg_image--38',
-    //     category: '',
-    //     title: '',
-    //     description: '',
-    //     buttonText: '',
-    //     buttonLink: ''
-    // },
-    // {
-    //     textPosition: 'text-left',
-    //     bgImage: 'bg_image--39',
-    //     category: '',
-    //     title: '',
-    //     description: '',
-    //     buttonText: '',
-    //     buttonLink: ''
-    // },
-
-]
-
-const SlideListMob = [
-    {
-        textPosition: 'text-right',
-        bgImage: 'bg_image--37',
-        category: '',
-        title: '',
-        description: '',
-        buttonText: '',
-        buttonLink: ''
-    },
-    {
-        textPosition: 'text-right',
-        bgImage: 'bg_image--38',
-        category: '',
-        title: '',
-        description: '',
-        buttonText: '',
-        buttonLink: ''
-    },
-    {
-        textPosition: 'text-left',
-        bgImage: 'bg_image--39',
-        category: '',
-        title: '',
-        description: '',
-        buttonText: '',
-        buttonLink: ''
-    },
-    {
-        textPosition: 'text-left',
-        bgImage: 'bg_image--40',
-        category: '',
-        title: '',
-        description: '',
-        buttonText: '',
-        buttonLink: ''
-    },
-    // {
-    //     textPosition: 'text-left',
-    //     bgImage: 'bg_image--37',
-    //     category: '',
-    //     title: '',
-    //     description: '',
-    //     buttonText: '',
-    //     buttonLink: ''
-    // },
-    // {
-    //     textPosition: 'text-left',
-    //     bgImage: 'bg_image--38',
-    //     category: '',
-    //     title: '',
-    //     description: '',
-    //     buttonText: '',
-    //     buttonLink: ''
-    // },
-    // {
-    //     textPosition: 'text-left',
-    //     bgImage: 'bg_image--39',
-    //     category: '',
-    //     title: '',
-    //     description: '',
-    //     buttonText: '',
-    //     buttonLink: ''
-    // },
-
-]
-
 const ServiceListOne = [
     {
         icon: <FiCast />,
@@ -174,38 +40,6 @@ const ServiceListOne = [
     },
 ]
 
-const ServiceListTwo = [
-    {
-        icon: <FiCast />,
-        title: 'Min deposit 500',
-        description: 'I throw myself down among the tall grass by the stream as I lie close to the earth.'
-    },
-    {
-        icon: <FiLayers />,
-        title: 'Withdrawal in 15 min',
-        description: 'I throw myself down among the tall grass by the stream as I lie close to the earth.'
-    },
-    {
-        icon: <FiUsers />,
-        title: '24/7 365 days support',
-        description: 'I throw myself down among the tall grass by the stream as I lie close to the earth.'
-    },
-]
-
-const starndardService = [
-    {
-        image: '01',
-        title: 'Free ID for 555',
-        description: 'I throw myself down among the tall grass by the stream',
-    },
-    {
-        image: '02',
-        title: 'Fastest withdraw in betting history',
-        description: 'I throw myself down among the tall grass by the stream',
-    }
-
-]
-
 const PostList = BlogContent.slice(0, 3);
 
 const PortfolioLanding = () => {
@@ -218,7 +52,8 @@ const PortfolioLanding = () => {
     let [siteOffers, setOffers] = useState()
     const [mobileCarouselImages, setMobileCarouselImages] = useState();
     const [webCarouselImages, setWebCarouselImages] = useState();
-
+    const [instaLink, setInstaLink] = useState("");
+    const [teleGramLink, setTelegramLink] = useState("");
 
     const getVideo = async () => {
         const videoRef = collection(db, 'video');
@@ -239,7 +74,6 @@ const PortfolioLanding = () => {
         }
     }
 
-
     const getOffers = async () => {
         const offersRef = collection(db, 'offers');
         const dbService = new UserDataService();
@@ -257,15 +91,11 @@ const PortfolioLanding = () => {
         setOffers(tmpArray);
     }
 
-
     let details = navigator.userAgent;
-
     let regexp = /android|iphone|kindle|ipad/i;
-
     /* Using test() method to search regexp in details
     it returns boolean value*/
     let isMobileDevice = regexp.test(details);
-
 
     const getCarouselImages = async () => {
         const carouselRef = collection(db, 'carousel');
@@ -285,10 +115,33 @@ const PortfolioLanding = () => {
 
     }
 
+    const getSocialLinks = async () => {
+        try {
+            // alert("in footer" + props.phone)
+            const socialLinks = collection(db, 'social');
+            const dbService = new UserDataService();
+            const data = await dbService.getAllData(socialLinks);
+            let tmpArray = [];
+            data.forEach((doc) => {
+                let obj = doc.data();
+                obj.id = doc.id;
+                tmpArray.push(obj);
+            });
+
+            console.log("socialArray >>> ", tmpArray);
+
+            setInstaLink(tmpArray[0].social.insta);
+            setTelegramLink(tmpArray[0].social.tele);
+            
+        } catch (err) {
+            console.log(err);
+
+        }
+    }
+
     useEffect(async () => {
         const service = new UserDataService();
         const data = await service.getAllPaymentDetails();
-
         data.forEach((doc) => {
             console.log(doc.data());
             setPhone1(doc.data().phone1);
@@ -297,11 +150,10 @@ const PortfolioLanding = () => {
         getCarouselImages();
         getVideo();
         getOffers();
+        getSocialLinks();
     }, []);
 
-
     useEffect(() => {
-
         const webImages = carouselImages?.filter((image) => {
             return image.carouselType == 'web';
         })
@@ -323,8 +175,8 @@ const PortfolioLanding = () => {
             <HeaderThree phone={phone1} homeLink="/" logo="symbol-dark" color="color-black" />
             {/* Start Slider Area   */}
 
-            <div id='home' className="slider-wrapper">
-                {!isMobileDevice && <div style={{ top: 80 }} className="slider-activation">
+            <div id='home' className="slider-wrapper bg_color--5">
+                {!isMobileDevice && <div style={{ top: -60 }} className="slider-activation">
                     <Slider {...slideSlick}>
                         {webCarouselImages?.map((value, index) => (
                             // <div style={{ opacity: 1 }} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image ${value.bgImage}`} key={index}>
@@ -349,7 +201,7 @@ const PortfolioLanding = () => {
                     </Slider>
                 </div>}
 
-                {isMobileDevice && <div style={{ top: 80 }} className="slider-activation">
+                {isMobileDevice && <div style={{ top: -60 }} className="slider-activation">
                     <Slider {...slideSlick}>
                         {mobileCarouselImages?.map((value, index) => (
                             // <div style={{ opacity: 1 }} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image ${value.bgImage}`} key={index}>
@@ -787,26 +639,30 @@ const PortfolioLanding = () => {
                 {!isMobileDevice && <div className="col-12">
 
                     <div className="text-center">
-                        <button className='changeColor btn mr-5' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
+                        <button onClick={() => {
+                            window.open(`${teleGramLink}`, "_blank");
+                        }} className='changeColor btn mr-5' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
 
                         <button onClick={() => {
-                            window.open(`https://www.instagram.com/betlights365?igshid=MzRlODBiNWFlZA==`, "_blank");
+                            window.open(`${instaLink}`, "_blank");
                         }} className='changeColor btn' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON INSTAGRAM <FaInstagram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
                     </div>
 
                 </div>}
 
                 {isMobileDevice && <div className="col-12 text-center">
-                    <button className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
+                    <button onClick={() => {
+                            window.open(`${teleGramLink}`, "_blank");
+                        }} className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
                 </div>}
 
                 {isMobileDevice && <div className="col-12 text-center mt-3">
                     <button onClick={() => {
-                        window.open(`https://www.instagram.com/betlights365?igshid=MzRlODBiNWFlZA==`, "_blank");
+                        window.open(`${instaLink}`, "_blank");
                     }} className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON INSTAGRAM <FaInstagram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
                 </div>}
             </div>
-
+                    {/* {alert(phone2)} */}
             <FooterTwo phone={phone2} />
             {/* Start Back To Top */}
             <div className="backto-top">

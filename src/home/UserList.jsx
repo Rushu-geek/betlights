@@ -124,7 +124,7 @@ function UserList() {
 
                     <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
 
-                <div style={{ marginLeft: 60, marginRight: 60, marginTop: 100, borderColor: 'black' }}>
+                <div style={{ marginLeft: 60, marginRight: 60, marginTop: 0, borderColor: 'black' }}>
 
                     <h1>User List</h1>
 

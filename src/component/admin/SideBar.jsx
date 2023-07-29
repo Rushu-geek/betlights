@@ -15,6 +15,8 @@ import db from "../../firebase";
 import UserList from '../../home/UserList';
 import PaymentReq from '../../home/PaymentReq';
 import AdminPassword from '../../home/AdminPassword';
+import ManageTheme from './ManageTheme';
+import AvailableSites from './AvailableSites';
 
 const SideBar = () => {
     const [logo, setLogo] = useState("");
@@ -54,10 +56,10 @@ const SideBar = () => {
     return (
         <div id="app" style={({ height: "100%" }, { display: "flex" })}>
 
-            <Sidebar backgroundColor="#18B0C8" style={{ height: "100vh" }}>
+            <Sidebar collapsed={false} backgroundColor='linear-gradient(#ffffff,#18b0c8)' style={{ height: "100vh", backgroundImage:'linear-gradient(#18b0c8,#022c43)' }}>
                 <Menu>
                     <MenuItem
-                        icon={<MenuOutlinedIcon />}
+                        // icon={< />}
                         onClick={() => {
                             collapseSidebar();
                         }}
@@ -76,10 +78,13 @@ const SideBar = () => {
                     <MenuItem onClick={() => { setactiveTab("request") }} icon={<ContactsOutlinedIcon />}>
                         APPROVE REQUEST
                     </MenuItem>
+                    <MenuItem onClick={() => { setactiveTab("sites") }} icon={<ContactsOutlinedIcon />}>
+                        AVAILABLE SITES
+                    </MenuItem>
                     <MenuItem onClick={() => { setactiveTab("password") }} icon={<ReceiptOutlinedIcon />}>
                         CHANGE PASSWORD
                     </MenuItem>
-                    <MenuItem icon={<HelpOutlineOutlinedIcon />}>
+                    <MenuItem onClick={() => { setactiveTab("manageTheme") }} icon={<HelpOutlineOutlinedIcon />}>
                         MANAGE THEME
                     </MenuItem>
                     {/* <MenuItem icon={<CalendarTodayOutlinedIcon />}>Calendar</MenuItem> */}
@@ -96,8 +101,14 @@ const SideBar = () => {
                 {activeTab == "request" && (
                     <PaymentReq />
                 )}
+                {activeTab == "sites" && (
+                    <AvailableSites />
+                )}
                 {activeTab == "password" && (
                     <AdminPassword />
+                )}
+                {activeTab == "manageTheme" && (
+                    <ManageTheme />
                 )}
             </main>
 

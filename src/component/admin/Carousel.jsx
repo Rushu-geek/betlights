@@ -131,8 +131,7 @@ const Carousel = () => {
         <div className=''>
             <Helmet pageTitle="Admin" />
 
-            <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" />
-            <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
+            <div className="designer-portfolio-area bg_color--1">
                 <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
                     <h2 className='text-center'>Carousel Images</h2>
