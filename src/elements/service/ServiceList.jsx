@@ -45,12 +45,40 @@ class ServiceThree extends Component {
 
         this.state = {
             sites: [],
+            color1: "#18b0c8",
+            color2: "#022c43"
         }
 
     }
 
 
     async componentDidMount() {
+
+        const getColors = async () => {
+            try {
+                // alert("in footer" + props.phone)
+                const colorsRef = collection(db, 'colors');
+                const dbService = new UserDataService();
+                const data = await dbService.getAllData(colorsRef);
+                let tmpArray = [];
+                data.forEach((doc) => {
+                    let obj = doc.data();
+                    obj.id = doc.id;
+                    tmpArray.push(obj);
+                });
+
+                console.log("Colors >>> ", tmpArray);
+
+                this.setState({ color1: tmpArray[0]?.color1 })
+                this.setState({ color2: tmpArray[0]?.color2 })
+
+            } catch (err) {
+                console.log(err);
+
+            }
+        }
+        getColors();
+
 
         const getSites = async () => {
             const sitesRef = collection(db, 'sites');
@@ -93,7 +121,7 @@ class ServiceThree extends Component {
                     {this.state.sites?.map((val, i) => (
                         <div className="col-lg-4 col-md-4 col-sm-12 col-12" key={i}>
                             <a style={{ cursor: 'pointer' }}>
-                                <div style={{ width: 300, height: 200, boxShadow: '0 0 9px #1C74CB', backgroundImage: 'linear-gradient(#022c43,#18b0c8)' }} className="service service__style--2 text-center">
+                                <div style={{ width: 300, height: 200, boxShadow: '0 0 9px #1C74CB', backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})` }} className="service service__style--2 text-center">
                                     <div className="">
                                         <img style={{ height: i == 0 ? 60 : i == 3 ? 90 : i == 5 ? 80 : '' }} src={val?.url} />
                                     </div>

@@ -13,6 +13,8 @@ const FooterTwo = (props) => {
     const [showRest, setShowRest] = useState(false);
     const [logoImage, setLogoImage] = useState("");
     const [socialLinks, setSocialLinks] = useState([]);
+    const [color1, setColor1] = useState("#18b0c8");
+    const [color2, setColor2] = useState("#022c43");
 
     const handleClose = () => {
         setShow18(false);
@@ -67,13 +69,38 @@ const FooterTwo = (props) => {
         }
     }
 
+    const getColors = async () => {
+        try {
+            // alert("in footer" + props.phone)
+            const colorsRef = collection(db, 'colors');
+            const dbService = new UserDataService();
+            const data = await dbService.getAllData(colorsRef);
+            let tmpArray = [];
+            data.forEach((doc) => {
+                let obj = doc.data();
+                obj.id = doc.id;
+                tmpArray.push(obj);
+            });
+
+            console.log("Colors >>> ", tmpArray);
+
+            setColor1(tmpArray[0]?.color1);
+            setColor2(tmpArray[0]?.color2);
+
+        } catch (err) {
+            console.log(err);
+
+        }
+    }
+
     useEffect(() => {
         getLogo();
         getSocialLinks();
+        getColors();
     }, [props.phone])
 
     return (
-        <div style={{ backgroundImage: 'linear-gradient(#022c43,#18b0c8)' }} className="footer-style-2 ptb--30">
+        <div style={{ backgroundImage: `linear-gradient(${color2},${color1})` }} className="footer-style-2 ptb--30">
 
             <Modal centered show={show18} onHide={() => handleClose()}>
                 <ModalHeader className="text-center" closeLabel="close" style={{ backgroundColor: 'white', borderBottomColor: 'black', alignContent: 'center', justifyContent: 'center' }} closeButton>

@@ -54,6 +54,8 @@ const PortfolioLanding = () => {
     const [webCarouselImages, setWebCarouselImages] = useState();
     const [instaLink, setInstaLink] = useState("");
     const [teleGramLink, setTelegramLink] = useState("");
+    const [color1, setColor1] = useState("#18b0c8");
+    const [color2, setColor2] = useState("#022c43");
 
     const getVideo = async () => {
         const videoRef = collection(db, 'video');
@@ -130,14 +132,40 @@ const PortfolioLanding = () => {
 
             console.log("socialArray >>> ", tmpArray);
 
-            setInstaLink(tmpArray[0].social.insta);
-            setTelegramLink(tmpArray[0].social.tele);
-            
+            setInstaLink(tmpArray[0]?.social?.insta);
+            setTelegramLink(tmpArray[0]?.social?.tele);
+
         } catch (err) {
             console.log(err);
 
         }
     }
+
+
+    const getColors = async () => {
+        try {
+            // alert("in footer" + props.phone)
+            const colorsRef = collection(db, 'colors');
+            const dbService = new UserDataService();
+            const data = await dbService.getAllData(colorsRef);
+            let tmpArray = [];
+            data.forEach((doc) => {
+                let obj = doc.data();
+                obj.id = doc.id;
+                tmpArray.push(obj);
+            });
+
+            console.log("Colors >>> ", tmpArray);
+
+            setColor1(tmpArray[0]?.color1);
+            setColor2(tmpArray[0]?.color2);
+
+        } catch (err) {
+            console.log(err);
+
+        }
+    }
+
 
     useEffect(async () => {
         const service = new UserDataService();
@@ -151,6 +179,7 @@ const PortfolioLanding = () => {
         getVideo();
         getOffers();
         getSocialLinks();
+        getColors();
     }, []);
 
     // useEffect(() => {
@@ -188,12 +217,12 @@ const PortfolioLanding = () => {
                             //     </div>
                             // </div>
                             <>
-                                {value?.carouselType == 'web' && <>
+                                <>
                                     <div key={`${index}`} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image`}>
                                         <img style={{ opacity: 1 }}
                                             src={value?.url} alt={`${index}`} />
                                     </div>
-                                </>}
+                                </>
                             </>
                         ))}
                     </Slider>
@@ -266,9 +295,9 @@ const PortfolioLanding = () => {
                 </div>
                 <div className="row" style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <button style={{
-                        backgroundColor: '#18b0c8',
+                        backgroundColor: {color1},
                         height: 90,
-                        boxShadow: '0 0 20px 1px #18b0c8'
+                        boxShadow: `0 0 20px 1px ${color1}`
                     }} type="button" className="rj-btn mt-3 changeColor" onClick={() => {
                         window.open(`https://api.whatsapp.com/send?phone=${phone1}&text=Hi I want to get ID!`, "_blank");
                     }} >
@@ -321,8 +350,8 @@ const PortfolioLanding = () => {
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="section-title text-center service-style--3 mb--30 mb_sm--0">
-                                    <h2 style={{ color: '#18b0c8' }} className="title">AVAILABLE SITES ON OUR PLATFORM</h2>
-                                    <p style={{ color: '#18b0c8' }}>Play on the leading websites and get unlimited rewards.</p>
+                                    <h2 style={{ color: {color1} }} className="title">AVAILABLE SITES ON OUR PLATFORM</h2>
+                                    <p style={{ color: {color1} }}>Play on the leading websites and get unlimited rewards.</p>
                                 </div>
                             </div>
                         </div>
@@ -352,7 +381,7 @@ const PortfolioLanding = () => {
                     <div className="row align-items-end">
                         <div className="col-lg-12">
                             <div className="section-title service-style--3 text-center">
-                                <h2 style={{ color: '#18b0c8' }} className="title">OUR TESTIMONIALS</h2>
+                                <h2 style={{ color: {color1} }} className="title">OUR TESTIMONIALS</h2>
                             </div>
                         </div>
                     </div>
@@ -431,14 +460,14 @@ const PortfolioLanding = () => {
                                 <br />
                                 <div className="section-title service-style--2 mb--30 mb_sm--0">
                                     <button style={{
-                                        backgroundColor: '#18b0c8'
+                                        backgroundColor: {color1}
                                     }} type="button" className="rj-btn" onClick={() => {
                                         window.open(`https://api.whatsapp.com/send?phone=${phone1}&text=Hi I want to get ID!`, "_blank");
                                     }} >
                                         <span style={{ fontWeight: 'bold', textShadow: '0 0 1px #000, 0 0 1px #000', fontSize: 21 }}>+916378934211</span>
                                     </button>
                                     <button style={{
-                                        backgroundColor: '#18b0c8'
+                                        backgroundColor: {color1}
                                     }} type="button" className={`rj-btn ${!isMobileDevice ? 'ml-3' : 'mt-3'}`} onClick={() => {
                                         window.open(`https://api.whatsapp.com/send?phone=${phone2}&text=Hi I want to get ID!`, "_blank");
                                     }}>
@@ -449,7 +478,7 @@ const PortfolioLanding = () => {
                                     <br />
                                     <h3 style={{
                                         color: '#fff',
-                                        textShadow: '#18b0c8 0 0 20px',
+                                        textShadow: `${color1} 0 0 20px`,
                                         lineHeight: 1.5
                                     }}>We Deal Directly On WhatsApp</h3>
                                 </div>
@@ -542,7 +571,7 @@ const PortfolioLanding = () => {
                                     duration: 2,
                                     opacity: 0.8,
                                     size: 10,
-                                    color: "#18b0c8",
+                                    color: {color1},
                                 },
                                 push: {
                                     quantity: 4,
@@ -550,16 +579,16 @@ const PortfolioLanding = () => {
                                 repulse: {
                                     distance: 100,
                                     duration: 0.4,
-                                    color: "#18b0c8",
+                                    color: {color1},
                                 },
                             },
                         },
                         particles: {
                             color: {
-                                value: "#18b0c8",
+                                value: {color1},
                             },
                             links: {
-                                color: "#18b0c8",
+                                color: {color1},
                                 distance: 150,
                                 enable: true,
                                 opacity: 0.6,
@@ -605,7 +634,7 @@ const PortfolioLanding = () => {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="section-title text-center service-style--3 mb_sm--0">
-                                        <h2 style={{ color: '#18b0c8' }} className="title">How It Works</h2>
+                                        <h2 style={{ color: {color1} }} className="title">How It Works</h2>
                                     </div>
                                 </div>
                             </div>
@@ -639,7 +668,7 @@ const PortfolioLanding = () => {
                     <div className="text-center">
                         <button onClick={() => {
                             window.open(`${teleGramLink}`, "_blank");
-                        }} className='changeColor btn mr-5' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
+                        }} className='changeColor btn mr-5' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25,backgroundColor:{color1} }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
 
                         <button onClick={() => {
                             window.open(`${instaLink}`, "_blank");
@@ -650,8 +679,8 @@ const PortfolioLanding = () => {
 
                 {isMobileDevice && <div className="col-12 text-center">
                     <button onClick={() => {
-                            window.open(`${teleGramLink}`, "_blank");
-                        }} className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
+                        window.open(`${teleGramLink}`, "_blank");
+                    }} className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
                 </div>}
 
                 {isMobileDevice && <div className="col-12 text-center mt-3">
@@ -660,7 +689,7 @@ const PortfolioLanding = () => {
                     }} className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON INSTAGRAM <FaInstagram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
                 </div>}
             </div>
-                    {/* {alert(phone2)} */}
+            {/* {alert(phone2)} */}
             <FooterTwo phone={phone2} />
             {/* Start Back To Top */}
             <div className="backto-top">

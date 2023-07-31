@@ -48,7 +48,6 @@ const SocialMedia = () => {
 
         } catch (err) {
             console.log(err);
-
         }
     }
 

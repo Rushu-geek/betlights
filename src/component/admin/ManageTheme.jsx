@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import Carousel from './Carousel';
 import SocialMedia from './SocialMedia';
 import Counts from './Counts';
+import ThemeColor from './ThemeColor';
 
 const ManageTheme = () => {
 
@@ -15,11 +16,16 @@ const ManageTheme = () => {
         <div style={{ overflow: "scroll", overflowX: "hidden", height: "100vh" }}>
             <Helmet pageTitle="Admin" />
             <h1>Manage Theme</h1>
-            <Carousel />
+
+            <div className='row mt-2'>
+                <div className='ml-4 m-2 col-lg-6 col-xl-6 col-md-6 col-sm-6 col-12'>
+                    <Carousel />
+                </div>
+            </div>
 
             <hr />
             <div className='row mt-2'>
-                <div className='ml-4 m-2 col-lg-5 col-xl-5 col-md-5 col-sm-5 col-22'>
+                <div className='ml-4 m-2 col-lg-5 col-xl-5 col-md-5 col-sm-5 col-12'>
                     <SocialMedia />
                 </div>
 
@@ -30,7 +36,7 @@ const ManageTheme = () => {
 
             <div className='row mt-2'>
 
-
+                <ThemeColor />
             </div>
 
         </div>

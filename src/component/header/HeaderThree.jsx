@@ -48,12 +48,40 @@ class HeaderThree extends Component {
             otp: "",
             phone1: "",
             phone2: "",
-            logoImage: ""
+            logoImage: "",
+            color1: "#18b0c8",
+            color2: "#022c43"
         }
     }
 
 
     async componentDidMount() {
+
+
+        const getColors = async () => {
+            try {
+                // alert("in footer" + props.phone)
+                const colorsRef = collection(db, 'colors');
+                const dbService = new UserDataService();
+                const data = await dbService.getAllData(colorsRef);
+                let tmpArray = [];
+                data.forEach((doc) => {
+                    let obj = doc.data();
+                    obj.id = doc.id;
+                    tmpArray.push(obj);
+                });
+
+                console.log("Colors >>> ", tmpArray);
+
+                this.setState({ color1: tmpArray[0]?.color1 })
+                this.setState({ color2: tmpArray[0]?.color2 })
+
+            } catch (err) {
+                console.log(err);
+
+            }
+        }
+        getColors();
 
 
         const getlogo = async () => {
@@ -222,7 +250,7 @@ class HeaderThree extends Component {
                     }))
                     this.setState({ isLoggedIn: true, showLogin: false });
                     if (dbUser.email == "admin@betlights.com") {
-                        window.location.replace('/admin/users');
+                        window.location.replace('/admin/');
                         localStorage.setItem('isAdmin', 'true');
                         return
                     }
@@ -340,14 +368,14 @@ class HeaderThree extends Component {
         const inputStyle = {
             color: '#000000',
             borderRadius: 0,
-            borderColor: '#18b0c8',
+            borderColor: this.state.color1,
             backgroundColor: 'white',
         }
 
         const inputStyleNo = {
             color: '#000000',
             borderRadius: 0,
-            borderColor: '#18b0c8',
+            borderColor: this.state.color1,
             backgroundColor: 'white',
         }
 
@@ -366,8 +394,8 @@ class HeaderThree extends Component {
         return (
             <>
                 {!isMobileDevice && <header style={{
-                    backgroundColor: window.location.pathname != '/' ? '#18b0c8' : '#18b0c8',
-                    top: -50, height: 140, backgroundImage: 'linear-gradient(#022c43,#18b0c8)',
+                    backgroundColor: window.location.pathname != '/' ? this.state.color1 : this.state.color1,
+                    top: -50, height: 140, backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
                     borderBottom: '3px solid #42c2e2',
                     position: 'fixed',
                 }} className={`header-area header-style-two header--fixed ${color}`}>
@@ -392,11 +420,11 @@ class HeaderThree extends Component {
 
                                 {isMobileDevice && <div className="header-right" style={{ backgroundColor: 'ActiveCaption' }}>
                                     <div className="humberger-menu d-lg-none">
-                                        <span onClick={this.menuTrigger} className="menutrigger text-white"><FiMenu color="#18b0c8" /></span>
+                                        <span onClick={this.menuTrigger} className="menutrigger text-white"><FiMenu color={this.state.color1} /></span>
                                     </div>
                                     {/* End Humberger Menu  */}
                                     <div className="close-menu d-block d-lg-none">
-                                        <span onClick={this.CLoseMenuTrigger} className="closeTrigger"><FiX color="#18b0c8" /></span>
+                                        <span onClick={this.CLoseMenuTrigger} className="closeTrigger"><FiX color={this.state.color1} /></span>
                                     </div>
                                 </div>}
 
@@ -467,14 +495,14 @@ class HeaderThree extends Component {
                                 </nav>
 
                                 <Modal centered show={this.state.show} onHide={() => this.handleClose()}>
-                                    <ModalHeader className="text-center" closeLabel="close" style={{ alignContent: 'center', justifyContent: 'center', backgroundImage: 'linear-gradient(#022c43,#18b0c8)', borderBottomColor: '#18b0c8' }} closeButton>
+                                    <ModalHeader className="text-center" closeLabel="close" style={{ alignContent: 'center', justifyContent: 'center', backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`, borderBottomColor: this.state.color1 }} closeButton>
                                         {/* {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">ghg</Modal.Title>} */}
                                         <div className="text-center" style={{ paddingLeft: !isMobileDevice ? 120 : 70, backgroundColor: '' }}>
                                             <img style={{ justifyContent: "center", alignItems: "center" }} height={130} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
                                         </div>
                                     </ModalHeader>
                                     <form onSubmit={(e) => this.onRegister(e)}>
-                                        <Modal.Body style={{ backgroundColor: '#18b0c8', borderTopColor: '#18b0c8' }}>
+                                        <Modal.Body style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1 }}>
                                             {this.state.message.display && <Alert variant={this.state.message.type}>
                                                 {this.state.message.msg}
                                             </Alert>}
@@ -541,7 +569,7 @@ class HeaderThree extends Component {
                                             <div id="recaptcha-container" />
                                             <p className="mt-3" style={{ color: 'black' }}>Already Have an Account? <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ show: false, showLogin: true })}>Login</a></p>
                                         </Modal.Body>
-                                        <Modal.Footer style={{ backgroundColor: '#18b0c8', borderTopColor: '#18b0c8', alignContent: 'center', justifyContent: 'center' }}>
+                                        <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
                                             <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
                                                 <span>Register</span>
                                             </button>
@@ -551,8 +579,8 @@ class HeaderThree extends Component {
 
                                 <Modal centered show={this.state.showLogin} onHide={() => this.handleCloseLogin()}>
                                     <Modal.Header style={{
-                                        backgroundImage: 'linear-gradient(#022c43,#18b0c8)',
-                                        borderBottomColor: '#18b0c8',
+                                        backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
+                                        borderBottomColor: this.state.color1,
                                         alignContent: 'center',
                                         justifyContent: 'center'
                                     }} closeButton>
@@ -562,7 +590,7 @@ class HeaderThree extends Component {
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.onLogin(e)}>
-                                        <Modal.Body style={{ backgroundColor: '#18b0c8', top: 0 }}>
+                                        <Modal.Body style={{ backgroundColor: this.state.color1, top: 0 }}>
                                             {this.state.message.display && <Alert variant={this.state.message.type}>
                                                 {this.state.message.msg}
                                             </Alert>}
@@ -592,7 +620,7 @@ class HeaderThree extends Component {
                                             <p className="mt-3" style={{ color: 'black' }}>Don't Have an Account? <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ show: true, showLogin: false })}>Register</a> </p>
                                             <p className="mt-3" style={{ color: 'white' }}> <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ showFwp: true, showLogin: false })}>Forgot Password</a> </p>
                                         </Modal.Body>
-                                        <Modal.Footer style={{ backgroundColor: '#18b0c8', borderTopColor: '#18b0c8', alignContent: 'center', justifyContent: 'center' }}>
+                                        <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
                                             <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
                                                 <span>Login</span>
                                             </button>
@@ -602,8 +630,8 @@ class HeaderThree extends Component {
 
                                 <Modal centered show={this.state.showOtp} onHide={() => this.handleCloseOtp()}>
                                     <Modal.Header style={{
-                                        backgroundImage: 'linear-gradient(#022c43,#18b0c8)',
-                                        borderBottomColor: '#18b0c8',
+                                        backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
+                                        borderBottomColor: this.state.color1,
                                         alignContent: 'center',
                                         justifyContent: 'center'
                                     }} closeButton>
@@ -613,7 +641,7 @@ class HeaderThree extends Component {
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.verifyOtp(e)}>
-                                        <Modal.Body style={{ backgroundColor: '#18b0c8', top: 0 }}>
+                                        <Modal.Body style={{ backgroundColor: this.state.color1, top: 0 }}>
                                             {this.state.message.display && <Alert variant={this.state.message.type}>
                                                 {this.state.message.msg}
                                             </Alert>}
@@ -629,7 +657,7 @@ class HeaderThree extends Component {
                                                 />
                                             </div>
                                         </Modal.Body>
-                                        <Modal.Footer style={{ backgroundColor: '#18b0c8', borderTopColor: '#18b0c8', alignContent: 'center', justifyContent: 'center' }}>
+                                        <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
                                             <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
                                                 <span>Verify Otp</span>
                                             </button>
@@ -639,8 +667,8 @@ class HeaderThree extends Component {
 
                                 <Modal centered show={this.state.showFwp} onHide={() => this.handleCloseFwp()}>
                                     <Modal.Header style={{
-                                        backgroundImage: 'linear-gradient(#022c43,#18b0c8)',
-                                        borderBottomColor: '#18b0c8',
+                                        backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
+                                        borderBottomColor: this.state.color1,
                                         alignContent: 'center',
                                         justifyContent: 'center'
                                     }} closeButton>
@@ -650,7 +678,7 @@ class HeaderThree extends Component {
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.sendFwpEmail(e)}>
-                                        <Modal.Body style={{ backgroundColor: '#18b0c8', top: 0 }}>
+                                        <Modal.Body style={{ backgroundColor: this.state.color1, top: 0 }}>
                                             {this.state.message.display && <Alert variant={this.state.message.type}>
                                                 {this.state.message.msg}
                                             </Alert>}
@@ -666,7 +694,7 @@ class HeaderThree extends Component {
                                                 />
                                             </div>
                                         </Modal.Body>
-                                        <Modal.Footer style={{ backgroundColor: '#18b0c8', borderTopColor: '#18b0c8', alignContent: 'center', justifyContent: 'center' }}>
+                                        <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
                                             <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
                                                 <span>Send password to registered email</span>
                                             </button>
@@ -731,8 +759,8 @@ class HeaderThree extends Component {
 
 
                 {isMobileDevice && <header style={{
-                    backgroundColor: window.location.pathname != '/' ? '#18b0c8' : '#18b0c8',
-                    top: -10, height: 100, backgroundImage: 'linear-gradient(#022c43,#18b0c8)',
+                    backgroundColor: window.location.pathname != '/' ? this.state.color1 : this.state.color1,
+                    top: -10, height: 100, backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
                     borderBottom: '4px solid #42c2e2',
                     position: 'fixed',
                 }} className={`header-area header-style-two header--fixed ${color}`}>
@@ -764,11 +792,11 @@ class HeaderThree extends Component {
 
 
                                     <div className="humberger-menu d-lg-none">
-                                        <span onClick={this.menuTrigger} className="menutrigger text-white"><FiMenu color="#18b0c8" /></span>
+                                        <span onClick={this.menuTrigger} className="menutrigger text-white"><FiMenu color={this.state.color1} /></span>
                                     </div>
                                     {/* End Humberger Menu  */}
                                     <div className="close-menu d-block d-lg-none">
-                                        <span onClick={this.CLoseMenuTrigger} className="closeTrigger"><FiX color="#18b0c8" /></span>
+                                        <span onClick={this.CLoseMenuTrigger} className="closeTrigger"><FiX color={this.state.color1} /></span>
                                     </div>
                                 </div>}
 
@@ -806,14 +834,14 @@ class HeaderThree extends Component {
                                 </nav>
 
                                 <Modal centered show={this.state.show} onHide={() => this.handleClose()}>
-                                    <ModalHeader className="text-center" closeLabel="close" style={{ alignContent: 'center', justifyContent: 'center', backgroundImage: 'linear-gradient(#022c43,#18b0c8)', borderBottomColor: '#18b0c8' }} closeButton>
+                                    <ModalHeader className="text-center" closeLabel="close" style={{ alignContent: 'center', justifyContent: 'center', backgroundImage:     `linear-gradient(${this.state.color2},${this.state.color1})`, borderBottomColor: this.state.color1 }} closeButton>
                                         {/* {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">ghg</Modal.Title>} */}
                                         <div className="text-center" style={{ paddingLeft: !isMobileDevice ? 120 : 70, backgroundColor: '' }}>
                                             <img style={{ justifyContent: "center", alignItems: "center" }} height={130} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
                                         </div>
                                     </ModalHeader>
                                     <form onSubmit={(e) => this.onRegister(e)}>
-                                        <Modal.Body style={{ backgroundColor: '#18b0c8', borderTopColor: '#18b0c8' }}>
+                                        <Modal.Body style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1 }}>
                                             {this.state.message.display && <Alert variant={this.state.message.type}>
                                                 {this.state.message.msg}
                                             </Alert>}
@@ -880,7 +908,7 @@ class HeaderThree extends Component {
                                             <div id="recaptcha-container" />
                                             <p className="mt-3" style={{ color: 'black' }}>Already Have an Account? <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ show: false, showLogin: true })}>Login</a></p>
                                         </Modal.Body>
-                                        <Modal.Footer style={{ backgroundColor: '#18b0c8', borderTopColor: '#18b0c8', alignContent: 'center', justifyContent: 'center' }}>
+                                        <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
                                             <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
                                                 <span>Register</span>
                                             </button>
@@ -890,8 +918,8 @@ class HeaderThree extends Component {
 
                                 <Modal centered show={this.state.showLogin} onHide={() => this.handleCloseLogin()}>
                                     <Modal.Header style={{
-                                        backgroundImage: 'linear-gradient(#022c43,#18b0c8)',
-                                        borderBottomColor: '#18b0c8',
+                                        backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
+                                        borderBottomColor: this.state.color1,
                                         alignContent: 'center',
                                         justifyContent: 'center'
                                     }} closeButton>
@@ -901,7 +929,7 @@ class HeaderThree extends Component {
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.onLogin(e)}>
-                                        <Modal.Body style={{ backgroundColor: '#18b0c8', top: 0 }}>
+                                        <Modal.Body style={{ backgroundColor: this.state.color1, top: 0 }}>
                                             {this.state.message.display && <Alert variant={this.state.message.type}>
                                                 {this.state.message.msg}
                                             </Alert>}
@@ -931,7 +959,7 @@ class HeaderThree extends Component {
                                             <p className="mt-3" style={{ color: 'black' }}>Don't Have an Account? <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ show: true, showLogin: false })}>Register</a> </p>
                                             <p className="mt-3" style={{ color: 'white' }}> <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ showFwp: true, showLogin: false })}>Forgot Password</a> </p>
                                         </Modal.Body>
-                                        <Modal.Footer style={{ backgroundColor: '#18b0c8', borderTopColor: '#18b0c8', alignContent: 'center', justifyContent: 'center' }}>
+                                        <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
                                             <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
                                                 <span>Login</span>
                                             </button>
@@ -941,8 +969,8 @@ class HeaderThree extends Component {
 
                                 <Modal centered show={this.state.showOtp} onHide={() => this.handleCloseOtp()}>
                                     <Modal.Header style={{
-                                        backgroundImage: 'linear-gradient(#022c43,#18b0c8)',
-                                        borderBottomColor: '#18b0c8',
+                                        backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
+                                        borderBottomColor: this.state.color1,
                                         alignContent: 'center',
                                         justifyContent: 'center'
                                     }} closeButton>
@@ -952,7 +980,7 @@ class HeaderThree extends Component {
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.verifyOtp(e)}>
-                                        <Modal.Body style={{ backgroundColor: '#18b0c8', top: 0 }}>
+                                        <Modal.Body style={{ backgroundColor: this.state.color1, top: 0 }}>
                                             {this.state.message.display && <Alert variant={this.state.message.type}>
                                                 {this.state.message.msg}
                                             </Alert>}
@@ -968,7 +996,7 @@ class HeaderThree extends Component {
                                                 />
                                             </div>
                                         </Modal.Body>
-                                        <Modal.Footer style={{ backgroundColor: '#18b0c8', borderTopColor: '#18b0c8', alignContent: 'center', justifyContent: 'center' }}>
+                                        <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
                                             <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
                                                 <span>Verify Otp</span>
                                             </button>
@@ -978,8 +1006,8 @@ class HeaderThree extends Component {
 
                                 <Modal centered show={this.state.showFwp} onHide={() => this.handleCloseFwp()}>
                                     <Modal.Header style={{
-                                        backgroundImage: 'linear-gradient(#022c43,#18b0c8)',
-                                        borderBottomColor: '#18b0c8',
+                                        backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
+                                        borderBottomColor: this.state.color1,
                                         alignContent: 'center',
                                         justifyContent: 'center'
                                     }} closeButton>
@@ -989,7 +1017,7 @@ class HeaderThree extends Component {
                                         </div>
                                     </Modal.Header>
                                     <form onSubmit={(e) => this.sendFwpEmail(e)}>
-                                        <Modal.Body style={{ backgroundColor: '#18b0c8', top: 0 }}>
+                                        <Modal.Body style={{ backgroundColor: this.state.color1, top: 0 }}>
                                             {this.state.message.display && <Alert variant={this.state.message.type}>
                                                 {this.state.message.msg}
                                             </Alert>}
@@ -1005,7 +1033,7 @@ class HeaderThree extends Component {
                                                 />
                                             </div>
                                         </Modal.Body>
-                                        <Modal.Footer style={{ backgroundColor: '#18b0c8', borderTopColor: '#18b0c8', alignContent: 'center', justifyContent: 'center' }}>
+                                        <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
                                             <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
                                                 <span>Send password to registered email</span>
                                             </button>

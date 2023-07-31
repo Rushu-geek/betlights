@@ -147,14 +147,13 @@ const Carousel = () => {
                         {
                             carouselImages?.map((imageObj) => {
                                 return (
-                                    <div className='col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12'>
+                                    <div className='m-1 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
                                         <div>
-                                            <img height="100px" width="200px" src={imageObj.url} alt="carousel image" />
+                                            <img height="70px" width="300px" src={imageObj.url} alt="carousel image" />
                                         </div>
                                         <div>
 
                                             <button onClick={() => { deleteCarouselImage(imageObj?.id) }}>Delete</button>
-                                            <p>{imageObj?.carouselType}</p>
                                         </div>
                                     </div>
                                 )

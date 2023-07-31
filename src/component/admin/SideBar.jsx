@@ -23,7 +23,8 @@ const SideBar = () => {
     const [logo, setLogo] = useState("");
     const { collapseSidebar } = useProSidebar();
     const [activeTab, setactiveTab] = useState("admin");
-
+    const [color1, setColor1] = useState("#18b0c8");
+    const [color2, setColor2] = useState("#022c43");
 
     const getLogo = async () => {
         try {
@@ -48,16 +49,48 @@ const SideBar = () => {
         }
     }
 
+    const getColors = async () => {
+        try {
+            // alert("in footer" + props.phone)
+            const colorsRef = collection(db, 'colors');
+            const dbService = new UserDataService();
+            const data = await dbService.getAllData(colorsRef);
+            let tmpArray = [];
+            data.forEach((doc) => {
+                let obj = doc.data();
+                obj.id = doc.id;
+                tmpArray.push(obj);
+            });
+
+            console.log("Colors >>> ", tmpArray);
+
+            setColor1(tmpArray[0]?.color1);
+            setColor2(tmpArray[0]?.color2);
+
+        } catch (err) {
+            console.log(err);
+
+        }
+    }
+
+    const onLogout = () => {
+        localStorage.clear();
+        // this.setState({ isLoggedIn: false })
+        window.location.replace('/')
+    }
+
     useEffect(() => {
         getLogo();
+        getColors();
     }, [])
 
+    let sidebarColor = `linear-gradient(#ffffff,${color1})`
 
 
     return (
         <div id="app" style={({ height: "100%" }, { display: "flex" })}>
 
-            <Sidebar collapsed={false} backgroundColor='linear-gradient(#ffffff,#18b0c8)' style={{ height: "100vh", backgroundImage: 'linear-gradient(#18b0c8,#022c43)' }}>
+            <Sidebar collapsed={false} backgroundColor={sidebarColor} style={{ height: "100vh", backgroundImage: `linear-gradient(${color1},${color2})` }}>
                 <Menu>
                     <MenuItem
                         // icon={< />}
@@ -91,7 +124,11 @@ const SideBar = () => {
                     <MenuItem onClick={() => { setactiveTab("manageTheme") }} icon={<HelpOutlineOutlinedIcon />}>
                         MANAGE THEME
                     </MenuItem>
-                    {/* <MenuItem icon={<CalendarTodayOutlinedIcon />}>Calendar</MenuItem> */}
+                    <MenuItem>
+                        <button onClick={() => onLogout()} type="button" className="rn-btn mt-3">
+                            <span>LOGOUT</span>
+                        </button>
+                    </MenuItem>
                 </Menu>
             </Sidebar>
             <main>
