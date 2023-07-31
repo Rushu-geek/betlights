@@ -65,7 +65,7 @@ const Carousel = () => {
 
                 img.onload = () => {
 
-                    if ((img?.height == 1080 && img?.width == 1920) || (img?.width == 390 && img?.height == 300)) {
+                    if ((img?.height == 1080 && img?.width == 1920)) {
 
                         if (image?.size * 0.001 <= 200) {
                             const imageRef = ref(storage, `/carouselImages/${image.name}`);
@@ -73,7 +73,7 @@ const Carousel = () => {
                                 getDownloadURL(snapshot.ref).then(async (url) => {
                                     console.log(url);
                                     const dbService = new UserDataService()
-                                    let image = { url, carouselType }
+                                    let image = { url }
                                     const pushImage = await dbService.addData(image, carouselRef);
                                     console.log(pushImage);
                                     showCarouselImages();
@@ -137,8 +137,8 @@ const Carousel = () => {
                     <h6 className='text-center'>Carousel Images</h6>
 
                     <input accept='image/*' type='file' multiple onChange={(e) => setImageUpload(e.target.files)} />
-                    Mobile: <input style={{}} type="radio" name="carouselType" id="" value="mobile" onChange={(e) => { setCarouselType(e.target.value) }} />
-                    Web: <input type="radio" name="carouselType" id="" value="web" onChange={(e) => { setCarouselType(e.target.value) }} />
+                    {/* Mobile: <input style={{}} type="radio" name="carouselType" id="" value="mobile" onChange={(e) => { setCarouselType(e.target.value) }} />
+                    Web: <input type="radio" name="carouselType" id="" value="web" onChange={(e) => { setCarouselType(e.target.value) }} /> */}
 
                     <button className='mt-3' onClick={addCarouselImage}>Add Image</button>
 

@@ -151,7 +151,7 @@ Slider Default Style
         }
 
         &.slider-box-content {
-            height: 810px;
+            height: auto;
 
             @media #{$lg-layout} {
                 height: auto;
@@ -180,7 +180,7 @@ Slider Default Style
 
         @media #{$sm-layout} {
             padding-top: 150px;
-            padding-bottom: 150px;
+            padding-bottom: 0px;
             min-height: auto;
         }
 

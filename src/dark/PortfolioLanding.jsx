@@ -50,7 +50,7 @@ const PortfolioLanding = () => {
     const [carouselImages, setCarouselImages] = useState();
     let [siteVideo, setVideo] = useState()
     let [siteOffers, setOffers] = useState()
-    const [mobileCarouselImages, setMobileCarouselImages] = useState();
+    // const [mobileCarouselImages, setMobileCarouselImages] = useState();
     const [webCarouselImages, setWebCarouselImages] = useState();
     const [instaLink, setInstaLink] = useState("");
     const [teleGramLink, setTelegramLink] = useState("");
@@ -153,18 +153,16 @@ const PortfolioLanding = () => {
         getSocialLinks();
     }, []);
 
-    useEffect(() => {
-        const webImages = carouselImages?.filter((image) => {
-            return image.carouselType == 'web';
-        })
-        const mobileImages = carouselImages?.filter((image) => {
-            return image.carouselType == 'mobile';
-        })
-        console.log(webImages)
-        setWebCarouselImages(webImages)
-        console.log(mobileImages)
-        setMobileCarouselImages(mobileImages)
-    }, [carouselImages])
+    // useEffect(() => {
+    //     const webImages = carouselImages;
+    //     // const mobileImages = carouselImages?.filter((image) => {
+    //     //     return image.carouselType == 'mobile';
+    //     // })
+    //     console.log(webImages)
+    //     setWebCarouselImages(carouselImages)
+    //     // console.log(mobileImages)
+    //     // setMobileCarouselImages(mobileImages)
+    // }, [carouselImages])
 
 
 
@@ -176,9 +174,9 @@ const PortfolioLanding = () => {
             {/* Start Slider Area   */}
 
             <div id='home' className="slider-wrapper bg_color--5">
-                {!isMobileDevice && <div style={{ top: -60 }} className="slider-activation">
+                {<div style={{ top: -60 }} className="slider-activation">
                     <Slider {...slideSlick}>
-                        {webCarouselImages?.map((value, index) => (
+                        {carouselImages?.map((value, index) => (
                             // <div style={{ opacity: 1 }} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image ${value.bgImage}`} key={index}>
                             //     <div className="container">
                             //         <div className="row">
@@ -201,7 +199,7 @@ const PortfolioLanding = () => {
                     </Slider>
                 </div>}
 
-                {isMobileDevice && <div style={{ top: -60 }} className="slider-activation">
+                {/* {isMobileDevice && <div style={{ top: -60 }} className="slider-activation">
                     <Slider {...slideSlick}>
                         {mobileCarouselImages?.map((value, index) => (
                             // <div style={{ opacity: 1 }} className={`slide slide-style-2 slider-box-content without-overlay align-items-center bg_image ${value.bgImage}`} key={index}>
@@ -226,11 +224,11 @@ const PortfolioLanding = () => {
 
                         ))}
                     </Slider>
-                </div>}
+                </div>} */}
 
             </div>
 
-            <div className="rn-featured-service-area pt--140 bg_color--5">
+            <div className="rn-featured-service-area bg_color--5">
                 {/* <div className="container mt-5"> */}
                 <div className="row text-center p-5">
 
