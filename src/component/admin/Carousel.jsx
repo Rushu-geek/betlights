@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import HeaderThree from '../header/HeaderThree';
 import { Helmet } from 'react-helmet';
 import UserDataService from '../../services/userService';
@@ -6,6 +6,7 @@ import { collection } from 'firebase/firestore';
 import db from "../../firebase";
 import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useDropzone } from 'react-dropzone'
 
 
 const Carousel = () => {
@@ -13,6 +14,7 @@ const Carousel = () => {
     const [imageUpload, setImageUpload] = useState();
     const [carouselImages, setCarouselImages] = useState();
     const [carouselType, setCarouselType] = useState("web");
+
 
     let details = navigator.userAgent;
 
@@ -100,6 +102,7 @@ const Carousel = () => {
 
             })
             showCarouselImages();
+            setImageUpload(undefined)
             // showImages();
 
         } catch (err) {
@@ -126,6 +129,17 @@ const Carousel = () => {
         showCarouselImages();
     }, []);
 
+    const onDrop = useCallback(acceptedFiles => {
+
+        setImageUpload(acceptedFiles)
+        console.log(acceptedFiles)
+
+        // Do something with the files
+    }, [])
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ accept: "image/*", onDrop })
+
+
 
     return (
         <div className=''>
@@ -136,7 +150,29 @@ const Carousel = () => {
 
                     <h4 className='text-center'>Banner Images</h4>
 
-                    <input accept='image/*' type='file' multiple onChange={(e) => setImageUpload(e.target.files)} />
+                    <div className='row p-4' style={{border:"1px solid black"}}>
+                        <div {...getRootProps()}>
+                            <input {...getInputProps()} />
+                            {
+                                isDragActive ?
+                                    <p>Drop the files here ...</p> :
+                                    <p>Drag & drop some Images here, or click to select Images</p>
+                            }
+                        </div>
+
+
+                        {imageUpload?.map((image) => {
+                            return (<>
+                                <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
+                                    <img height="70px" width="300px" src={URL.createObjectURL(image)} alt="image preview" />
+                                </div>
+                            </>)
+                        })}
+                    </div>
+
+
+                    {/* <input accept='image/*' type='file' multiple onChange={(e) => setImageUpload(e.target.files)} /> */}
+
                     {/* Mobile: <input style={{}} type="radio" name="carouselType" id="" value="mobile" onChange={(e) => { setCarouselType(e.target.value) }} />
                     Web: <input type="radio" name="carouselType" id="" value="web" onChange={(e) => { setCarouselType(e.target.value) }} /> */}
 

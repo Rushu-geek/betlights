@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import HeaderThree from '../header/HeaderThree';
 import { Helmet } from 'react-helmet';
 import UserDataService from '../../services/userService';
@@ -8,6 +8,7 @@ import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import SideBar from './SideBar';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { useDropzone } from 'react-dropzone'
 
 const AvailableSites = () => {
 
@@ -100,6 +101,7 @@ const AvailableSites = () => {
                 // -------------
             })
             showSitesImages();
+            setSiteImageUpload(undefined)
 
         } catch (err) {
             console.log(err);
@@ -124,6 +126,15 @@ const AvailableSites = () => {
         showSitesImages();
     }, []);
 
+    const onDrop = useCallback(acceptedFiles => {
+
+        setSiteImageUpload(acceptedFiles)
+        console.log(acceptedFiles)
+
+        // Do something with the files
+    }, [])
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ accept: "image/*", onDrop })
 
 
 
@@ -147,7 +158,29 @@ const AvailableSites = () => {
 
                     <h2 className='text-center'>Available Sites</h2>
 
-                    <input accept='image/*' type='file' multiple onChange={(e) => setSiteImageUpload(e.target.files)} />
+                    <div className='p-4' style={{ border: "1px solid black" }}>
+                        <div {...getRootProps()}>
+                            <input {...getInputProps()} />
+                            {
+                                isDragActive ?
+                                    <p>Drop the files here ...</p> :
+                                    <p>Drag & drop some Images here, or click to select Images</p>
+                            }
+                        </div>
+
+                        <div className='row'>
+                            {siteImageUpload?.map((image) => {
+                                return (<>
+                                    <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
+                                        <img height="100px" width="300px" src={URL.createObjectURL(image)} alt="image preview" />
+                                    </div>
+                                </>)
+                            })}
+                        </div>
+                    </div>
+
+
+                    {/* <input accept='image/*' type='file' multiple onChange={(e) => setSiteImageUpload(e.target.files)} /> */}
 
                     <button className='mt-3' onClick={addSitesImage}>Add Sites</button>
 

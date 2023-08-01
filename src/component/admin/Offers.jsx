@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import HeaderThree from '../header/HeaderThree';
 import { Helmet } from 'react-helmet';
 import UserDataService from '../../services/userService';
@@ -6,6 +6,8 @@ import { collection } from 'firebase/firestore';
 import db from "../../firebase";
 import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useDropzone } from 'react-dropzone'
+
 
 const Offers = () => {
 
@@ -89,12 +91,9 @@ const Offers = () => {
                     console.log("img error");
                     console.error(err);
                 };
-
-
-                // --- 
-
             })
             showOfferImages();
+            setOfferImageUpload(undefined)
 
         } catch (err) {
             console.log(err);
@@ -118,17 +117,49 @@ const Offers = () => {
         showOfferImages();
     }, []);
 
+    const onDrop = useCallback(acceptedFiles => {
+
+        setOfferImageUpload(acceptedFiles)
+        console.log(acceptedFiles)
+
+        // Do something with the files
+    }, [])
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ accept: "image/*", onDrop })
+
     return (
 
         <div className=''>
             <Helmet pageTitle="Admin" />
 
-            <div style={{ }} className="designer-portfolio-area bg_color--1">
+            <div style={{}} className="designer-portfolio-area bg_color--1">
                 <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
                     <h2 className='text-center'>Offers</h2>
 
-                    <input accept='image/*' type='file' multiple onChange={(e) => setOfferImageUpload(e.target.files)} />
+
+                    <div className='p-4' style={{ border: "1px solid black" }}>
+                        <div {...getRootProps()}>
+                            <input {...getInputProps()} />
+                            {
+                                isDragActive ?
+                                    <p>Drop the files here ...</p> :
+                                    <p>Drag & drop some Images here, or click to select Images</p>
+                            }
+                        </div>
+
+                        <div className='row'>
+                            {offerImageUpload?.map((image) => {
+                                return (<>
+                                    <div className='col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12'>
+                                        <img height="100px" width="200px" src={URL.createObjectURL(image)} alt="image preview" />
+                                    </div>
+                                </>)
+                            })}
+                        </div>
+                    </div>
+
+                    {/* <input accept='image/*' type='file' multiple onChange={(e) => setOfferImageUpload(e.target.files)} /> */}
 
                     <button className='mt-3' onClick={addOfferImage}>Add Offers</button>
 

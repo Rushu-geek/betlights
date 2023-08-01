@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import HeaderThree from '../header/HeaderThree';
 import { Helmet } from 'react-helmet';
 import UserDataService from '../../services/userService';
@@ -6,6 +6,7 @@ import { collection } from 'firebase/firestore';
 import db from "../../firebase";
 import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useDropzone } from 'react-dropzone'
 
 const Video = () => {
 
@@ -49,40 +50,60 @@ const Video = () => {
         try {
 
 
-            if (!video || (video?.size * 0.000001) > 5) {
+            if (!video) {
                 return;
             }
 
-            console.log(video)
+            if ((video?.size * 0.000001) <= 5) {
 
-            const videoRef = collection(db, 'video');
+                const videoRef = collection(db, 'video');
 
-            const dbService = new UserDataService()
+                const dbService = new UserDataService()
 
-            if (currentVideoId) {
-                const delData = await dbService.deleteData(db, 'video', currentVideoId);
-                console.log(delData)
-            }
+                if (currentVideoId) {
+                    const delData = await dbService.deleteData(db, 'video', currentVideoId);
+                    console.log(delData)
+                }
 
-            // if (delData) {
-            const imgRef = ref(storage, `/video/${video.name}`);
-            uploadBytes(imgRef, video).then((snapshot) => {
-                getDownloadURL(snapshot.ref).then(async (url) => {
-                    console.log(url);
-                    let video = { url }
-                    const pushvideo = await dbService.addData(video, videoRef);
-                    console.log(pushvideo);
-                    showVideo()
+                // if (delData) {
+                const imgRef = ref(storage, `/video/${video.name}`);
+                uploadBytes(imgRef, video).then((snapshot) => {
+                    getDownloadURL(snapshot.ref).then(async (url) => {
+                        console.log(url);
+                        let video = { url }
+                        const pushvideo = await dbService.addData(video, videoRef);
+                        console.log(pushvideo);
+                        showVideo()
+                    })
                 })
-            })
-            showVideo()
-            // }
+                showVideo()
+                setNewVideo(undefined)
+                // }
+
+            }
+            else {
+                alert("Video size should not exceed 5mb.")
+            }
 
         } catch (err) {
             console.log(err);
 
         }
     }
+
+    const onDrop = useCallback(acceptedFiles => {
+
+        if (acceptedFiles?.length == 1) {
+            setNewVideo(acceptedFiles[0])
+            console.log(acceptedFiles)
+        }
+        else {
+            alert("You can only upload one video.")
+        }
+    }, [])
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ accept: "video/*", onDrop })
+
 
     useEffect(() => {
         showVideo()
@@ -98,22 +119,42 @@ const Video = () => {
 
                 <div className="wrapper">
 
-                <h4 className='text-center'>Manage Video</h4>
+                    <h4 className='text-center'>Manage Video</h4>
 
-                <input accept='video/*' className='mt-3 mb-5' type="file" onChange={(e) => setNewVideo(e.target.files[0])} name="" id="" />
+                    <div className='row p-4' style={{ border: "1px solid black" }}>
+                        <div {...getRootProps()}>
+                            <input {...getInputProps()} />
+                            {
+                                isDragActive ?
+                                    <p>Drop the files here ...</p> :
+                                    <p>Drag & drop Video here, or click to select Video</p>
+                            }
+                        </div>
+
+                        {newvideo && (
+
+                            <div className='text-center col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+
+                                <video height="70px" width="300px" src={URL.createObjectURL(newvideo)}></video>
+                            </div>
+                        )}
+
+                    </div>
+
+                    {/* <input accept='video/*' className='mt-3 mb-5' type="file" onChange={(e) => setNewVideo(e.target.files[0])} name="" id="" /> */}
 
 
                     {uploadedVideoImage?.length <= 1 && (
-                        <div>
+                        <div className='row'>
                             {uploadedVideoImage?.map((video, index) => {
                                 return (
                                     <>
-                                        <video autoPlay loop muted style={{ width: '50%', height: '50%' }}>
+                                        <video className='m-2' autoPlay loop muted style={{ width: '50%', height: '50%' }}>
                                             {!isMobileDevice && <source id='mp4' src={video.url} type='video/mp4' />}
 
                                             {isMobileDevice && <source id='mp4' src={video.url} type='video/mp4' />}
                                         </video>
-                                        <button className='mt-3' onClick={() => { uploadVideo(newvideo, video.id) }}>Change Video</button>
+                                        <button className='btn mt-3' onClick={() => { uploadVideo(newvideo, video.id) }}>Change Video</button>
                                     </>
                                 )
                             })}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import HeaderThree from '../header/HeaderThree';
 import { Helmet } from 'react-helmet';
 import UserDataService from '../../services/userService';
@@ -6,6 +6,7 @@ import { collection } from 'firebase/firestore';
 import db from "../../firebase";
 import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useDropzone } from 'react-dropzone'
 
 const Logo = () => {
 
@@ -71,6 +72,7 @@ const Logo = () => {
                 })
             })
             showLogo();
+            setLogoImage(undefined)
             // }
 
         } catch (err) {
@@ -84,6 +86,20 @@ const Logo = () => {
     }, [])
 
 
+    const onDrop = useCallback(acceptedFiles => {
+
+        if (acceptedFiles?.length == 1) {
+
+            setLogoImage(acceptedFiles[0])
+            console.log(acceptedFiles)
+        } else {
+            alert("You can only upload one logo image.")
+        }
+    }, [])
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ accept: "image/*", onDrop })
+
+
     return (
         <div>
             <Helmet pageTitle="Admin" />
@@ -93,8 +109,32 @@ const Logo = () => {
                 <div className="wrapper">
 
                     <div>
-                    <h4 className='text-center'>Manage Logo</h4>
-                    <input accept='image/*' className='mt-3' type="file" onChange={(e) => setLogoImage(e.target.files[0])} name="" id="" />
+                        <h4 className='text-center'>Manage Logo</h4>
+
+                        <div className='row p-4' style={{ border: "1px solid black" }}>
+                            <div {...getRootProps()}>
+                                <input {...getInputProps()} />
+                                {
+                                    isDragActive ?
+                                        <p>Drop the files here ...</p> :
+                                        <p>Drag & drop some Logo image here, or click to select Image</p>
+                                }
+                            </div>
+
+
+
+                            {logoImage && (<>
+
+
+                                <div className='text-center col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                                    <img height="100px" width="100px" src={URL.createObjectURL(logoImage)} alt="Logo image preview" />
+                                </div>
+
+                            </>)}
+                        </div>
+
+
+                        {/* <input accept='image/*' className='mt-3' type="file" onChange={(e) => setLogoImage(e.target.files[0])} name="" id="" /> */}
 
                         {uploadedLogoImage?.length <= 1 && (
                             <div>
@@ -103,7 +143,7 @@ const Logo = () => {
                                         <>
                                             <img height="200px" width="200px" src={logo.url} alt="Logo Image" />
 
-                                            <button className='mt-3' onClick={() => { uploadLogo(logoImage, logo.id) }}>Change Logo</button>
+                                            <button className='btn mt-3' onClick={() => { uploadLogo(logoImage, logo.id) }}>Change Logo</button>
                                         </>
                                     )
                                 })}
