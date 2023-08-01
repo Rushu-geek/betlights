@@ -145,7 +145,7 @@ const FooterTwo = (props) => {
                         <div className="inner text-center">
                             <ul className="social-share rn-lg-size d-flex justify-content-center liststyle">
                                 {socialLinks.map((val, i) => (
-                                    <li key={i}><a href={`${val.link}`} target='_blank'>{val.Social}</a></li>
+                                    <li key={i}><a style={{color: '#ffffff', borderColor: '#ffffff'}} href={`${val.link}`} target='_blank'>{val.Social}</a></li>
                                 ))}
                             </ul>
                         </div>
@@ -161,7 +161,7 @@ const FooterTwo = (props) => {
                     <div className="col-lg-4 col-md-12 col-sm-12 col-12">
                         <div className="inner text-lg-right text-center mt_md--20 mt_sm--20">
                             <div className="text">
-                                <p>Copyright © 2022 Bet Lights. All Rights Reserved.</p>
+                                <p style={{color: '#fff'}}>Copyright © 2022 Bet Lights. All Rights Reserved.</p>
                             </div>
                         </div>
                     </div>

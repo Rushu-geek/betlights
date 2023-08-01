@@ -219,13 +219,13 @@
             font-weight: 400;
             margin-bottom: 23px;
             display: inline-flex;
-            color: $theme-color;
+            // color: $theme-color;
             @extend %transition;
             @media #{$md-layout} {
                 margin-bottom: 11px;
             }
             @media #{$large-mobile} {
-                color: #18b0c8;
+                // color: #18b0c8;
             }
            svg {
                 stroke-width: 1 !important;
@@ -247,12 +247,12 @@
                         margin-bottom: 8px;
                     }
                     @media #{$large-mobile} {
-                        color: #18b0c8;
+                        // color: #18b0c8;
                     }
                     a {
                         color: inherit;
                         @media #{$large-mobile} {
-                            color: #ffffff;
+                            // color: #ffffff;
                         }
                     }
                 }

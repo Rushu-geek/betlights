@@ -69,12 +69,12 @@ class CounterOne extends Component {
                 <div className="row">
                     {this.state.countsData?.map((value, index) => (
                         <div className="counterup_style--1 col-lg-4 col-md-4 col-sm-6 col-12" key={index}>
-                            <h5 className="counter">
+                            <h5 style={{color: this.props.color2}} className="counter">
                                 <VisibilitySensor onChange={this.onVisibilityChange} offset={{ top: 10 }} delayedCall>
                                     <CountUp end={this.state.didViewCountUp ? value?.count : 0} />
                                 </VisibilitySensor>
                             </h5>
-                            <p style={{ color: '#1C74CB' }} className="description">{value?.name}</p>
+                            <p style={{ color: this.props.color1 }} className="description">{value?.name}</p>
                         </div>
                     ))}
                 </div>

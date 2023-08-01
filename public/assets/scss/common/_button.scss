@@ -35,14 +35,14 @@ a {
     }
 }
 
-@keyframes color-change {
-    from {
-      background-color: #18b0c8;
-    }
-    to {
-      background-color: #022c43;    
-    }
-  }
+// @keyframes color-change {
+//     from {
+//       background-color: #18b0c8;
+//     }
+//     to {
+//       background-color: #022c43;    
+//     }
+//   }
 
 a,
 button {
@@ -66,7 +66,7 @@ button {
             border: 2px solid $theme-color;
             transform: translateY(-3px);
             color: #ffffff;
-            background: $theme-color;
+            // background: $theme-color;
         }
 
         &.btn-white {
@@ -120,7 +120,7 @@ button {
         color: #fff;
         border: none;
         cursor: pointer;
-        animation: color-change 1s infinite;
+        // animation: color-change 1s infinite;
     }
 }
 

@@ -14,7 +14,7 @@ class BrandTwo extends Component {
             <React.Fragment>
                 <div className="row">
                     <div className="col-3 col-md-3 mt-5" style={{ backgroundColor: '' }}>
-                        <h2 style={{ color: '#18b0c8' }} className="title">PAYMENT OPTIONS</h2>
+                        <h2 style={{ color: this.props.color1   }} className="title">PAYMENT OPTIONS</h2>
                     </div>
 
                     {!isMobileDevice && <div className="col-9 col-md-9" style={{ backgroundColor: '' }}>

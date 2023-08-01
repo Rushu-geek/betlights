@@ -193,6 +193,26 @@ const PortfolioLanding = () => {
     //     // setMobileCarouselImages(mobileImages)
     // }, [carouselImages])
 
+    useEffect(() => {
+
+        const styleElement = document.createElement('style');
+        let styleSheet = null;
+        document.head.appendChild(styleElement);
+        styleSheet = styleElement.sheet;
+
+        const keyframesStyle = `
+        @keyframes color-change {
+            from {
+              background-color: ${color1};
+            }
+            to {
+              background-color: ${color2};
+            }
+          }
+      `;
+        styleSheet.insertRule(keyframesStyle, styleSheet.cssRules.length);
+    }, [color1, color2])
+
 
 
     return (
@@ -298,7 +318,8 @@ const PortfolioLanding = () => {
                         backgroundColor: {color1},
                         height: 90,
                         boxShadow: `0 0 20px 1px ${color1}`,
-                        color: {color1}
+                        color: {color1},
+                        animation: `color-change 1s infinite`,
                     }} type="button" className="rj-btn mt-3 changeColor" onClick={() => {
                         window.open(`https://api.whatsapp.com/send?phone=${phone1}&text=Hi I want to get ID!`, "_blank");
                     }} >
@@ -351,8 +372,8 @@ const PortfolioLanding = () => {
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="section-title text-center service-style--3 mb--30 mb_sm--0">
-                                    <h2 style={{ color: {color1} }} className="title">AVAILABLE SITES ON OUR PLATFORM</h2>
-                                    <p style={{ color: {color1} }}>Play on the leading websites and get unlimited rewards.</p>
+                                    <h2 style={{ color: color1 }} className="title">AVAILABLE SITES ON OUR PLATFORM</h2>
+                                    <p style={{ color: color1 }}>Play on the leading websites and get unlimited rewards.</p>
                                 </div>
                             </div>
                         </div>
@@ -382,7 +403,7 @@ const PortfolioLanding = () => {
                     <div className="row align-items-end">
                         <div className="col-lg-12">
                             <div className="section-title service-style--3 text-center">
-                                <h2 style={{ color: {color1} }} className="title">OUR TESTIMONIALS</h2>
+                                <h2 style={{ color: color1 }} className="title">OUR TESTIMONIALS</h2>
                             </div>
                         </div>
                     </div>
@@ -425,7 +446,7 @@ const PortfolioLanding = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
-                            <BrandOne branstyle="branstyle--2" />
+                            <BrandOne color1={color1} color2={color2} branstyle="branstyle--2" />
                         </div>
                     </div>
                 </div>
@@ -461,14 +482,14 @@ const PortfolioLanding = () => {
                                 <br />
                                 <div className="section-title service-style--2 mb--30 mb_sm--0">
                                     <button style={{
-                                        backgroundColor: {color1}
+                                        backgroundColor: color1
                                     }} type="button" className="rj-btn" onClick={() => {
                                         window.open(`https://api.whatsapp.com/send?phone=${phone1}&text=Hi I want to get ID!`, "_blank");
                                     }} >
                                         <span style={{ fontWeight: 'bold', textShadow: '0 0 1px #000, 0 0 1px #000', fontSize: 21 }}>+916378934211</span>
                                     </button>
                                     <button style={{
-                                        backgroundColor: {color1}
+                                        backgroundColor: color1
                                     }} type="button" className={`rj-btn ${!isMobileDevice ? 'ml-3' : 'mt-3'}`} onClick={() => {
                                         window.open(`https://api.whatsapp.com/send?phone=${phone2}&text=Hi I want to get ID!`, "_blank");
                                     }}>
@@ -491,7 +512,7 @@ const PortfolioLanding = () => {
 
             <div className="counterup-area ptb--120 bg_color--5">
                 <div className="container">
-                    <CounterOne />
+                    <CounterOne color1={color1} color2={color2} />
                 </div>
             </div>
 
@@ -644,11 +665,11 @@ const PortfolioLanding = () => {
                                     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3" key={i}>
                                         <a className="text-center">
                                             <div className="service service__style--27">
-                                                <div className="icon">
+                                                <div style={{color: color1}} className="icon">
                                                     {val.icon}
                                                 </div>
                                                 <div className="content">
-                                                    <h3 className="title">{val.title}</h3>
+                                                    <h3 style={{color: color2}} className="title">{val.title}</h3>
                                                 </div>
                                             </div>
                                         </a>
@@ -669,11 +690,11 @@ const PortfolioLanding = () => {
                     <div className="text-center">
                         <button onClick={() => {
                             window.open(`${teleGramLink}`, "_blank");
-                        }} className='changeColor btn mr-5' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25,backgroundColor:{color1} }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
+                        }} className='changeColor btn mr-5' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25,backgroundColor:{color1}, animation: `color-change 1s infinite`, }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
 
                         <button onClick={() => {
                             window.open(`${instaLink}`, "_blank");
-                        }} className='changeColor btn' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON INSTAGRAM <FaInstagram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
+                        }} className='changeColor btn' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25,animation: `color-change 1s infinite`,backgroundColor:{color1}, }}>JOIN US ON INSTAGRAM <FaInstagram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
                     </div>
 
                 </div>}
@@ -681,13 +702,13 @@ const PortfolioLanding = () => {
                 {isMobileDevice && <div className="col-12 text-center">
                     <button onClick={() => {
                         window.open(`${teleGramLink}`, "_blank");
-                    }} className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
+                    }} className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25, animation: `color-change 1s infinite`, }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
                 </div>}
 
                 {isMobileDevice && <div className="col-12 text-center mt-3">
                     <button onClick={() => {
                         window.open(`${instaLink}`, "_blank");
-                    }} className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25 }}>JOIN US ON INSTAGRAM <FaInstagram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
+                    }} className='changeColor btn' id="myButton" style={{ height: 90, width: isMobileDevice ? 300 : 600, fontWeight: 'bold', fontSize: 25, animation: `color-change 1s infinite`, }}>JOIN US ON INSTAGRAM <FaInstagram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
                 </div>}
             </div>
             {/* {alert(phone2)} */}
