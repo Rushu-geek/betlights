@@ -134,7 +134,7 @@ const Carousel = () => {
             <div className="designer-portfolio-area bg_color--1">
                 <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
-                    <h6 className='text-center'>Carousel Images</h6>
+                    <h4 className='text-center'>Banner Images</h4>
 
                     <input accept='image/*' type='file' multiple onChange={(e) => setImageUpload(e.target.files)} />
                     {/* Mobile: <input style={{}} type="radio" name="carouselType" id="" value="mobile" onChange={(e) => { setCarouselType(e.target.value) }} />
@@ -153,7 +153,7 @@ const Carousel = () => {
                                         </div>
                                         <div>
 
-                                            <button onClick={() => { deleteCarouselImage(imageObj?.id) }}>Delete</button>
+                                            <button className='btn-outline-primary' onClick={() => { deleteCarouselImage(imageObj?.id) }}>Delete</button>
                                         </div>
                                     </div>
                                 )

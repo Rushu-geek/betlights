@@ -396,7 +396,7 @@ class HeaderThree extends Component {
                 {!isMobileDevice && <header style={{
                     backgroundColor: window.location.pathname != '/' ? this.state.color1 : this.state.color1,
                     top: -50, height: 140, backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
-                    borderBottom: '3px solid #42c2e2',
+                    // borderBottom: '3px solid #42c2e2',
                     position: 'fixed',
                 }} className={`header-area header-style-two header--fixed ${color}`}>
 

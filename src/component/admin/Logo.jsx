@@ -88,15 +88,16 @@ const Logo = () => {
         <div>
             <Helmet pageTitle="Admin" />
 
-            <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" />
-            <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
-                <div className="wrapper plr--70 plr_sm--30 plr_md--30">
+            {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
+            <div className="designer-portfolio-area bg_color--1">
+                <div className="wrapper">
 
                     <div>
+                    <h4 className='text-center'>Manage Logo</h4>
+                    <input accept='image/*' className='mt-3' type="file" onChange={(e) => setLogoImage(e.target.files[0])} name="" id="" />
 
                         {uploadedLogoImage?.length <= 1 && (
                             <div>
-
                                 {uploadedLogoImage?.map((logo, index) => {
                                     return (
                                         <>
@@ -112,8 +113,6 @@ const Logo = () => {
                                     <button className='mt-3' onClick={() => { uploadLogo(logoImage) }}>Change Logo</button>
 
                                 )}
-
-                                <input accept='image/*' className='mt-3' type="file" onChange={(e) => setLogoImage(e.target.files[0])} name="" id="" />
                             </div>
                         )}
                     </div>

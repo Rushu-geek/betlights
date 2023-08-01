@@ -125,9 +125,9 @@ const SideBar = () => {
                         MANAGE THEME
                     </MenuItem>
                     <MenuItem>
-                        <button onClick={() => onLogout()} type="button" className="rn-btn mt-3">
-                            <span>LOGOUT</span>
-                        </button>
+                        {/* <button onClick={() => onLogout()} type="button" className="rn-btn mt-3"> */}
+                            <span onClick={() => onLogout()} >LOGOUT</span>
+                        {/* </button> */}
                     </MenuItem>
                 </Menu>
             </Sidebar>

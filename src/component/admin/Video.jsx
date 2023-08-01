@@ -92,16 +92,19 @@ const Video = () => {
         <div>
             <Helmet pageTitle="Admin" />
 
-            <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" />
+            {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
 
-            <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
+            <div className="designer-portfolio-area bg_color--1">
 
-                <div className="wrapper plr--70 plr_sm--30 plr_md--30">
+                <div className="wrapper">
+
+                <h4 className='text-center'>Manage Video</h4>
+
+                <input accept='video/*' className='mt-3 mb-5' type="file" onChange={(e) => setNewVideo(e.target.files[0])} name="" id="" />
 
 
                     {uploadedVideoImage?.length <= 1 && (
                         <div>
-
                             {uploadedVideoImage?.map((video, index) => {
                                 return (
                                     <>
@@ -119,7 +122,6 @@ const Video = () => {
                                 <button className='mt-3' onClick={() => { uploadVideo(newvideo) }}>Change Video</button>
 
                             )}
-                            <input accept='video/*' className='mt-3' type="file" onChange={(e) => setNewVideo(e.target.files[0])} name="" id="" />
                         </div>
                     )}
                 </div>

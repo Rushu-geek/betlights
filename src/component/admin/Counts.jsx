@@ -122,7 +122,7 @@ const Counts = () => {
             <div style={{}} className="designer-portfolio-area bg_color--1">
                 <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
-                    <h6 className='text-center'>Manage Data</h6>
+                    <h4 className='text-center'>Manage Counter</h4>
 
                     <div className='p-3 m-2'>
                         <div style={{ width: "200%" }} className='row'>

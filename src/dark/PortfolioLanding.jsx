@@ -297,7 +297,8 @@ const PortfolioLanding = () => {
                     <button style={{
                         backgroundColor: {color1},
                         height: 90,
-                        boxShadow: `0 0 20px 1px ${color1}`
+                        boxShadow: `0 0 20px 1px ${color1}`,
+                        color: {color1}
                     }} type="button" className="rj-btn mt-3 changeColor" onClick={() => {
                         window.open(`https://api.whatsapp.com/send?phone=${phone1}&text=Hi I want to get ID!`, "_blank");
                     }} >
@@ -571,7 +572,7 @@ const PortfolioLanding = () => {
                                     duration: 2,
                                     opacity: 0.8,
                                     size: 10,
-                                    color: {color1},
+                                    color: color1,
                                 },
                                 push: {
                                     quantity: 4,
@@ -579,16 +580,16 @@ const PortfolioLanding = () => {
                                 repulse: {
                                     distance: 100,
                                     duration: 0.4,
-                                    color: {color1},
+                                    color: color1,
                                 },
                             },
                         },
                         particles: {
                             color: {
-                                value: {color1},
+                                value: color1,
                             },
                             links: {
-                                color: {color1},
+                                color: color1,
                                 distance: 150,
                                 enable: true,
                                 opacity: 0.6,
@@ -634,7 +635,7 @@ const PortfolioLanding = () => {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="section-title text-center service-style--3 mb_sm--0">
-                                        <h2 style={{ color: {color1} }} className="title">How It Works</h2>
+                                        <h2 style={{ color: color1 }} className="title">How It Works</h2>
                                     </div>
                                 </div>
                             </div>

@@ -80,13 +80,13 @@ const ThemeColor = () => {
             <Helmet pageTitle="Admin" />
 
             <div className="designer-portfolio-area bg_color--1">
-                <div className="wrapper plr--70 plr_sm--30 plr_md--30">
+                <div className="wrapper">
 
                     <div className='row'>
                         <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12'>
-                            <h6 className='text-center'>Theme Color 1</h6>
+                            <h4 className='text-center'>Theme Color 1</h4>
 
-                            <div className='p-3 m-2'>
+                            <div className='p-1 m-1'>
                                 <ChromePicker
                                     color={selectColor1}
                                     onChangeComplete={(color) => { setSelectColor1(color.hex) }}
@@ -96,9 +96,9 @@ const ThemeColor = () => {
                         </div>
 
                         <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12'>
-                            <h6 className='text-center'>Theme Color 2</h6>
+                            <h4 className='text-center'>Theme Color 2</h4>
 
-                            <div className='p-3 m-2'>
+                            <div className='p-1 m-1'>
                                 <ChromePicker
                                     color={selectColor2}
                                     onChangeComplete={(color) => { setSelectColor2(color.hex) }}
@@ -109,7 +109,7 @@ const ThemeColor = () => {
 
                     </div>
 
-                    <button onClick={updateColor}>Update</button>
+                    <button className='btn-outline-primary' onClick={updateColor}>Update</button>
 
 
                 </div>
