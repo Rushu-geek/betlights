@@ -54,25 +54,51 @@ const Logo = () => {
 
             const dbService = new UserDataService()
 
+            const img = new Image();
+            img.src = URL.createObjectURL(image);
 
-            if (currentLogoId) {
-                const delData = await dbService.deleteData(db, 'logo', currentLogoId);
-                console.log(delData)
-            }
+            img.onload = async () => {
+
+                console.log(img?.height, img?.width);
+
+                if ((img?.height == 60 && img?.width == 274)) {
+
+                    if (image?.size * 0.001 <= 10) {
+
+                        if (currentLogoId) {
+                            const delData = await dbService.deleteData(db, 'logo', currentLogoId);
+                            console.log(delData)
+                        }
+
+                        const imgRef = ref(storage, `/logoImage/${image.name}`);
+                        uploadBytes(imgRef, image).then((snapshot) => {
+                            getDownloadURL(snapshot.ref).then(async (url) => {
+                                console.log(url);
+                                let image = { url }
+                                const pushImage = await dbService.addData(image, logoRef);
+                                console.log(pushImage);
+                                showLogo()
+                            })
+                        })
+                        showLogo();
+                        setLogoImage(undefined)
+
+                    } else {
+                        alert("Image size should not exceed 10 kb.")
+                    }
+
+                } else {
+                    alert("Image width should be 274 pixels and height should be 60 pixels.");
+                }
+            };
+
+            img.onerror = (err) => {
+                console.log("img error");
+                console.error(err);
+            };
 
             // if (delData) {
-            const imgRef = ref(storage, `/logoImage/${image.name}`);
-            uploadBytes(imgRef, image).then((snapshot) => {
-                getDownloadURL(snapshot.ref).then(async (url) => {
-                    console.log(url);
-                    let image = { url }
-                    const pushImage = await dbService.addData(image, logoRef);
-                    console.log(pushImage);
-                    showLogo()
-                })
-            })
-            showLogo();
-            setLogoImage(undefined)
+
             // }
 
         } catch (err) {

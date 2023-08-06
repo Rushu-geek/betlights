@@ -71,6 +71,7 @@ import Offers from './component/admin/Offers';
 import AvailableSites from './component/admin/AvailableSites';
 import Testimonials from './component/admin/Testimonials';
 import SideBar from './component/admin/SideBar';
+import AdminLogin from './component/admin/Login';
 
 class Root extends Component {
     render() {
@@ -87,6 +88,8 @@ class Root extends Component {
                             <Route exact path={`/paralax`} component={Paralax} />
                             {localStorage.getItem('currentUser') && <Route exact path={`/dashboard`} component={Dashboard} />}
                             {<Route exact path={`/admin`} component={SideBar} />}
+                            {<Route exact path={`/admin/login/MC4CAQAwBQYDK2VwBCIEIN8kTZl8xlCcJ9COZ5SUXUXR2QnZ8rCDUh`} component={AdminLogin} />}
+
                             {<Route exact path={`/admin/password`} component={AdminPassword} />}
 
                             {

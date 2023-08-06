@@ -398,7 +398,7 @@ const PortfolioLanding = () => {
                 </div>
             </div>
 
-            <div className="rn-blog-area pt--120 pb--80 bg_color--1">
+            {/* <div className="rn-blog-area pt--120 pb--80 bg_color--1">
                 <div className="container">
                     <div className="row align-items-end">
                         <div className="col-lg-12">
@@ -439,7 +439,7 @@ const PortfolioLanding = () => {
 
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Start Brand Area  */}
             <div className="rn-brand-area pb--60 bg_color--1">

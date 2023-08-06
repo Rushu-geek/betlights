@@ -23,6 +23,7 @@ function Admin() {
     const [paymentDetailId, setPaymentDetailId] = useState("");
     const [singleImage, setSingleImage] = useState("");
     const [sideBarState, setSideBarState] = useState("open");
+    const [role, setRole] = useState("");
 
     useEffect(async () => {
         console.log("get all payment requestss.");
@@ -35,6 +36,9 @@ function Admin() {
             array.push(obj);
             console.log("req >>> ", doc.data());
         });
+        let user = localStorage.getItem('currentUser');
+        let role = JSON.parse(user).role;
+        setRole(role);
         setPaymentReq(array);
         getCurrentPayments();
     }, []);
@@ -145,16 +149,17 @@ function Admin() {
             {/* <div className={sideBarState == "open" ? 'col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10' : 'col-xl-11 col-lg-11 col-md-11 col-sm-10 col-10'}> */}
 
 
-                <div id='payInfo' className="active" style={{ backgroundColor: 'black' }}>
-                    <Helmet pageTitle="Admin" />
-                    {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
-                    <div style={{  }} className="designer-portfolio-area bg_color--1">
-                        <div className="wrapper plr--70 plr_sm--30 plr_md--30">
-                            {/* <ServiceOne payment={paymentReq} /> */}
-                            <h2>Update Payment Details</h2>
+            <div id='payInfo' className="active" style={{ backgroundColor: 'black' }}>
+                <Helmet pageTitle="Admin" />
+                {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
+                <div style={{}} className="designer-portfolio-area bg_color--1">
+                    <div className="wrapper plr--70 plr_sm--30 plr_md--30">
+                        {/* <ServiceOne payment={paymentReq} /> */}
+                        <h2>Update Payment Details</h2>
 
-                            <div style={{ overflow: "scroll", overflowX: "hidden", height: "87vh" }} className="row">
-                                <div className={`${isMobileDevice ? 'col-12' : 'col-6'}`}>
+                        <div style={{ overflow: "scroll", overflowX: "hidden", height: "87vh" }} className="row">
+                            <div className={`${isMobileDevice ? 'col-12' : 'col-6'}`}>
+                                {role == "sadmin" && <div>
                                     <label>Bank Account Number</label>
                                     <input value={bankNo} onChange={(e) => setBankNo(e.target.value)} />
                                     <label>IFSC Code</label>
@@ -168,22 +173,22 @@ function Admin() {
 
                                     <label>QR code</label>
                                     <input type='file' name='png' onChange={handleImage} />
+                                </div>}
+                                <label>Phone No 1</label>
+                                <input value={phone1} onChange={(e) => setPhone1(e.target.value)} />
 
-                                    <label>Phone No 1</label>
-                                    <input value={phone1} onChange={(e) => setPhone1(e.target.value)} />
+                                <label>Phone No 2</label>
+                                <input value={phone2} onChange={(e) => setPhone2(e.target.value)} />
 
-                                    <label>Phone No 2</label>
-                                    <input value={phone2} onChange={(e) => setPhone2(e.target.value)} />
-
-                                    <Button className='mt-3' variant="outline-dark" onClick={() => updatePayment()} >
-                                        Save
-                                    </Button>
-                                </div>
+                                <Button className='mt-3' variant="outline-dark" onClick={() => updatePayment()} >
+                                    Save
+                                </Button>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
+            </div>
             {/* </div> */}
         </div>
     )

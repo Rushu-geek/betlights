@@ -67,7 +67,7 @@ const Carousel = () => {
 
                 img.onload = () => {
 
-                    if ((img?.height == 1080 && img?.width == 1920)) {
+                    if ((img?.height == 640 && img?.width == 1920)) {
 
                         if (image?.size * 0.001 <= 200) {
                             const imageRef = ref(storage, `/carouselImages/${image.name}`);
@@ -87,9 +87,8 @@ const Carousel = () => {
                             alert("Image size should not exceed 200 kb.")
                         }
 
-
                     } else {
-                        alert("Image width should be 1920 pixels and height should be 1080 pixels.");
+                        alert("Image width should be 1920 pixels and height should be 640 pixels.");
                     }
                 };
 

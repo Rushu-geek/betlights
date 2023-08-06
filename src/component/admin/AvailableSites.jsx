@@ -190,10 +190,10 @@ const AvailableSites = () => {
                             siteImages?.map((imageObj) => {
                                 return (
                                     <div className='col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12'>
-                                        <div>
+                                        <div style={{height: 140}}>
                                             <img src={imageObj.url} alt="offer image" />
                                         </div>
-                                        <div>
+                                        <div className='text-center'>
 
                                             <button onClick={() => { deleteSiteImage(imageObj?.id) }}>Delete</button>
                                         </div>
