@@ -121,7 +121,7 @@ class ServiceThree extends Component {
                     {this.state.sites?.map((val, i) => (
                         <div className="col-lg-4 col-md-4 col-sm-12 col-12" key={i}>
                             <a style={{ cursor: 'pointer' }}>
-                                <div style={{ width: 300, height: 200, boxShadow: '0 0 9px #1C74CB', backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})` }} className="service service__style--2 text-center">
+                                <div style={{ width: 300, height: 200, boxShadow: `0 0 9px ${this.props.color1}`, backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})` }} className="service service__style--2 text-center">
                                     <div className="">
                                         <img style={{ height: i == 0 ? 60 : i == 3 ? 90 : i == 5 ? 80 : '' }} src={val?.url} />
                                     </div>

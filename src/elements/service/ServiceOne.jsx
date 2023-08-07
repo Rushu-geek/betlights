@@ -70,7 +70,7 @@ class ServiceOne extends Component {
             <React.Fragment>
                 <div className="row">
                     {this.props.payment.map((val, i) => (
-                        <div className="col-lg-4 col-md-6 col-sm-6 col-12" key={i}>
+                        <div className="col-lg-12 col-md-6 col-sm-6 col-12" key={i}>
                             <div style={{ backgroundColor: 'black', borderRadius: 20, height: 280 }} className="mb-3 service text-center service__style--1">
                                 {/* <div className="icon">
                                     <img src={`/assets/images/icons/icon-${val.icon}.png`} alt="Digital Agency"/>

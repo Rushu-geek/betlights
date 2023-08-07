@@ -22,6 +22,7 @@ class TabStyleThree extends Component {
             activeDefault: 1,
             color1: '',
             color2: '',
+            color3: '',
             allSites: []
         };
     }
@@ -82,6 +83,8 @@ class TabStyleThree extends Component {
 
             this.setState({ color1: tmpArray[0]?.color1 })
             this.setState({ color2: tmpArray[0]?.color2 })
+            this.setState({ color3: tmpArray[0]?.color3 })
+
 
         } catch (err) {
             console.log(err);
@@ -145,7 +148,7 @@ class TabStyleThree extends Component {
                         <div className="container">
                             <div className="row creative-service">
                                 <div className="col-lg-12">
-                                    <ServiceList color1={this.state.color1} color2={this.state.color2} allIds={this.state.allSites} item="6" column="col-lg-4 col-md-6 col-sm-6 col-12 text-left" />
+                                    <ServiceList color1={this.state.color1} color2={this.state.color2} color3={this.state.color3} allIds={this.state.allSites} item="6" column="col-lg-4 col-md-6 col-sm-6 col-12 text-left" />
                                 </div>
                             </div>
                         </div>

@@ -716,18 +716,21 @@ class HeaderThree extends Component {
                                         {this.state.isLoggedIn && !this.state.isAdmin && <Button variant="outline-dark" style={{
                                             // boxShadow: '0 0 20px 1px #ee076e',
                                             color: this.state.color3,
+                                            borderColor: this.state.color3,
                                             marginRight: 10
                                         }} onClick={() => this.myIds()} >
                                             My IDs
                                         </Button>}
                                         {this.state.isLoggedIn && !this.state.isAdmin && <Button variant="outline-dark" style={{
                                             // boxShadow: '0 0 20px 1px #ee076e',
-                                            color: this.state.color3
+                                            color: this.state.color3,
+                                            borderColor: this.state.color3,
+
                                         }} onClick={() => this.getIdNow()} >
                                             Get Your ID Now!
                                         </Button>}
 
-                                        {this.state.isLoggedIn && <button style={{ borderColor: this.state.color3, color: this.state.color3 }} onClick={() => this.onLogout()} type="button" className="rn-btn ml-3">
+                                        {this.state.isLoggedIn && <button style={{ borderColor: this.state.color3, color: this.state.color3 }} onClick={() => this.onLogout()} type="button" className="rn-btn ml-5">
                                             <span>Logout</span>
                                         </button>}
 

@@ -98,7 +98,7 @@ class ServiceTwo extends Component {
                             {this.props?.myIds?.map((val, i) => (
                                 <div className="col-lg-3 col-md-6 col-sm-6 col-12" key={i}>
                                     <a>
-                                        <div style={{ backgroundColor: '#18b0c8', backgroundImage: 'linear-gradient(#022c43,#18b0c8)' }} className="service mb-4 service__style--2">
+                                        <div style={{ backgroundColor: '#18b0c8', backgroundImage: `linear-gradient(${this.props.color2},${this.props.color1})` }} className="service mb-4 service__style--2">
                                             <div className="icon">
                                                 <img src={`${val.image}`} />                                             </div>
                                             <div className="content">
@@ -126,7 +126,7 @@ class ServiceTwo extends Component {
                                                     {val.userName && <span>Deposit money</span>}
                                                 </button>}
 
-                                                {!isMobileDevice && <button  onClick={() => this.onCreateId(val.websiteId, val.userName)} type="button" className={`rn-btn ${i != 1 ? 'mt-4' : ''}`}>
+                                                {!isMobileDevice && <button style={{color: this.props.color3, borderColor: this.props.color3}}  onClick={() => this.onCreateId(val.websiteId, val.userName)} type="button" className={`rn-btn ${i != 1 ? 'mt-4' : ''}`}>
                                                     {!val.userName && <span style={{ lineHeight: 0 }}>Create ID and deposit money</span>}
                                                     {val.userName && <span>Deposit money</span>}
                                                 </button>}

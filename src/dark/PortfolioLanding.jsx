@@ -379,7 +379,7 @@ const PortfolioLanding = () => {
                         </div>
                         <div className="row creative-service">
                             <div className="col-lg-12">
-                                <ServiceList item="9" column="col-lg-4 col-md-6 col-sm-6 col-12 text-left" />
+                                <ServiceList color1={color1} item="9" column="col-lg-4 col-md-6 col-sm-6 col-12 text-left" />
                             </div>
                         </div>
                     </div>
@@ -482,18 +482,20 @@ const PortfolioLanding = () => {
                                 <br />
                                 <div className="section-title service-style--2 mb--30 mb_sm--0">
                                     <button style={{
-                                        backgroundColor: color1
+                                        backgroundColor: color1,
+                                        color: 'white'
                                     }} type="button" className="rj-btn" onClick={() => {
                                         window.open(`https://api.whatsapp.com/send?phone=${phone1}&text=Hi I want to get ID!`, "_blank");
                                     }} >
-                                        <span style={{ fontWeight: 'bold', textShadow: '0 0 1px #000, 0 0 1px #000', fontSize: 21 }}>+916378934211</span>
+                                        <span style={{ fontWeight: 'bold', textShadow: '0 0 1px #000, 0 0 1px #000', fontSize: 21 }}>{phone1}</span>
                                     </button>
                                     <button style={{
-                                        backgroundColor: color1
+                                        backgroundColor: color1,
+                                        color: 'white'
                                     }} type="button" className={`rj-btn ${!isMobileDevice ? 'ml-3' : 'mt-3'}`} onClick={() => {
                                         window.open(`https://api.whatsapp.com/send?phone=${phone2}&text=Hi I want to get ID!`, "_blank");
                                     }}>
-                                        <span style={{ fontWeight: 'bold', textShadow: '0 0 1px #000, 0 0 1px #000', fontSize: 21 }}>+447412202358</span>
+                                        <span style={{ fontWeight: 'bold', textShadow: '0 0 1px #000, 0 0 1px #000', fontSize: 21 }}>{phone2}</span>
                                     </button>
                                     <br />
                                     <br />

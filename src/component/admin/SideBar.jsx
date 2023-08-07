@@ -94,19 +94,11 @@ const SideBar = () => {
         <div id="app" style={({ height: "100%" }, { display: "flex" })}>
 
             <Sidebar collapsed={false} backgroundColor='#1863AF' style={{ height: "100vh" }}>
+            <img className='ml-5' style={{
+                            // paddingLeft: 40
+                        }} height={85} src={logo} alt="Digital Agency" />
                 <Menu>
-                    <MenuItem
-                        // icon={< />}
-                        onClick={() => {
-                            collapseSidebar();
-                        }}
-                        style={{ textAlign: "center" }}
-                    >
-                        {" "}
-                        <img height={100} className='mt-5' src={logo} alt="Digital Agency" />
-                    </MenuItem>
-
-                    <MenuItem className='mt-5' onClick={() => { setactiveTab("admin") }} icon={<HomeOutlinedIcon />}>
+                    <MenuItem onClick={() => { setactiveTab("admin") }} icon={<HomeOutlinedIcon />}>
                         PAYMENT INFO
                     </MenuItem>
                     <MenuItem onClick={() => { setactiveTab("users") }} icon={<PeopleOutlinedIcon />}>

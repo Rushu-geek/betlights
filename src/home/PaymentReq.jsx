@@ -111,15 +111,10 @@ function PaymentReq() {
 
     return (
 
-        <div className='row'>
-            {/* <div onClick={() => { sideBarState == "open" ? setSideBarState("close") : setSideBarState("open") }} className={sideBarState == "open" ? 'col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2' : 'col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2'}>
-            <SideBar />
-        </div>
-
-        <div className={sideBarState == "open" ? 'col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10' : 'col-xl-11 col-lg-11 col-md-11 col-sm-10 col-10'}> */}
+        <div className='row' style={{overflow: "scroll", overflowX: "hidden", height: "100vh"}}>
 
 
-            <div id='payInfo' className="active" style={{ backgroundColor: 'black' }}>
+            <div id='payInfo' className="active">
                 <Helmet pageTitle="PaymentReq" />
                 {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
                 <div style={{ marginTop: isMobileDevice ? 60 : '' }} className="designer-portfolio-area ptb--120 bg_color--1">
