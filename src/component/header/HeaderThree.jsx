@@ -49,8 +49,8 @@ class HeaderThree extends Component {
             phone1: "",
             phone2: "",
             logoImage: "",
-            color1: "#18b0c8",
-            color2: "#022c43"
+            color1: "",
+            color2: ""
         }
     }
 

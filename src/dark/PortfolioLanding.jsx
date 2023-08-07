@@ -54,8 +54,8 @@ const PortfolioLanding = () => {
     const [webCarouselImages, setWebCarouselImages] = useState();
     const [instaLink, setInstaLink] = useState("");
     const [teleGramLink, setTelegramLink] = useState("");
-    const [color1, setColor1] = useState("#18b0c8");
-    const [color2, setColor2] = useState("#022c43");
+    const [color1, setColor1] = useState("");
+    const [color2, setColor2] = useState("");
 
     const getVideo = async () => {
         const videoRef = collection(db, 'video');

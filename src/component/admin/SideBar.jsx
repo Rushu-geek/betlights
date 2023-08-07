@@ -23,8 +23,8 @@ const SideBar = () => {
     const [logo, setLogo] = useState("");
     const { collapseSidebar } = useProSidebar();
     const [activeTab, setactiveTab] = useState("admin");
-    const [color1, setColor1] = useState("#18b0c8");
-    const [color2, setColor2] = useState("#022c43");
+    const [color1, setColor1] = useState("");
+    const [color2, setColor2] = useState("");
 
     const getLogo = async () => {
         try {

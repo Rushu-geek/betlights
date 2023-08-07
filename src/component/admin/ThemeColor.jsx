@@ -15,8 +15,8 @@ import "react-color-palette/lib/css/styles.css";
 
 const ThemeColor = () => {
 
-    const [selectColor1, setSelectColor1] = useState("#18b0c8");
-    const [selectColor2, setSelectColor2] = useState("#022c43");
+    const [selectColor1, setSelectColor1] = useState("");
+    const [selectColor2, setSelectColor2] = useState("");
     const [objId, setObjId] = useState("");
 
     // const [color1, setColor1] = useColor("hex", "#18b0c8");
@@ -62,7 +62,8 @@ const ThemeColor = () => {
                 const dbService = new UserDataService();
                 const data = await dbService.updateData(db, 'colors', objId, resObj);
                 console.log(data);
-                getColors()
+                getColors();
+                alert("Changes applied successfully")
 
             }
         } catch (err) {

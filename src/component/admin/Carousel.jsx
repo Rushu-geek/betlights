@@ -79,6 +79,8 @@ const Carousel = () => {
                                     const pushImage = await dbService.addData(image, carouselRef);
                                     console.log(pushImage);
                                     showCarouselImages();
+                                    alert("Changes applied successfully")
+
                                     // showImages();
                                 })
                             })
@@ -154,8 +156,8 @@ const Carousel = () => {
                             <input {...getInputProps()} />
                             {
                                 isDragActive ?
-                                    <p>Drop the files here ...</p> :
-                                    <p>Drag & drop some Images here, or click to select Images</p>
+                                    <p style={{fontFamily:"arial"}}>Drop the files here ...</p> :
+                                    <p style={{fontFamily:"arial"}}>Drag & drop some Images here, or click to select Images</p>
                             }
                         </div>
 

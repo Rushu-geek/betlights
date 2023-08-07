@@ -72,7 +72,9 @@ const SocialMedia = () => {
                 const dbService = new UserDataService();
                 const data = await dbService.updateData(db, 'social', linkId, resObj);
                 console.log(data);
-                showSocialMediaLinks()
+                showSocialMediaLinks();
+                alert("Changes applied successfully")
+
 
             }
         } catch (err) {

@@ -81,7 +81,9 @@ const Logo = () => {
                             })
                         })
                         showLogo();
-                        setLogoImage(undefined)
+                        setLogoImage(undefined);
+                        alert("Changes applied successfully")
+
 
                     } else {
                         alert("Image size should not exceed 10 kb.")
@@ -142,8 +144,8 @@ const Logo = () => {
                                 <input {...getInputProps()} />
                                 {
                                     isDragActive ?
-                                        <p>Drop the files here ...</p> :
-                                        <p>Drag & drop some Logo image here, or click to select Image</p>
+                                        <p style={{fontFamily:"arial"}}>Drop the files here ...</p> :
+                                        <p style={{fontFamily:"arial"}}>Drag & drop some Logo image here, or click to select Image</p>
                                 }
                             </div>
 

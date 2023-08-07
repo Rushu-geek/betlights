@@ -74,6 +74,7 @@ const Video = () => {
                         const pushvideo = await dbService.addData(video, videoRef);
                         console.log(pushvideo);
                         showVideo()
+                        alert("Changes applied successfully")
                     })
                 })
                 showVideo()
@@ -126,8 +127,8 @@ const Video = () => {
                             <input {...getInputProps()} />
                             {
                                 isDragActive ?
-                                    <p>Drop the files here ...</p> :
-                                    <p>Drag & drop Video here, or click to select Video</p>
+                                    <p style={{fontFamily:"arial"}}>Drop the files here ...</p> :
+                                    <p style={{fontFamily:"arial"}}>Drag & drop Video here, or click to select Video</p>
                             }
                         </div>
 

@@ -65,7 +65,9 @@ const Counts = () => {
                 const dbService = new UserDataService();
                 const data = await dbService.updateData(db, 'counter', countId, resObj);
                 console.log(data);
-                showCounts()
+                showCounts();
+                alert("Changes applied successfully")
+
 
             }
         } catch (err) {
