@@ -17,6 +17,8 @@ const ThemeColor = () => {
 
     const [selectColor1, setSelectColor1] = useState("");
     const [selectColor2, setSelectColor2] = useState("");
+    const [selectColor3, setSelectColor3] = useState("");
+
     const [objId, setObjId] = useState("");
 
     // const [color1, setColor1] = useColor("hex", "#18b0c8");
@@ -39,6 +41,9 @@ const ThemeColor = () => {
             console.log(tmpArray);
             setSelectColor1(tmpArray[0]?.color1);
             setSelectColor2(tmpArray[0]?.color2);
+            setSelectColor3(tmpArray[0]?.color3);
+
+
             setObjId(tmpArray[0]?.id)
 
         } catch (err) {
@@ -56,7 +61,8 @@ const ThemeColor = () => {
                 let resObj =
                 {
                     color1: selectColor1,
-                    color2: selectColor2
+                    color2: selectColor2,
+                    color3: selectColor3
                 }
 
                 const dbService = new UserDataService();
@@ -84,7 +90,7 @@ const ThemeColor = () => {
                 <div className="wrapper">
 
                     <div className='row'>
-                        <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12'>
+                        <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
                             <h4 className='text-center'>Theme Color 1</h4>
 
                             <div className='p-1 m-1'>
@@ -96,13 +102,25 @@ const ThemeColor = () => {
                             </div>
                         </div>
 
-                        <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12'>
+                        <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
                             <h4 className='text-center'>Theme Color 2</h4>
 
                             <div className='p-1 m-1'>
                                 <ChromePicker
                                     color={selectColor2}
                                     onChangeComplete={(color) => { setSelectColor2(color.hex) }}
+                                    disableAlpha={true}
+                                />
+                            </div>
+                        </div>
+
+                        <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
+                            <h4 className='text-center'>Font Color</h4>
+
+                            <div className='p-1 m-1'>
+                                <ChromePicker
+                                    color={selectColor3}
+                                    onChangeComplete={(color) => { setSelectColor3(color.hex) }}
                                     disableAlpha={true}
                                 />
                             </div>

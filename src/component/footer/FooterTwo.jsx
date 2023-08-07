@@ -15,6 +15,7 @@ const FooterTwo = (props) => {
     const [socialLinks, setSocialLinks] = useState([]);
     const [color1, setColor1] = useState("");
     const [color2, setColor2] = useState("");
+    const [color3, setColor3] = useState("");
 
     const handleClose = () => {
         setShow18(false);
@@ -86,6 +87,7 @@ const FooterTwo = (props) => {
 
             setColor1(tmpArray[0]?.color1);
             setColor2(tmpArray[0]?.color2);
+            setColor3(tmpArray[0]?.color3);
 
         } catch (err) {
             console.log(err);
@@ -145,15 +147,15 @@ const FooterTwo = (props) => {
                         <div className="inner text-center">
                             <ul className="social-share rn-lg-size d-flex justify-content-center liststyle">
                                 {socialLinks.map((val, i) => (
-                                    <li key={i}><a style={{color: '#ffffff', borderColor: '#ffffff'}} href={`${val.link}`} target='_blank'>{val.Social}</a></li>
+                                    <li key={i}><a style={{ color: color3, borderColor: color3 }} href={`${val.link}`} target='_blank'>{val.Social}</a></li>
                                 ))}
                             </ul>
                         </div>
                         <div className="inner text-center mt-3">
-                            <p onClick={() => setShow18(true)} style={{ cursor: 'pointer', color: '#fff', fontSize: 18 }} className="social-share rn-lg-size d-flex justify-content-center liststyle">
+                            <p onClick={() => setShow18(true)} style={{ cursor: 'pointer', color: color3, fontSize: 18 }} className="social-share rn-lg-size d-flex justify-content-center liststyle">
                                 <img height={30} width={30} src="/assets/images/icons/plus18.webp"></img> --Underage gambling is an offence--
                             </p>
-                            <p onClick={() => setShowRest(true)} style={{ cursor: 'pointer', color: '#fff', fontSize: 18 }} className="social-share rn-lg-size d-flex justify-content-center liststyle">
+                            <p onClick={() => setShowRest(true)} style={{ cursor: 'pointer', color: color3, fontSize: 18 }} className="social-share rn-lg-size d-flex justify-content-center liststyle">
                                 <img height={30} width={30} src="/assets/images/icons/restricted.webp"></img> --Restricted territories--
                             </p>
                         </div>
@@ -161,7 +163,7 @@ const FooterTwo = (props) => {
                     <div className="col-lg-4 col-md-12 col-sm-12 col-12">
                         <div className="inner text-lg-right text-center mt_md--20 mt_sm--20">
                             <div className="text">
-                                <p style={{color: '#fff'}}>Copyright © 2022 Bet Lights. All Rights Reserved.</p>
+                                <p style={{ color: color3 }}>Copyright © 2022 Bet Lights. All Rights Reserved.</p>
                             </div>
                         </div>
                     </div>

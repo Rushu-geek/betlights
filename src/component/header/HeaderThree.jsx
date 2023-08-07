@@ -50,7 +50,8 @@ class HeaderThree extends Component {
             phone2: "",
             logoImage: "",
             color1: "",
-            color2: ""
+            color2: "",
+            color3: ""
         }
     }
 
@@ -75,6 +76,7 @@ class HeaderThree extends Component {
 
                 this.setState({ color1: tmpArray[0]?.color1 })
                 this.setState({ color2: tmpArray[0]?.color2 })
+                this.setState({ color3: tmpArray[0]?.color3 })
 
             } catch (err) {
                 console.log(err);
@@ -366,14 +368,14 @@ class HeaderThree extends Component {
         let isMobileDevice = regexp.test(details);
 
         const inputStyle = {
-            color: '#000000',
+            color: "#000000",
             borderRadius: 0,
             borderColor: this.state.color1,
             backgroundColor: 'white',
         }
 
         const inputStyleNo = {
-            color: '#000000',
+            color: "#000000",
             borderRadius: 0,
             borderColor: this.state.color1,
             backgroundColor: 'white',
@@ -421,24 +423,24 @@ class HeaderThree extends Component {
                                 <nav className="mainmenunav d-lg-block ml--50">
 
                                     <Scrollspy className="mainmenu" items={['home', 'service', 'deal', 'support', 'payInfo', 'getId', 'myId']} currentClassName="is-current" offset={-200}>
-                                        {!this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/#home">HOME</a></li>}
-                                        {!this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/#service">SITES AVAILABLE</a></li>}
-                                        {!this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/#deal">SERVICE</a></li>}
-                                        {!this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/#support">SUPPORT</a></li>}
-                                        {this.state.isLoggedIn && !this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/dashboard">GET ID</a></li>}
-                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/admin">PAYMENT INFO</a></li>}
-                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/admin/users">USERLIST</a></li>}
-                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/admin/req">APPROVE REQUEST</a></li>}
-                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }} href="/admin/password">CHANGE PASSWORD</a></li>}
+                                        {!this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/#home">HOME</a></li>}
+                                        {!this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/#service">SITES AVAILABLE</a></li>}
+                                        {!this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/#deal">SERVICE</a></li>}
+                                        {!this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/#support">SUPPORT</a></li>}
+                                        {this.state.isLoggedIn && !this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/dashboard">GET ID</a></li>}
+                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/admin">PAYMENT INFO</a></li>}
+                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/admin/users">USERLIST</a></li>}
+                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/admin/req">APPROVE REQUEST</a></li>}
+                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/admin/password">CHANGE PASSWORD</a></li>}
 
 
                                         {this.state.isLoggedIn && this.state.isAdmin && <li>
 
-                                            <div style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'white', fontWeight: 'bold' }}>
+                                            <div style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }}>
 
                                                 <Dropdown>
                                                     <Dropdown.Toggle variant="transparent">
-                                                        <span style={{ color: "white" }}>  Site Settings </span>
+                                                        <span style={{ color: this.state.color3 }}>  Site Settings </span>
                                                     </Dropdown.Toggle>
 
                                                     <Dropdown.Menu>
@@ -465,14 +467,14 @@ class HeaderThree extends Component {
 
 
                                         {this.state.isLoggedIn && isMobileDevice && <div className="header-btn">
-                                            <button onClick={() => this.onLogout()} type="button" className="rn-btn mt-3">
-                                                <span>LOGOUT</span>
+                                            <button onClick={() => this.onLogout()} style={{ color: this.state.color3 }} type="button" className="rn-btn mt-3">
+                                                <span style={{ color: this.state.color3 }}>LOGOUT</span>
                                             </button>
                                         </div>}
 
                                         {!this.state.isLoggedIn && isMobileDevice && <div className="header-btn mt-3">
-                                            <button onClick={() => this.handleShowLogin()} type="button" className="rn-btn">
-                                                <span>LOGIN</span>
+                                            <button style={{ color: this.state.color3 }} onClick={() => this.handleShowLogin()} type="button" className="rn-btn">
+                                                <span style={{ color: this.state.color3 }}>LOGIN</span>
                                             </button>
                                             &nbsp;&nbsp;&nbsp;
                                             <button onClick={() => this.handleShow()} type="button" className="rn-btn">
@@ -557,10 +559,10 @@ class HeaderThree extends Component {
                                                 />
                                             </div>
                                             <div id="recaptcha-container" />
-                                            <p className="mt-3" style={{ color: 'black' }}>Already Have an Account? <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ show: false, showLogin: true })}>Login</a></p>
+                                            <p className="mt-3" style={{ color: this.state.color3 }}>Already Have an Account? <a style={{ color: this.state.color3, cursor: 'pointer' }} onClick={() => this.setState({ show: false, showLogin: true })}>Login</a></p>
                                         </Modal.Body>
                                         <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
-                                            <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
+                                            <button style={{ color: this.state.color3, borderColor: this.state.color3 }} type="submit" className="rn-btn">
                                                 <span>Register</span>
                                             </button>
                                         </Modal.Footer>
@@ -607,11 +609,11 @@ class HeaderThree extends Component {
                                                     required
                                                 />
                                             </div>
-                                            <p className="mt-3" style={{ color: 'black' }}>Don't Have an Account? <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ show: true, showLogin: false })}>Register</a> </p>
-                                            <p className="mt-3" style={{ color: 'white' }}> <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ showFwp: true, showLogin: false })}>Forgot Password</a> </p>
+                                            <p className="mt-3" style={{ color: this.state.color3 }}>Don't Have an Account? <a style={{ color: this.state.color3, cursor: 'pointer' }} onClick={() => this.setState({ show: true, showLogin: false })}>Register</a> </p>
+                                            <p className="mt-3" style={{ color: this.state.color3 }}> <a style={{ color: this.state.color3, cursor: 'pointer' }} onClick={() => this.setState({ showFwp: true, showLogin: false })}>Forgot Password</a> </p>
                                         </Modal.Body>
                                         <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
-                                            <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
+                                            <button style={{ color: this.state.color3, borderColor: this.state.color3 }} type="submit" className="rn-btn">
                                                 <span>Login</span>
                                             </button>
                                         </Modal.Footer>
@@ -648,7 +650,7 @@ class HeaderThree extends Component {
                                             </div>
                                         </Modal.Body>
                                         <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
-                                            <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
+                                            <button style={{ color: this.state.color3, borderColor: this.state.color3 }} type="submit" className="rn-btn">
                                                 <span>Verify Otp</span>
                                             </button>
                                         </Modal.Footer>
@@ -685,7 +687,7 @@ class HeaderThree extends Component {
                                             </div>
                                         </Modal.Body>
                                         <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
-                                            <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
+                                            <button style={{ color: this.state.color3, borderColor: this.state.color3 }} type="submit" className="rn-btn">
                                                 <span>Send password to registered email</span>
                                             </button>
                                         </Modal.Footer>
@@ -696,36 +698,36 @@ class HeaderThree extends Component {
                                     {!this.state.isAdmin && !this.state.isLoggedIn && <div className="social-share-inner ml-5">
                                         <ul className="social-share social-style--2 color-black d-flex justify-content-start liststyle">
                                             {SocialShare.map((val, i) => (
-                                                <li onClick={() => {
+                                                <li style={{ color: this.state.color3 }} onClick={() => {
                                                     window.open(`${val.link}`, "_blank");
-                                                }} key={i}><a className="mr-3" style={{ color: '#ffffff', cursor: 'pointer', opacity: 1 }} target='_blank'>{val.Social}</a></li>
+                                                }} key={i}><a className="mr-3" style={{ color: this.state.color3, cursor: 'pointer', opacity: 1 }} target='_blank'>{val.Social}</a></li>
                                             ))}
                                         </ul>
                                     </div>}
                                     <div className="header-btn">
-                                        {!this.state.isLoggedIn && <button style={{ borderColor: 'white', color: 'white' }} onClick={() => this.handleShowLogin()} type="button" className="rn-btn">
+                                        {!this.state.isLoggedIn && <button style={{ borderColor: this.state.color3, color: this.state.color3 }} onClick={() => this.handleShowLogin()} type="button" className="rn-btn">
                                             <span>Login</span>
                                         </button>}
                                         &nbsp;&nbsp;&nbsp;
-                                        {!this.state.isLoggedIn && <button style={{ borderColor: 'white', color: 'white' }} onClick={() => this.handleShow()} type="button" className="rn-btn">
+                                        {!this.state.isLoggedIn && <button style={{ borderColor: this.state.color3, color: this.state.color3 }} onClick={() => this.handleShow()} type="button" className="rn-btn">
                                             <span>Register</span>
                                         </button>}
 
                                         {this.state.isLoggedIn && !this.state.isAdmin && <Button variant="outline-dark" style={{
                                             // boxShadow: '0 0 20px 1px #ee076e',
-                                            color: '#fff',
+                                            color: this.state.color3,
                                             marginRight: 10
                                         }} onClick={() => this.myIds()} >
                                             My IDs
                                         </Button>}
                                         {this.state.isLoggedIn && !this.state.isAdmin && <Button variant="outline-dark" style={{
                                             // boxShadow: '0 0 20px 1px #ee076e',
-                                            color: '#fff'
+                                            color: this.state.color3
                                         }} onClick={() => this.getIdNow()} >
                                             Get Your ID Now!
                                         </Button>}
 
-                                        {this.state.isLoggedIn && <button style={{ borderColor: 'white', color: 'white' }} onClick={() => this.onLogout()} type="button" className="rn-btn ml-3">
+                                        {this.state.isLoggedIn && <button style={{ borderColor: this.state.color3, color: this.state.color3 }} onClick={() => this.onLogout()} type="button" className="rn-btn ml-3">
                                             <span>Logout</span>
                                         </button>}
 
@@ -773,7 +775,7 @@ class HeaderThree extends Component {
                                         {SocialShare.map((val, i) => (
                                             <a className="mr-3" onClick={() => {
                                                 window.open(`${val.link}`, "_blank");
-                                            }} style={{ color: '#ffffff', cursor: 'pointer', opacity: 1 }}>{val.Social}</a>
+                                            }} style={{ color: this.state.color3, cursor: 'pointer', opacity: 1 }}>{val.Social}</a>
                                         ))}
                                     </div>}
 
@@ -790,15 +792,15 @@ class HeaderThree extends Component {
                                 <nav className="mainmenunav d-lg-block ml--50">
 
                                     <Scrollspy className="mainmenu" items={['home', 'service', 'deal', 'support', 'payInfo', 'getId', 'myId']} currentClassName="is-current" offset={-200}>
-                                        {!this.state.isAdmin && <li><a onClick={this.CLoseMenuTrigger} style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'black', fontWeight: 'bold' }} href="/#home">HOME</a></li>}
-                                        {!this.state.isAdmin && <li><a onClick={this.CLoseMenuTrigger} style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'black', fontWeight: 'bold' }} href="/#service">SITES AVAILABLE</a></li>}
-                                        {!this.state.isAdmin && <li><a onClick={this.CLoseMenuTrigger} style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'black', fontWeight: 'bold' }} href="/#deal">SERVICE</a></li>}
-                                        {!this.state.isAdmin && <li><a onClick={this.CLoseMenuTrigger} style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'black', fontWeight: 'bold' }} href="/#support">SUPPORT</a></li>}
-                                        {this.state.isLoggedIn && !this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'black', fontWeight: 'bold' }} href="/dashboard">GET ID</a></li>}
-                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'black', fontWeight: 'bold' }} href="/admin">PAYMENT INFO</a></li>}
-                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'black', fontWeight: 'bold' }} href="/admin/users">USERLIST</a></li>}
-                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'black', fontWeight: 'bold' }} href="/admin/req">APPROVE REQUEST</a></li>}
-                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? 'black' : 'black', fontWeight: 'bold' }} href="/admin/password">CHANGE PASSWORD</a></li>}
+                                        {!this.state.isAdmin && <li><a onClick={this.CLoseMenuTrigger} style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/#home">HOME</a></li>}
+                                        {!this.state.isAdmin && <li><a onClick={this.CLoseMenuTrigger} style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/#service">SITES AVAILABLE</a></li>}
+                                        {!this.state.isAdmin && <li><a onClick={this.CLoseMenuTrigger} style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/#deal">SERVICE</a></li>}
+                                        {!this.state.isAdmin && <li><a onClick={this.CLoseMenuTrigger} style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/#support">SUPPORT</a></li>}
+                                        {this.state.isLoggedIn && !this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/dashboard">GET ID</a></li>}
+                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/admin">PAYMENT INFO</a></li>}
+                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/admin/users">USERLIST</a></li>}
+                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/admin/req">APPROVE REQUEST</a></li>}
+                                        {this.state.isLoggedIn && this.state.isAdmin && <li><a style={{ color: (window.location.pathname != '/' && isMobileDevice) ? this.state.color3 : this.state.color3, fontWeight: 'bold' }} href="/admin/password">CHANGE PASSWORD</a></li>}
 
                                         {this.state.isLoggedIn && isMobileDevice && <div className="header-btn">
                                             <button onClick={() => this.onLogout()} type="button" className="rn-btn mt-3">
@@ -807,8 +809,8 @@ class HeaderThree extends Component {
                                         </div>}
 
                                         {!this.state.isLoggedIn && isMobileDevice && <div className="header-btn mt-3">
-                                            <button onClick={() => this.handleShowLogin()} type="button" className="rn-btn">
-                                                <span>LOGIN</span>
+                                            <button style={{ color: this.state.color3 }} onClick={() => this.handleShowLogin()} type="button" className="rn-btn">
+                                                <span style={{ color: this.state.color3 }}>LOGIN</span>
                                             </button>
                                             &nbsp;&nbsp;&nbsp;
                                             <button onClick={() => this.handleShow()} type="button" className="rn-btn">
@@ -821,7 +823,7 @@ class HeaderThree extends Component {
                                 </nav>
 
                                 <Modal centered show={this.state.show} onHide={() => this.handleClose()}>
-                                    <ModalHeader className="text-center" closeLabel="close" style={{ alignContent: 'center', justifyContent: 'center', backgroundImage:     `linear-gradient(${this.state.color2},${this.state.color1})`, borderBottomColor: this.state.color1 }} closeButton>
+                                    <ModalHeader className="text-center" closeLabel="close" style={{ alignContent: 'center', justifyContent: 'center', backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`, borderBottomColor: this.state.color1 }} closeButton>
                                         {/* {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">ghg</Modal.Title>} */}
                                         <div className="text-center" style={{ paddingLeft: !isMobileDevice ? 120 : 70, backgroundColor: '' }}>
                                             <img style={{ justifyContent: "center", alignItems: "center" }} height={130} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
@@ -893,10 +895,10 @@ class HeaderThree extends Component {
                                                 />
                                             </div>
                                             <div id="recaptcha-container" />
-                                            <p className="mt-3" style={{ color: 'black' }}>Already Have an Account? <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ show: false, showLogin: true })}>Login</a></p>
+                                            <p className="mt-3" style={{ color: this.state.color3 }}>Already Have an Account? <a style={{ color: this.state.color3, cursor: 'pointer' }} onClick={() => this.setState({ show: false, showLogin: true })}>Login</a></p>
                                         </Modal.Body>
                                         <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
-                                            <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
+                                            <button style={{ color: this.state.color3, borderColor: this.state.color3 }} type="submit" className="rn-btn">
                                                 <span>Register</span>
                                             </button>
                                         </Modal.Footer>
@@ -943,11 +945,11 @@ class HeaderThree extends Component {
                                                     required
                                                 />
                                             </div>
-                                            <p className="mt-3" style={{ color: 'black' }}>Don't Have an Account? <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ show: true, showLogin: false })}>Register</a> </p>
-                                            <p className="mt-3" style={{ color: 'white' }}> <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ showFwp: true, showLogin: false })}>Forgot Password</a> </p>
+                                            <p className="mt-3" style={{ color: this.state.color3 }}>Don't Have an Account? <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ show: true, showLogin: false })}>Register</a> </p>
+                                            <p className="mt-3" style={{ color: this.state.color3 }}> <a style={{ color: this.state.color3, cursor: 'pointer' }} onClick={() => this.setState({ showFwp: true, showLogin: false })}>Forgot Password</a> </p>
                                         </Modal.Body>
                                         <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
-                                            <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
+                                            <button style={{ color: this.state.color3, borderColor: this.state.color3 }} type="submit" className="rn-btn">
                                                 <span>Login</span>
                                             </button>
                                         </Modal.Footer>
@@ -984,7 +986,7 @@ class HeaderThree extends Component {
                                             </div>
                                         </Modal.Body>
                                         <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
-                                            <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
+                                            <button style={{ color: this.state.color3, borderColor: this.state.color3 }} type="submit" className="rn-btn">
                                                 <span>Verify Otp</span>
                                             </button>
                                         </Modal.Footer>
@@ -1021,7 +1023,7 @@ class HeaderThree extends Component {
                                             </div>
                                         </Modal.Body>
                                         <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
-                                            <button style={{ color: 'white', borderColor: 'white' }} type="submit" className="rn-btn">
+                                            <button style={{ color: this.state.color3, borderColor: this.state.color3 }} type="submit" className="rn-btn">
                                                 <span>Send password to registered email</span>
                                             </button>
                                         </Modal.Footer>
