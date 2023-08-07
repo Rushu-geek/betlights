@@ -93,7 +93,7 @@ const SideBar = () => {
     return (
         <div id="app" style={({ height: "100%" }, { display: "flex" })}>
 
-            <Sidebar collapsed={false} backgroundColor={sidebarColor} style={{ height: "100vh", backgroundImage: `linear-gradient(${color1},${color2})` }}>
+            <Sidebar collapsed={false} backgroundColor='#1863AF' style={{ height: "100vh" }}>
                 <Menu>
                     <MenuItem
                         // icon={< />}
@@ -106,30 +106,30 @@ const SideBar = () => {
                         <img height={100} className='mt-5' src={logo} alt="Digital Agency" />
                     </MenuItem>
 
-                    <MenuItem className='mt-5' style={{color:color3}} onClick={() => { setactiveTab("admin") }} icon={<HomeOutlinedIcon />}>
+                    <MenuItem className='mt-5' onClick={() => { setactiveTab("admin") }} icon={<HomeOutlinedIcon />}>
                         PAYMENT INFO
                     </MenuItem>
-                    <MenuItem style={{color:color3}} onClick={() => { setactiveTab("users") }} icon={<PeopleOutlinedIcon />}>
+                    <MenuItem onClick={() => { setactiveTab("users") }} icon={<PeopleOutlinedIcon />}>
                         USERLIST
                     </MenuItem>
-                    <MenuItem style={{color:color3}} onClick={() => { setactiveTab("request") }} icon={<ContactsOutlinedIcon />}>
+                    <MenuItem onClick={() => { setactiveTab("request") }} icon={<ContactsOutlinedIcon />}>
                         APPROVE REQUEST
                     </MenuItem>
-                    <MenuItem style={{color:color3}} onClick={() => { setactiveTab("sites") }} icon={<ContactsOutlinedIcon />}>
+                    <MenuItem onClick={() => { setactiveTab("sites") }} icon={<ContactsOutlinedIcon />}>
                         AVAILABLE SITES
                     </MenuItem>
-                    <MenuItem style={{color:color3}} onClick={() => { setactiveTab("offers") }} icon={<ReceiptOutlinedIcon />}>
+                    <MenuItem onClick={() => { setactiveTab("offers") }} icon={<ReceiptOutlinedIcon />}>
                         OFFERS
                     </MenuItem>
-                    <MenuItem style={{color:color3}} onClick={() => { setactiveTab("password") }} icon={<ReceiptOutlinedIcon />}>
+                    <MenuItem onClick={() => { setactiveTab("password") }} icon={<ReceiptOutlinedIcon />}>
                         CHANGE PASSWORD
                     </MenuItem>
-                    <MenuItem style={{color:color3}} onClick={() => { setactiveTab("manageTheme") }} icon={<HelpOutlineOutlinedIcon />}>
+                    <MenuItem onClick={() => { setactiveTab("manageTheme") }} icon={<HelpOutlineOutlinedIcon />}>
                         MANAGE THEME
                     </MenuItem>
                     <MenuItem>
                         {/* <button onClick={() => onLogout()} type="button" className="rn-btn mt-3"> */}
-                        <span style={{color:color3}} onClick={() => onLogout()} >LOGOUT</span>
+                        <span onClick={() => onLogout()} >LOGOUT</span>
                         {/* </button> */}
                     </MenuItem>
                 </Menu>

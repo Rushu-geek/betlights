@@ -62,11 +62,11 @@ class ServiceTwo extends Component {
 
     async sendDetailsToWhatsapp() {
         console.log(this.state);
-        window.open(`https://api.whatsapp.com/send?phone=+447412202358&text=website: ${this.state.selectedIdName} userName: ${this.state.userName} amount: ${this.state.amount}`, "_blank");
+        window.open(`https://api.whatsapp.com/send?phone=+447412202358&text=userName: ${this.state.userName} amount: ${this.state.amount}`, "_blank");
         const paymentReq = {
             requestStatus: false,
             userName: this.state.userName,
-            websiteId: this.state.selectedIdName,
+            // websiteId: this.state.selectedIdName,
             number: JSON.parse(localStorage.getItem('currentUser')).number,
             userId: JSON.parse(localStorage.getItem('currentUser')).userId
         }
@@ -114,18 +114,19 @@ class ServiceTwo extends Component {
                             {this.props?.allIds?.map((val, i) => (
                                 <div className="col-lg-4 col-md-6 col-sm-6 col-12" key={i}>
                                     <a>
-                                        <div style={{ backgroundColor: '#18b0c8', height: 300, backgroundImage: 'linear-gradient(#022c43,#18b0c8)' }} className="service mb-4 service__style--27">
-                                            <div className={`${i != 1 ? 'mb-3' : ''} text-center`}>
-                                                <img style={{ height: i == 1 ? 120 : 80 }} src={`/assets/images/icons/i${i + 1}.png`} />                                            </div>
+                                        <div style={{ height: 300, backgroundImage: `linear-gradient(${this.props.color2},${this.props.color1})` }} className="service mb-4 service__style--27">
+                                            <div style={{height: 140}} className={`${i != 1 ? 'mb-3' : ''} text-center`}>
+                                                <img style={{ height: 100}} src={val.url} />
+                                            </div>
                                             <div className="content text-center">
                                                 <h3 style={{ color: 'white' }} className="title">{val.websiteId}</h3>
                                                 {val.userName && <p style={{ color: 'white' }}>UserName: {val.userName}</p>}
-                                                {isMobileDevice && <button style={{ lineHeight: 3, color: '#18b0c8', borderRadius: 6, borderColor: '#18b0c8' }} onClick={() => this.onCreateId(val.websiteId, val.userName)} type="button" className={`${i != 1 ? 'mt-4' : ''}`}>
+                                                {isMobileDevice && <button style={{ lineHeight: 3, color: this.props.color1, borderRadius: 6, borderColor: '#18b0c8' }} onClick={() => this.onCreateId(val.websiteId, val.userName)} type="button" className={`${i != 1 ? 'mt-4' : ''}`}>
                                                     {!val.userName && <span style={{ lineHeight: 0 }}>CREATE ID AND DEPOSIT MONEY</span>}
                                                     {val.userName && <span>Deposit money</span>}
                                                 </button>}
 
-                                                {!isMobileDevice && <button onClick={() => this.onCreateId(val.websiteId, val.userName)} type="button" className={`rn-btn ${i != 1 ? 'mt-4' : ''}`}>
+                                                {!isMobileDevice && <button  onClick={() => this.onCreateId(val.websiteId, val.userName)} type="button" className={`rn-btn ${i != 1 ? 'mt-4' : ''}`}>
                                                     {!val.userName && <span style={{ lineHeight: 0 }}>Create ID and deposit money</span>}
                                                     {val.userName && <span>Deposit money</span>}
                                                 </button>}
@@ -141,7 +142,7 @@ class ServiceTwo extends Component {
 
                 <Modal centered show={this.state.show} onHide={() => this.handleClose()}>
                     <Modal.Header style={{ height: 60 }} closeButton>
-                        <Modal.Title className="text-center">{this.state.selectedIdName}</Modal.Title>
+                        <Modal.Title className="text-center">Add details</Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{ backgroundColor: '' }}>
 
@@ -194,8 +195,8 @@ class ServiceTwo extends Component {
                         </div>
                         <div className="row">
                             <div className="col-6">
-                                <p className="mb-0" style={pStyle}>Username : <span style={{ fontWeight: 500, color: '#18b0c8' }}>{this.state.userName}</span></p>
-                                <p className="mb-0" style={pStyle}>&nbsp;&nbsp;Amount &nbsp;&nbsp;: <span style={{ fontWeight: 500, color: '#18b0c8' }}>{this.state.amount}</span></p>
+                                <p className="mb-0" style={pStyle}>Username : <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.userName}</span></p>
+                                <p className="mb-0" style={pStyle}>&nbsp;&nbsp;Amount &nbsp;&nbsp;: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.amount}</span></p>
                             </div>
 
                         </div>
@@ -210,13 +211,13 @@ class ServiceTwo extends Component {
                                 <p className="mb-0" style={pStyle}> <span style={{ fontWeight: 500 }}>Scan QR to do payment</span> </p>
                                 <img height={150} width={150} src={this.state.qrImage} />
                                 <p className="mb-0" style={pStyle}>OR</p>
-                                <p className="mb-0" style={pStyle}>UPI: <span style={{ fontWeight: 500, color: '#18b0c8' }}>{this.state.upi}</span></p>
+                                <p className="mb-0" style={pStyle}>UPI: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.upi}</span></p>
                             </div>
                             <div className="col-6">
-                                <p className="mb-0" style={pStyle}>A/C No: <span style={{ fontWeight: 500, color: '#18b0c8' }}>{this.state.bankNo}</span></p>
-                                <p className="mb-0" style={pStyle}>IFSC: <span style={{ fontWeight: 500, color: '#18b0c8' }}>{this.state.ifsc}</span></p>
-                                <p className="mb-0" style={pStyle}>Name: <span style={{ fontWeight: 500, color: '#18b0c8' }}>{this.state.bankHolder}</span></p>
-                                <p className="mb-0" style={pStyle}>Bank Name: <span style={{ fontWeight: 500, color: '#18b0c8' }}>{this.state.bankName}</span></p>
+                                <p className="mb-0" style={pStyle}>A/C No: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.bankNo}</span></p>
+                                <p className="mb-0" style={pStyle}>IFSC: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.ifsc}</span></p>
+                                <p className="mb-0" style={pStyle}>Name: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.bankHolder}</span></p>
+                                <p className="mb-0" style={pStyle}>Bank Name: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.bankName}</span></p>
                             </div>
                         </div>
                         {/* <div className="row">
@@ -236,7 +237,7 @@ class ServiceTwo extends Component {
                             <FaWhatsapp size={20} />  <span className="mt-1">Send Payment Screenshot to Whatsapp</span>
                         </button>}
 
-                        {isMobileDevice && <button style={{lineHeight: 3, color: '#18b0c8', borderRadius: 6, borderColor: '#18b0c8'}} onClick={() => this.sendDetailsToWhatsapp()} type="button" className="">
+                        {isMobileDevice && <button style={{ lineHeight: 3, color: '#18b0c8', borderRadius: 6, borderColor: '#18b0c8' }} onClick={() => this.sendDetailsToWhatsapp()} type="button" className="">
                             <FaWhatsapp size={20} />  <span className="mt-1">Send Payment Screenshot to Whatsapp</span>
                         </button>}
                     </Modal.Footer>

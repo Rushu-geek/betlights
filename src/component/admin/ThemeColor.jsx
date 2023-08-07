@@ -90,7 +90,7 @@ const ThemeColor = () => {
                 <div className="wrapper">
 
                     <div className='row'>
-                        <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
+                        <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12'>
                             <h4 className='text-center'>Theme Color 1</h4>
 
                             <div className='p-1 m-1'>
@@ -102,7 +102,7 @@ const ThemeColor = () => {
                             </div>
                         </div>
 
-                        <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
+                        <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12'>
                             <h4 className='text-center'>Theme Color 2</h4>
 
                             <div className='p-1 m-1'>
@@ -114,7 +114,10 @@ const ThemeColor = () => {
                             </div>
                         </div>
 
-                        <div className='col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12'>
+                    </div>
+
+                    <div className="row">
+                    <div className='col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12'>
                             <h4 className='text-center'>Font Color</h4>
 
                             <div className='p-1 m-1'>
@@ -125,7 +128,6 @@ const ThemeColor = () => {
                                 />
                             </div>
                         </div>
-
                     </div>
 
                     <button className='btn-outline-primary' onClick={updateColor}>Update</button>

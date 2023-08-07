@@ -4,7 +4,8 @@ import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import ServiceList from "../../elements/service/ServiceTwo";
 import UserDataService from '../../services/userService';
-
+import db from "../../firebase";
+import { collection } from 'firebase/firestore';
 
 
 class TabStyleThree extends Component {
@@ -18,11 +19,16 @@ class TabStyleThree extends Component {
             isOpen: false,
             myIds: [],
             allIds: [],
-            activeDefault: 1
+            activeDefault: 1,
+            color1: '',
+            color2: '',
+            allSites: []
         };
     }
 
     async componentDidMount() {
+        this.getColors();
+        this.showSitesImages();
         const userService = new UserDataService();
         const user = JSON.parse(localStorage.getItem('currentUser'));
         const myIds = await userService.queryUserIds(user.userId);
@@ -43,7 +49,7 @@ class TabStyleThree extends Component {
                 // console.log("allId", id);
                 console.log(myId.websiteId == id.websiteId);
                 if (myId.websiteId == id.websiteId) {
-                    allIdArray[index].userName = myId.userName 
+                    allIdArray[index].userName = myId.userName
                 }
             })
         })
@@ -57,6 +63,51 @@ class TabStyleThree extends Component {
             console.log("param >>>", param == 'dashboard?1')
         this.setState({ myIds: idArray, allIds: allIdArray, activeDefault: param == 'dashboard?1' ? 1 : 0 })
         console.log("this.state.myIds >> ", this.state.allIds);
+    }
+
+    getColors = async () => {
+        try {
+            // alert("in footer" + props.phone)
+            const colorsRef = collection(db, 'colors');
+            const dbService = new UserDataService();
+            const data = await dbService.getAllData(colorsRef);
+            let tmpArray = [];
+            data.forEach((doc) => {
+                let obj = doc.data();
+                obj.id = doc.id;
+                tmpArray.push(obj);
+            });
+
+            console.log("Colors >>> ", tmpArray);
+
+            this.setState({ color1: tmpArray[0]?.color1 })
+            this.setState({ color2: tmpArray[0]?.color2 })
+
+        } catch (err) {
+            console.log(err);
+
+        }
+    }
+
+    showSitesImages = async () => {
+        try {
+            const sitesRef = collection(db, 'sites');
+            const dbService = new UserDataService();
+
+            const data = await dbService.getAllData(sitesRef);
+            let tmpArray = [];
+
+            data.forEach((doc) => {
+                let obj = doc.data();
+
+                obj.id = doc.id;
+                tmpArray.push(obj);
+            });
+            console.log(tmpArray);
+            this.setState({ allSites: tmpArray });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     render() {
@@ -80,9 +131,9 @@ class TabStyleThree extends Component {
                     <div className="row text-center mt-5">
                         <div className="col-lg-12">
                             <div className="tablist-inner">
-                                <TabList style={{ backgroundColor: '#18b0c8', backgroundImage: 'linear-gradient(#022c43,#18b0c8)' }} className="pv-tab-button text-center mt--0">
-                                    <Tab><span style={{color: 'white'}}>Get ID</span></Tab>
-                                    <Tab><span style={{color: 'white'}}>My ID</span></Tab>
+                                <TabList style={{ backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})` }} className="pv-tab-button text-center mt--0">
+                                    <Tab><span style={{ color: 'white' }}>Get ID</span></Tab>
+                                    <Tab><span style={{ color: 'white' }}>My ID</span></Tab>
                                     {/* <Tab><span>Logo Design</span></Tab>
                                     <Tab><span>Mobile App</span></Tab> */}
                                 </TabList>
@@ -94,7 +145,7 @@ class TabStyleThree extends Component {
                         <div className="container">
                             <div className="row creative-service">
                                 <div className="col-lg-12">
-                                    <ServiceList allIds={this.state.allIds} item="6" column="col-lg-4 col-md-6 col-sm-6 col-12 text-left" />
+                                    <ServiceList color1={this.state.color1} color2={this.state.color2} allIds={this.state.allSites} item="6" column="col-lg-4 col-md-6 col-sm-6 col-12 text-left" />
                                 </div>
                             </div>
                         </div>
@@ -104,7 +155,7 @@ class TabStyleThree extends Component {
                         <div className="container">
                             <div className="row creative-service">
                                 <div className="col-lg-12">
-                                    <ServiceList myIds={this.state.myIds} item="6" column="col-lg-4 col-md-6 col-sm-6 col-12 text-left" />
+                                    <ServiceList color1={this.state.color1} color2={this.state.color2} myIds={this.state.myIds} item="6" column="col-lg-4 col-md-6 col-sm-6 col-12 text-left" />
                                 </div>
                             </div>
                         </div>
