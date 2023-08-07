@@ -100,10 +100,10 @@ const SideBar = () => {
                         style={{ textAlign: "center" }}
                     >
                         {" "}
-                        <img height={100} className='mt-1' src={logo} alt="Digital Agency" />
+                        <img height={100} className='mt-5' src={logo} alt="Digital Agency" />
                     </MenuItem>
 
-                    <MenuItem onClick={() => { setactiveTab("admin") }} icon={<HomeOutlinedIcon />}>
+                    <MenuItem className='mt-5' onClick={() => { setactiveTab("admin") }} icon={<HomeOutlinedIcon />}>
                         PAYMENT INFO
                     </MenuItem>
                     <MenuItem onClick={() => { setactiveTab("users") }} icon={<PeopleOutlinedIcon />}>

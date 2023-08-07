@@ -355,7 +355,7 @@ class HeaderThree extends Component {
 
 
         // /assets/images/logo/betNew.png
-        let logoUrl = <img height={100} src={this.state.logoImage} alt="Digital Agency" />;
+        let logoUrl = <img height={85} src={this.state.logoImage} alt="Digital Agency" />;
 
         let details = navigator.userAgent;
 
@@ -417,16 +417,6 @@ class HeaderThree extends Component {
                         </div>
                         <div style={{ top: 50, left: -80 }} className="col-9">
                             <div className="header-wrapper">
-
-                                {isMobileDevice && <div className="header-right" style={{ backgroundColor: 'ActiveCaption' }}>
-                                    <div className="humberger-menu d-lg-none">
-                                        <span onClick={this.menuTrigger} className="menutrigger text-white"><FiMenu color={this.state.color1} /></span>
-                                    </div>
-                                    {/* End Humberger Menu  */}
-                                    <div className="close-menu d-block d-lg-none">
-                                        <span onClick={this.CLoseMenuTrigger} className="closeTrigger"><FiX color={this.state.color1} /></span>
-                                    </div>
-                                </div>}
 
                                 <nav className="mainmenunav d-lg-block ml--50">
 
@@ -702,7 +692,7 @@ class HeaderThree extends Component {
                                     </form>
                                 </Modal>
 
-                                {!isMobileDevice && <div className="header-right">
+                                <div className="header-right">
                                     {this.state.isLoggedIn && !this.state.isAdmin && <Button variant="outline-dark" style={{
                                         // boxShadow: '0 0 20px 1px #ee076e',
                                         color: '#fff',
@@ -748,7 +738,7 @@ class HeaderThree extends Component {
                                     <div className="close-menu d-block d-lg-none">
                                         <span onClick={this.CLoseMenuTrigger} className="closeTrigger"><FiX /></span>
                                     </div>
-                                </div>}
+                                </div>
                             </div>
                         </div>
                     </div>
