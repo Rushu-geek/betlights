@@ -693,20 +693,7 @@ class HeaderThree extends Component {
                                 </Modal>
 
                                 <div className="header-right">
-                                    {this.state.isLoggedIn && !this.state.isAdmin && <Button variant="outline-dark" style={{
-                                        // boxShadow: '0 0 20px 1px #ee076e',
-                                        color: '#fff',
-                                        marginRight: 50
-                                    }} onClick={() => this.myIds()} >
-                                        My IDs
-                                    </Button>}
-                                    {this.state.isLoggedIn && !this.state.isAdmin && <Button variant="outline-dark" style={{
-                                        // boxShadow: '0 0 20px 1px #ee076e',
-                                        color: '#fff'
-                                    }} onClick={() => this.getIdNow()} >
-                                        Get Your ID Now!
-                                    </Button>}
-                                    {!this.state.isAdmin && <div className="social-share-inner ml-5">
+                                    {!this.state.isAdmin && !this.state.isLoggedIn && <div className="social-share-inner ml-5">
                                         <ul className="social-share social-style--2 color-black d-flex justify-content-start liststyle">
                                             {SocialShare.map((val, i) => (
                                                 <li onClick={() => {
@@ -715,29 +702,39 @@ class HeaderThree extends Component {
                                             ))}
                                         </ul>
                                     </div>}
-                                    {!this.state.isLoggedIn && <div className="header-btn">
-                                        <button style={{ borderColor: 'white', color: 'white' }} onClick={() => this.handleShowLogin()} type="button" className="rn-btn">
+                                    <div className="header-btn">
+                                        {!this.state.isLoggedIn && <button style={{ borderColor: 'white', color: 'white' }} onClick={() => this.handleShowLogin()} type="button" className="rn-btn">
                                             <span>Login</span>
-                                        </button>
+                                        </button>}
                                         &nbsp;&nbsp;&nbsp;
-                                        <button style={{ borderColor: 'white', color: 'white' }} onClick={() => this.handleShow()} type="button" className="rn-btn">
+                                        {!this.state.isLoggedIn && <button style={{ borderColor: 'white', color: 'white' }} onClick={() => this.handleShow()} type="button" className="rn-btn">
                                             <span>Register</span>
-                                        </button>
-                                    </div>}
-                                    {this.state.isLoggedIn && <div className="header-btn">
+                                        </button>}
+
+                                        {this.state.isLoggedIn && !this.state.isAdmin && <Button variant="outline-dark" style={{
+                                            // boxShadow: '0 0 20px 1px #ee076e',
+                                            color: '#fff',
+                                            marginRight: 10
+                                        }} onClick={() => this.myIds()} >
+                                            My IDs
+                                        </Button>}
+                                        {this.state.isLoggedIn && !this.state.isAdmin && <Button variant="outline-dark" style={{
+                                            // boxShadow: '0 0 20px 1px #ee076e',
+                                            color: '#fff'
+                                        }} onClick={() => this.getIdNow()} >
+                                            Get Your ID Now!
+                                        </Button>}
+
+                                        {this.state.isLoggedIn && <button style={{ borderColor: 'white', color: 'white' }} onClick={() => this.onLogout()} type="button" className="rn-btn ml-3">
+                                            <span>Logout</span>
+                                        </button>}
+
+                                    </div>
+                                    {/* {this.state.isLoggedIn && <div className="header-btn">
                                         <button style={{ borderColor: 'white', color: 'white' }} onClick={() => this.onLogout()} type="button" className="rn-btn">
                                             <span>Logout</span>
                                         </button>
-                                    </div>}
-
-                                    {/* Start Humberger Menu  */}
-                                    <div className="humberger-menu d-block d-lg-none pl--20">
-                                        <span onClick={this.menuTrigger} className="menutrigger text-white"><FiMenu /></span>
-                                    </div>
-                                    {/* End Humberger Menu  */}
-                                    <div className="close-menu d-block d-lg-none">
-                                        <span onClick={this.CLoseMenuTrigger} className="closeTrigger"><FiX /></span>
-                                    </div>
+                                    </div>} */}
                                 </div>
                             </div>
                         </div>
