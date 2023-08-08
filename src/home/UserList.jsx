@@ -4,6 +4,7 @@ import UserDataService from '../services/userService';
 import DataTable from 'react-data-table-component'
 import styled from 'styled-components';
 import SideBar from '../component/admin/SideBar';
+import { CSVLink } from "react-csv";
 
 
 function UserList() {
@@ -50,6 +51,8 @@ function UserList() {
         },
     ];
 
+
+
     const TextField = styled.input`
     height: 40px;
     width: 500px;
@@ -71,6 +74,21 @@ function UserList() {
             item?.email?.toLowerCase().includes(filterText?.toLowerCase()) ||
             item?.websiteId?.toLowerCase().includes(filterText?.toLowerCase())
     );
+
+
+    console.log(filteredItems)
+
+    const csvData = [
+        ["Name", "Number", "Email", "Website", "User Name"],
+        ...filteredItems.map(({ fullName, number, email, website, userName }) => [
+            fullName,
+            number,
+            email,
+            website,
+            userName,
+        ]),
+    ];
+
 
     const FilterComponent = ({ filterText, onFilter }) => (
         <>
@@ -138,7 +156,17 @@ function UserList() {
                         subHeaderComponent={subHeaderComponentMemo}
                         customStyles={customStyles}
                     />
+
+                    <button className='mt-2 btn btn-secondary'>
+                        <CSVLink className="downloadbtn" filename="my-file.csv" data={csvData}>
+                            <span style={{ color: 'white' }}>
+                                Export to CSV
+                            </span>
+                        </CSVLink>
+                    </button>
                 </div>
+
+
 
             </div>
             {/* </div> */}

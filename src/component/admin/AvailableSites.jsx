@@ -21,6 +21,8 @@ const AvailableSites = () => {
     let isMobileDevice = regexp.test(details);
 
     const [siteImageUpload, setSiteImageUpload] = useState();
+    const [siteTextUpload, setSiteTextUpload] = useState("");
+
     const [siteImages, setSiteImages] = useState();
     const [sideBarState, setSideBarState] = useState("open");
 
@@ -46,7 +48,7 @@ const AvailableSites = () => {
     }
 
     const addSitesImage = () => {
-        if (!siteImageUpload) {
+        if (!siteImageUpload || !siteTextUpload) {
             return;
         }
         try {
@@ -74,7 +76,7 @@ const AvailableSites = () => {
                                 getDownloadURL(snapshot.ref).then(async (url) => {
                                     console.log(url);
                                     const dbService = new UserDataService()
-                                    let image = { url }
+                                    let image = { url, name: siteTextUpload }
                                     const pushImage = await dbService.addData(image, sitesRef);
                                     console.log(pushImage);
                                     showSitesImages();
@@ -130,8 +132,12 @@ const AvailableSites = () => {
 
     const onDrop = useCallback(acceptedFiles => {
 
-        setSiteImageUpload(acceptedFiles)
-        console.log(acceptedFiles)
+        if (acceptedFiles?.length == 1) {
+            setSiteImageUpload(acceptedFiles)
+            console.log(acceptedFiles)
+        } else if (acceptedFiles?.length > 1) {
+            alert("Please upload a single file at a Time.")
+        }
 
         // Do something with the files
     }, [])
@@ -146,15 +152,6 @@ const AvailableSites = () => {
             <Helmet pageTitle="Admin" />
 
 
-            {/* <HeaderThree homeLink="/" logo="symbol-dark" color="color-black" /> */}
-
-            {/* <div className='row'> */}
-            {/* <div onClick={() => { sideBarState == "open" ? setSideBarState("close") : setSideBarState("open") }} className={sideBarState == "open" ? 'col-xl-3 col-lg-3 col-md-3 col-sm-2 col-2' : 'col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2'}>
-                    <SideBar />
-                </div> */}
-
-            {/* <div className={ 'col-xl-9 col-lg-9 col-md-9 col-sm-10 col-10'}> */}
-
             <div className="designer-portfolio-area ptb--70 bg_color--1">
                 <div className="wrapper plr--70 plr_sm--30 plr_md--30">
 
@@ -165,8 +162,8 @@ const AvailableSites = () => {
                             <input {...getInputProps()} />
                             {
                                 isDragActive ?
-                                    <p style={{fontFamily:"arial"}}>Drop the files here ...</p> :
-                                    <p style={{fontFamily:"arial"}}>Drag & drop some Images here, or click to select Images</p>
+                                    <p style={{ fontFamily: "arial" }}>Drop the files here ...</p> :
+                                    <p style={{ fontFamily: "arial" }}>Drag & drop some Images here, or click to select Images</p>
                             }
                         </div>
 
@@ -181,9 +178,10 @@ const AvailableSites = () => {
                         </div>
                     </div>
 
-
-                    {/* <input accept='image/*' type='file' multiple onChange={(e) => setSiteImageUpload(e.target.files)} /> */}
-
+                    <div>
+                        <input className='mt-2 col-4 col-xl-4 col-lg-4 col-md-4' placeholder='Enter Site Name' width="150px" type="text" name="siteName" onChange={((e) => { setSiteTextUpload(e.target.value) })} value={siteTextUpload} />
+                        {/* <input accept='image/*' type='file' multiple onChange={(e) => setSiteImageUpload(e.target.files)} /> */}
+                    </div>
                     <button className='mt-3' onClick={addSitesImage}>Add Sites</button>
 
                     <div style={{ overflow: "scroll", overflowX: "hidden", height: "50vh" }} className='mt-3 row'>
@@ -192,11 +190,12 @@ const AvailableSites = () => {
                             siteImages?.map((imageObj) => {
                                 return (
                                     <div className='col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12'>
-                                        <div style={{height: 140}}>
+                                        <div style={{ height: 140 }}>
                                             <img src={imageObj.url} alt="offer image" />
                                         </div>
-                                        <div className='text-center'>
 
+                                        <div className='text-center'>
+                                            <p>{imageObj?.name}</p>
                                             <button onClick={() => { deleteSiteImage(imageObj?.id) }}>Delete</button>
                                         </div>
                                     </div>

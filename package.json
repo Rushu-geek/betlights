@@ -63,6 +63,7 @@
     "react-color": "^2.19.3",
     "react-color-palette": "^6.2.0",
     "react-countup": "^4.4.0",
+    "react-csv": "^2.2.2",
     "react-data-table-component": "^7.5.3",
     "react-dev-utils": "^9.1.0",
     "react-dom": "^17.0.2",
