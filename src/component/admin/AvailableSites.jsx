@@ -182,15 +182,15 @@ const AvailableSites = () => {
                         <input className='mt-2 col-4 col-xl-4 col-lg-4 col-md-4' placeholder='Enter Site Name' width="150px" type="text" name="siteName" onChange={((e) => { setSiteTextUpload(e.target.value) })} value={siteTextUpload} />
                         {/* <input accept='image/*' type='file' multiple onChange={(e) => setSiteImageUpload(e.target.files)} /> */}
                     </div>
-                    <button className='mt-3' onClick={addSitesImage}>Add Sites</button>
+                    <button className='mt-3' onClick={addSitesImage}>Add Site</button>
 
                     <div style={{ overflow: "scroll", overflowX: "hidden", height: "50vh" }} className='mt-3 row'>
 
                         {
                             siteImages?.map((imageObj) => {
                                 return (
-                                    <div className='col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12'>
-                                        <div style={{ height: 140 }}>
+                                    <div className='col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 mt-3'>
+                                        <div style={{ height: 120 }}>
                                             <img src={imageObj.url} alt="offer image" />
                                         </div>
 

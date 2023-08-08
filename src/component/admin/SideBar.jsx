@@ -79,7 +79,7 @@ const SideBar = () => {
     const onLogout = () => {
         localStorage.clear();
         // this.setState({ isLoggedIn: false })
-        window.location.replace('/')
+        window.location.replace('/admin/login/MC4CAQAwBQYDK2VwBCIEIN8kTZl8xlCcJ9COZ5SUXUXR2QnZ8rCDUh')
     }
 
     useEffect(() => {

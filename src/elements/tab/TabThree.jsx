@@ -23,13 +23,13 @@ class TabStyleThree extends Component {
             color1: '',
             color2: '',
             color3: '',
-            allSites: []
+            // allSites: []
         };
     }
 
     async componentDidMount() {
         this.getColors();
-        this.showSitesImages();
+        // this.showSitesImages();
         const userService = new UserDataService();
         const user = JSON.parse(localStorage.getItem('currentUser'));
         const myIds = await userService.queryUserIds(user.userId);
@@ -38,7 +38,10 @@ class TabStyleThree extends Component {
             idArray.push(doc.data())
         });
         console.log();
-        const allIds = await userService.getAllWebsites();
+
+        const sitesRef = collection(db, 'sites');
+
+        const allIds = await userService.getAllData(sitesRef);
         let allIdArray = [];
         allIds.forEach((doc) => {
             allIdArray.push(doc.data());
@@ -46,10 +49,10 @@ class TabStyleThree extends Component {
 
         allIdArray.forEach((id, index) => {
             idArray.forEach((myId) => {
-                // console.log("myId", myId);
-                // console.log("allId", id);
-                console.log(myId.websiteId == id.websiteId);
-                if (myId.websiteId == id.websiteId) {
+                console.log("myId", myId);
+                console.log("allId", id);
+                console.log(myId.websiteId == id.name);
+                if (myId.websiteId == id.name) {
                     allIdArray[index].userName = myId.userName
                 }
             })
@@ -92,26 +95,26 @@ class TabStyleThree extends Component {
         }
     }
 
-    showSitesImages = async () => {
-        try {
-            const sitesRef = collection(db, 'sites');
-            const dbService = new UserDataService();
+    // showSitesImages = async () => {
+    //     try {
+    //         const sitesRef = collection(db, 'sites');
+    //         const dbService = new UserDataService();
 
-            const data = await dbService.getAllData(sitesRef);
-            let tmpArray = [];
+    //         const data = await dbService.getAllData(sitesRef);
+    //         let tmpArray = [];
 
-            data.forEach((doc) => {
-                let obj = doc.data();
+    //         data.forEach((doc) => {
+    //             let obj = doc.data();
 
-                obj.id = doc.id;
-                tmpArray.push(obj);
-            });
-            console.log(tmpArray);
-            this.setState({ allSites: tmpArray });
-        } catch (err) {
-            console.log(err);
-        }
-    }
+    //             obj.id = doc.id;
+    //             tmpArray.push(obj);
+    //         });
+    //         console.log(tmpArray);
+    //         this.setState({ allSites: tmpArray });
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // }
 
     render() {
         const { column } = this.props;
@@ -148,7 +151,7 @@ class TabStyleThree extends Component {
                         <div className="container">
                             <div className="row creative-service">
                                 <div className="col-lg-12">
-                                    <ServiceList color1={this.state.color1} color2={this.state.color2} color3={this.state.color3} allIds={this.state.allSites} item="6" column="col-lg-4 col-md-6 col-sm-6 col-12 text-left" />
+                                    <ServiceList color1={this.state.color1} color2={this.state.color2} color3={this.state.color3} allIds={this.state.allIds} item="6" column="col-lg-4 col-md-6 col-sm-6 col-12 text-left" />
                                 </div>
                             </div>
                         </div>

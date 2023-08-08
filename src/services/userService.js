@@ -90,6 +90,12 @@ class UserDataService {
         return docs;
     }
 
+    queryUserByUserName = async (number) => {
+        const q = query(collection(db, "users"), where("userName", "==", number));
+        const docs = await getDocs(q);
+        return docs;
+    }
+
     queryUserRequest = async (data) => {
         const q = query(collection(db, "paymentRequests"), where("email", "==", data));
         const docs = await getDocs(q);

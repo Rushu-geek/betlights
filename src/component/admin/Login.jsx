@@ -9,7 +9,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useDropzone } from 'react-dropzone'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-import { Modal } from 'react-bootstrap';
+import { Alert, Modal } from 'react-bootstrap';
 
 const AdminLogin = () => {
 
@@ -18,6 +18,8 @@ const AdminLogin = () => {
 
     const [selectColor1, setSelectColor1] = useState("");
     const [selectColor2, setSelectColor2] = useState("");
+
+    const [message, setMessage] = useState({ display: false, msg: "", type: "" })
 
     useEffect(() => {
         getColors();
@@ -48,6 +50,7 @@ const AdminLogin = () => {
     const onLogin = async (e) => {
         e.preventDefault();
         // this.setState({ message: { display: false, msg: "", type: '' } })
+        setMessage({ display: false, msg: "", type: "" })
         const loginData = {
             number: number,
             password: password
@@ -57,9 +60,15 @@ const AdminLogin = () => {
         try {
             let dbUser = {};
             // console.log(loginData);
-            let user = await service.queryUserByPhone(loginData.number);
+            let user = await service.queryUserByUserName(loginData.number);
 
             console.log(user.size);
+
+            if (!user.size) {
+                alert("user doesn't exist");
+                return
+            }
+
             user.forEach((doc) => {
                 // console.log(doc.id, " => ", doc.data());
                 if (doc.id) {
@@ -73,7 +82,7 @@ const AdminLogin = () => {
                     }
 
                     if (loginData.password != dbUser.password) {
-                        // this.setState({ message: { display: true, msg: "Invalid password", type: 'danger' } })
+                        alert("Invalid password");
                         return;
                     }
 
@@ -91,6 +100,8 @@ const AdminLogin = () => {
                         localStorage.setItem('isAdmin', 'true');
                         return
                     }
+                } else {
+                    alert("user doesn't exist")
                 }
             });
         } catch (e) {
@@ -104,25 +115,27 @@ const AdminLogin = () => {
         <div className='text-center'>
             <Helmet pageTitle="Admin login" />
 
-            <Modal style={{height: 600}} centered show={true}>
+            <Modal style={{ height: 600 }} centered show={true}>
                 <Modal.Header className='text-center' style={{
                     backgroundImage: `linear-gradient(${selectColor1},${selectColor2})`,
                     borderBottomColor: selectColor2,
                 }} closeButton>
-                    <h4 className='mt-2' style={{color: '#fff'}}>Admin Login</h4>
-                    
+                    <h4 className='mt-2' style={{ color: '#fff' }}>Admin Login</h4>
+
                 </Modal.Header>
                 <form onSubmit={(e) => onLogin(e)}>
                     <Modal.Body style={{ backgroundColor: selectColor2, top: 0 }}>
+                        {message.display && <Alert variant={message.type}>
+                            {message.msg}
+                        </Alert>}
                         <div className="rn-form-group">
-                            <PhoneInput
-                                defaultCountry="IN"
+                            <input
                                 value={number}
-                                onChange={phone => setNumber(phone)}
-                                style={{ borderRadius: 7, backgroundColor: 'white'}}
+                                onChange={(e) => setNumber(e.target.value)}
+                                style={{ borderRadius: 7, backgroundColor: 'white' }}
                                 type="text"
-                                name="Number"
-                                placeholder="Mobile Number"
+                                name="User Name"
+                                placeholder="User Name"
                                 required
                             />
                         </div>
@@ -130,14 +143,14 @@ const AdminLogin = () => {
                             <input
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                style={{ borderRadius: 7, backgroundColor: 'white'}}
+                                style={{ borderRadius: 7, backgroundColor: 'white' }}
                                 type="password"
                                 name="password"
                                 placeholder="Password"
                                 required
                             />
                         </div>
-                        
+
                     </Modal.Body>
                     <Modal.Footer style={{ backgroundColor: selectColor2, borderTopColor: selectColor2, alignContent: 'center', justifyContent: 'center' }}>
                         <button type="submit" className="rn-btn">
