@@ -51,12 +51,34 @@ class HeaderThree extends Component {
             logoImage: "",
             color1: "",
             color2: "",
-            color3: ""
+            color3: "",
+            instaLink: ""
         }
     }
 
 
     async componentDidMount() {
+
+        const getSocialLinks = async () => {
+            try {
+                // alert("in footer" + props.phone)
+                const socialLinks = collection(db, 'social');
+                const dbService = new UserDataService();
+                const data = await dbService.getAllData(socialLinks);
+                let tmpArray = [];
+                data.forEach((doc) => {
+                    let obj = doc.data();
+                    obj.id = doc.id;
+                    tmpArray.push(obj);
+                });
+                this.setState({ instaLink: tmpArray[0].social.insta })
+            } catch (err) {
+                console.log(err);
+
+            }
+        }
+
+        getSocialLinks();
 
 
         const getColors = async () => {
@@ -388,7 +410,7 @@ class HeaderThree extends Component {
             {
                 Social: <FaWhatsapp size={`${isMobileDevice ? 35 : 40}`} fill={this.state.color3} />, link: `https://api.whatsapp.com/send?phone=${this.state.phone2}&text=Hi I want to get ID!.`
             },
-            { Social: <FaInstagram size={`${isMobileDevice ? 35 : 40}`} fill={this.state.color3} />, link: 'https://www.instagram.com/betlights365?igshid=MzRlODBiNWFlZA==' }
+            { Social: <FaInstagram size={`${isMobileDevice ? 35 : 40}`} fill={this.state.color3} />, link: `${this.state.instaLink}` }
         ]
 
         const dynamicScreensData = [{ title: 'Carousel', link: "/admin/carousel" }, { title: 'Offers', link: "/admin/offers" }, { title: 'Available Sites', link: "/admin/sites" }, { title: 'Video', link: "/admin/video" }, { title: 'Testimonials', link: "/admin/testimonials" }, { title: 'Counts', link: "/admin/counts" }, { title: 'Social Media', link: "/admin/carousel" }]
@@ -401,10 +423,6 @@ class HeaderThree extends Component {
                     // borderBottom: '3px solid #42c2e2',
                     position: 'fixed',
                 }} className={`header-area header-style-two header--fixed ${color}`}>
-
-                    {/* {isMobileDevice && <a style={{ marginLeft: -80 }} href={this.props.homeLink}>
-                    {logoUrl}
-                </a>} */}
 
                     <div className="row">
                         <div className="col-3">
@@ -487,12 +505,17 @@ class HeaderThree extends Component {
                                 </nav>
 
                                 <Modal centered show={this.state.show} onHide={() => this.handleClose()}>
-                                    <ModalHeader className="text-center" closeLabel="close" style={{ alignContent: 'center', justifyContent: 'center', backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`, borderBottomColor: this.state.color1 }} closeButton>
-                                        {/* {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">ghg</Modal.Title>} */}
-                                        <div className="text-center" style={{ paddingLeft: !isMobileDevice ? 120 : 70, backgroundColor: '' }}>
-                                            <img style={{ justifyContent: "center", alignItems: "center" }} height={130} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
+                                    <Modal.Header style={{
+                                        backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
+                                        borderBottomColor: this.state.color1,
+                                        alignContent: 'center',
+                                        justifyContent: 'center'
+                                    }} closeButton>
+                                        {/* {!isMobileDevice && <Modal.Title style={{ color: 'transparent' }} className="text-center">Login hvvh</Modal.Title>} */}
+                                        <div className="text-center ml-7">
+                                            <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 120 }} height={130} width={'auto'} src={this.state.logoImage} alt="Digital Agency" />
                                         </div>
-                                    </ModalHeader>
+                                    </Modal.Header>
                                     <form onSubmit={(e) => this.onRegister(e)}>
                                         <Modal.Body style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1 }}>
                                             {this.state.message.display && <Alert variant={this.state.message.type}>
@@ -744,8 +767,6 @@ class HeaderThree extends Component {
                             </div>
                         </div>
                     </div>
-
-
 
                 </header>}
 
