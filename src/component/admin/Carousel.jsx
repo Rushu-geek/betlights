@@ -59,7 +59,7 @@ const Carousel = () => {
             const imagesArr = Object.values(imageUpload);
             console.log(Object.values(imageUpload));
 
-            imagesArr.map((image) => {
+            imagesArr.map((image,index) => {
 
                 // getting the dimensions of the Image.
                 const img = new Image();
@@ -79,6 +79,7 @@ const Carousel = () => {
                                     const pushImage = await dbService.addData(image, carouselRef);
                                     console.log(pushImage);
                                     showCarouselImages();
+                                    if(index==0)
                                     alert("Changes applied successfully")
 
                                     // showImages();

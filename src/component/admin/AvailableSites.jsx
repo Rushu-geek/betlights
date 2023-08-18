@@ -59,7 +59,7 @@ const AvailableSites = () => {
             const imagesArr = Object.values(siteImageUpload);
             console.log(Object.values(siteImageUpload));
 
-            imagesArr.map((image) => {
+            imagesArr.map((image,index) => {
 
 
                 const img = new Image();
@@ -80,6 +80,7 @@ const AvailableSites = () => {
                                     const pushImage = await dbService.addData(image, sitesRef);
                                     console.log(pushImage);
                                     showSitesImages();
+                                    if(index==0)
                                     alert("Changes applied successfully")
 
                                 })

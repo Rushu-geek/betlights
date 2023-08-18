@@ -55,7 +55,7 @@ const Offers = () => {
             const imagesArr = Object.values(offerImageUpload);
             console.log(Object.values(offerImageUpload));
 
-            imagesArr.map((image) => {
+            imagesArr.map((image,index) => {
 
                 const img = new Image();
                 img.src = URL.createObjectURL(image);
@@ -75,6 +75,7 @@ const Offers = () => {
                                     const pushImage = await dbService.addData(image, carouselRef);
                                     console.log(pushImage);
                                     showOfferImages();
+                                    if(index==0)
                                     alert("Changes applied successfully")
                                 })
                             })
