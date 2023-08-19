@@ -96,12 +96,12 @@ export const slickDot = {
 
 export const slideSlick = {
     infinite: true,
-    slidesToShow: 6,
+    // slidesToShow: 6,
     slidesToScroll: 1,
     dots: false,
     arrows: true,
     autoplay: true,
-    autoplaySpeed: 3500,
+    autoplaySpeed: 5000,
     fade: true,
     easing: "fade",
     adaptiveHeight: true

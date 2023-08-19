@@ -483,16 +483,18 @@ const PortfolioLanding = () => {
                                 <div className="section-title service-style--2 mb--30 mb_sm--0">
                                     <button style={{
                                         backgroundColor: color1,
-                                        color: 'white'
-                                    }} type="button" className="rj-btn p-2" onClick={() => {
+                                        color: 'white',
+                                        width: 330
+                                    }} type="button" className="rj-btn" onClick={() => {
                                         window.open(`https://api.whatsapp.com/send?phone=${phone1}&text=Hi I want to get ID!`, "_blank");
                                     }} >
                                         <span style={{ fontWeight: 'bold', textShadow: '0 0 1px #000, 0 0 1px #000', fontSize: 21 }}>{phone1}</span>
                                     </button>
                                     <button style={{
                                         backgroundColor: color1,
-                                        color: 'white'
-                                    }} type="button" className={`rj-btn  p-2 ${!isMobileDevice ? 'ml-3' : 'mt-3'}`} onClick={() => {
+                                        color: 'white',
+                                        width: 330
+                                    }} type="button" className={`rj-btn ${!isMobileDevice ? 'ml-3' : 'mt-3'}`} onClick={() => {
                                         window.open(`https://api.whatsapp.com/send?phone=${phone2}&text=Hi I want to get ID!`, "_blank");
                                     }}>
                                         <span style={{ fontWeight: 'bold', textShadow: '0 0 1px #000, 0 0 1px #000', fontSize: 21 }}>{phone2}</span>
