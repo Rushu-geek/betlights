@@ -113,6 +113,7 @@ const PortfolioLanding = () => {
             tmpArray.push(obj);
         });
         console.log(tmpArray);
+        tmpArray.sort((a, b) => { return a?.date - b?.date });
         setCarouselImages(tmpArray);
 
     }

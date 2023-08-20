@@ -40,6 +40,7 @@ const Carousel = () => {
                 obj.id = doc.id;
                 tmpArray.push(obj);
             });
+            tmpArray.sort((a, b) => { return a?.date - b?.date });
             console.log(tmpArray);
             setCarouselImages(tmpArray);
         } catch (err) {
@@ -59,7 +60,9 @@ const Carousel = () => {
             const imagesArr = Object.values(imageUpload);
             console.log(Object.values(imageUpload));
 
-            imagesArr.map((image,index) => {
+            imagesArr.map((image, index) => {
+
+                let imgObj = { date: Date.now() }
 
                 // getting the dimensions of the Image.
                 const img = new Image();
@@ -75,12 +78,12 @@ const Carousel = () => {
                                 getDownloadURL(snapshot.ref).then(async (url) => {
                                     console.log(url);
                                     const dbService = new UserDataService()
-                                    let image = { url }
-                                    const pushImage = await dbService.addData(image, carouselRef);
+                                    imgObj['url'] = url;
+                                    const pushImage = await dbService.addData(imgObj, carouselRef);
                                     console.log(pushImage);
                                     showCarouselImages();
-                                    if(index==0)
-                                    alert("Changes applied successfully")
+                                    if (index == 0)
+                                        alert("Changes applied successfully")
 
                                     // showImages();
                                 })
@@ -152,13 +155,13 @@ const Carousel = () => {
 
                     <h4 className='text-center'>Banner Images</h4>
 
-                    <div className='row p-4' style={{border:"1px solid black"}}>
+                    <div className='row p-4' style={{ border: "1px solid black" }}>
                         <div {...getRootProps()}>
                             <input {...getInputProps()} />
                             {
                                 isDragActive ?
-                                    <p style={{fontFamily:"arial"}}>Drop the files here ...</p> :
-                                    <p style={{fontFamily:"arial"}}>Drag & drop some Images here, or click to select Images</p>
+                                    <p style={{ fontFamily: "arial" }}>Drop the files here ...</p> :
+                                    <p style={{ fontFamily: "arial" }}>Drag & drop some Images here, or click to select Images</p>
                             }
                         </div>
 
