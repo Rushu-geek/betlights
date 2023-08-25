@@ -60,6 +60,7 @@ const Carousel = () => {
             const imagesArr = Object.values(imageUpload);
             console.log(Object.values(imageUpload));
 
+            let validationFlag = true;
             imagesArr.map((image, index) => {
 
                 let imgObj = { date: Date.now() }
@@ -90,11 +91,16 @@ const Carousel = () => {
                             })
 
                         } else {
-                            alert("Image size should not exceed 200 kb.")
+                            if (validationFlag)
+                                alert("Image size should not exceed 200 kb.")
+                            validationFlag = false
                         }
 
                     } else {
-                        alert("Image width should be 1920 pixels and height should be 640 pixels.");
+                        if (validationFlag)
+                            alert("Image width should be 1920 pixels and height should be 640 pixels.");
+                        validationFlag = false
+
                     }
                 };
 
@@ -102,9 +108,6 @@ const Carousel = () => {
                     console.log("img error");
                     console.error(err);
                 };
-
-
-
             })
             showCarouselImages();
             setImageUpload(undefined)

@@ -55,7 +55,8 @@ const Offers = () => {
             const imagesArr = Object.values(offerImageUpload);
             console.log(Object.values(offerImageUpload));
 
-            imagesArr.map((image,index) => {
+            let validationFlag = true;
+            imagesArr.map((image, index) => {
 
                 const img = new Image();
                 img.src = URL.createObjectURL(image);
@@ -75,16 +76,22 @@ const Offers = () => {
                                     const pushImage = await dbService.addData(image, carouselRef);
                                     console.log(pushImage);
                                     showOfferImages();
-                                    if(index==0)
-                                    alert("Changes applied successfully")
+                                    if (index == 0)
+                                        alert("Changes applied successfully")
                                 })
                             })
 
                         } else {
-                            alert("Image size should not exceed 200 kb.")
+                            if (validationFlag)
+                                alert("Image size should not exceed 200 kb.")
+                            validationFlag = false
+
                         }
                     } else {
-                        alert("Image width should be 1014 pixels and height should be 553 pixels.");
+                        if (validationFlag)
+                            alert("Image width should be 1014 pixels and height should be 553 pixels.");
+                        validationFlag = false
+
                     }
 
                 };
@@ -145,8 +152,8 @@ const Offers = () => {
                             <input {...getInputProps()} />
                             {
                                 isDragActive ?
-                                    <p style={{fontFamily:"arial"}}>Drop the files here ...</p> :
-                                    <p style={{fontFamily:"arial"}}>Drag & drop some Images here, or click to select Images</p>
+                                    <p style={{ fontFamily: "arial" }}>Drop the files here ...</p> :
+                                    <p style={{ fontFamily: "arial" }}>Drag & drop some Images here, or click to select Images</p>
                             }
                         </div>
 

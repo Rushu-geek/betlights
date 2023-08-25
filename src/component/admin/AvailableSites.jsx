@@ -59,7 +59,9 @@ const AvailableSites = () => {
             const imagesArr = Object.values(siteImageUpload);
             console.log(Object.values(siteImageUpload));
 
-            imagesArr.map((image,index) => {
+            let validationFlag = true;
+
+            imagesArr.map((image, index) => {
 
 
                 const img = new Image();
@@ -80,19 +82,24 @@ const AvailableSites = () => {
                                     const pushImage = await dbService.addData(image, sitesRef);
                                     console.log(pushImage);
                                     showSitesImages();
-                                    if(index==0)
-                                    alert("Changes applied successfully")
+                                    if (index == 0)
+                                        alert("Changes applied successfully")
 
                                 })
                             })
 
 
                         } else {
-                            alert("Image size should not exceed 200 kb.")
+                            if (validationFlag)
+                                alert("Image size should not exceed 200 kb.")
+                            validationFlag = false
 
                         }
                     } else {
-                        alert("Image width and height should be less than or equal to 386 pixels and height should be 200 pixels.");
+                        if (validationFlag)
+                            alert("Image width and height should be less than or equal to 386 pixels and height should be 200 pixels.");
+                        validationFlag = false
+
                     }
 
                 };
