@@ -42,6 +42,10 @@ function UserList() {
             selector: row => row.email,
         },
         {
+            name: 'Password',
+            selector: row => row.password,
+        },
+        {
             name: 'Website',
             selector: row => row.websiteId || 'NA',
         },
@@ -80,10 +84,11 @@ function UserList() {
 
     const csvData = [
         ["Name", "Number", "Email", "Website", "User Name"],
-        ...filteredItems.map(({ fullName, number, email, website, userName }) => [
+        ...filteredItems.map(({ fullName, number, email, password, website, userName }) => [
             fullName,
             number,
             email,
+            password,
             website,
             userName,
         ]),

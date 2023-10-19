@@ -541,7 +541,7 @@ class HeaderThree extends Component {
                                                     className="mb-4"
                                                     type="email"
                                                     name="email"
-                                                    placeholder="Email"
+                                                    placeholder="Email (Optional)"
                                                     required
                                                 />
                                             </div>

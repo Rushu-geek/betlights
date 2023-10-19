@@ -125,12 +125,12 @@ class ServiceTwo extends Component {
                                             <div className="content text-center">
                                                 <h3 style={{ color: 'white', height: val.name == 'SkyExch' ? 40 : 0 }} className="title">{val.name}</h3>
                                                 {val.userName && <p style={{ color: 'white' }}>UserName: {val.userName}</p>}
-                                                {isMobileDevice && <button style={{ lineHeight: 3, color: this.props.color1, borderRadius: 6, borderColor: '#18b0c8' }} onClick={() => this.onCreateId(val.websiteId, val.userName, val.url)} type="button" className={`${i != 1 ? 'mt-4' : ''}`}>
+                                                {isMobileDevice && <button style={{ lineHeight: 3, color: this.props.color1, borderRadius: 6, borderColor: '#fff', color: 'white' }} onClick={() => this.onCreateId(val.websiteId, val.userName, val.url)} type="button" className={`${i != 1 ? 'mt-4' : 'mt-4'}`}>
                                                     {!val.userName && <span style={{ lineHeight: 0 }}>CREATE ID AND DEPOSIT MONEY</span>}
                                                     {val.userName && <span>Deposit money</span>}
                                                 </button>}
 
-                                                {!isMobileDevice && <button style={{color: this.props.color3, borderColor: this.props.color3, bottom: 0}}  onClick={() => this.onCreateId(val.name, val.userName, val.url)} type="button" className={`rn-btn ${i != 1 ? 'mt-4' : ''}`}>
+                                                {!isMobileDevice && <button style={{color: this.props.color3, borderColor: this.props.color3, bottom: 0}}  onClick={() => this.onCreateId(val.name, val.userName, val.url)} type="button" className={`rn-btn ${i != 1 ? 'mt-4' : 'mt-4'}`}>
                                                     {!val.userName && <span style={{ lineHeight: 0 }}>Create ID and deposit money</span>}
                                                     {val.userName && <span>Deposit money</span>}
                                                 </button>}

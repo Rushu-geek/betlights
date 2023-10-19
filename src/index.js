@@ -88,7 +88,7 @@ class Root extends Component {
                             <Route exact path={`/paralax`} component={Paralax} />
                             {localStorage.getItem('currentUser') && <Route exact path={`/dashboard`} component={Dashboard} />}
                             {localStorage.getItem('currentUser') && <Route exact path={`/admin`} component={SideBar} />}
-                            {<Route exact path={`/admin/login/MC4CAQAwBQYDK2VwBCIEIN8kTZl8xlCcJ9COZ5SUXUXR2QnZ8rCDUh`} component={AdminLogin} />}
+                            {<Route exact path={`/admin/login`} component={AdminLogin} />}
 
                             {<Route exact path={`/admin/password`} component={AdminPassword} />}
 

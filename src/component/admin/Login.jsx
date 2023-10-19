@@ -153,7 +153,7 @@ const AdminLogin = () => {
 
                     </Modal.Body>
                     <Modal.Footer style={{ backgroundColor: selectColor2, borderTopColor: selectColor2, alignContent: 'center', justifyContent: 'center' }}>
-                        <button type="submit" className="rn-btn">
+                        <button style={{color: 'white', borderColor: 'white'}} type="submit" className="rn-btn">
                             <span>Login</span>
                         </button>
                     </Modal.Footer>

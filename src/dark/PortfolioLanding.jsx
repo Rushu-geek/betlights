@@ -17,6 +17,9 @@ import ModalVideo from 'react-modal-video';
 import { FaInstagram, FaTelegram } from 'react-icons/fa';
 import { collection } from 'firebase/firestore';
 import db from "../firebase";
+import { Alert, Modal } from 'react-bootstrap';
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 const image1 = "/assets/images/bg/8.png";
 const image2 = "/assets/images/bg/7.png";
@@ -56,6 +59,17 @@ const PortfolioLanding = () => {
     const [teleGramLink, setTelegramLink] = useState("");
     const [color1, setColor1] = useState("");
     const [color2, setColor2] = useState("");
+    const [color3, setColor3] = useState("");
+
+    const [showLogin, setShowLogin] = useState(false);
+
+    const [message, setMessage] = useState({ display: false, msg: "", type: "" });
+
+    const [logoImage, setLogoImage] = useState("");
+
+    const [number, setNumber] = useState("");
+
+    const [password, setPassword] = useState("");
 
     const getVideo = async () => {
         const videoRef = collection(db, 'video');
@@ -160,10 +174,29 @@ const PortfolioLanding = () => {
 
             setColor1(tmpArray[0]?.color1);
             setColor2(tmpArray[0]?.color2);
+            setColor3(tmpArray[0]?.color3);
 
         } catch (err) {
             console.log(err);
+        }
+    }
 
+    const getlogo = async () => {
+        const logoRef = collection(db, 'logo');
+        const dbService = new UserDataService();
+
+        const data = await dbService.getAllData(logoRef);
+        let tmpArray = [];
+
+        data.forEach((doc) => {
+            let obj = doc.data();
+
+            obj.id = doc.id;
+            tmpArray.push(obj);
+        });
+        if (tmpArray?.length == 1) {
+            console.log(tmpArray[0]?.url);
+            setLogoImage(tmpArray[0]?.url);
         }
     }
 
@@ -181,6 +214,7 @@ const PortfolioLanding = () => {
         getOffers();
         getSocialLinks();
         getColors();
+        getlogo();
     }, []);
 
     // useEffect(() => {
@@ -214,7 +248,85 @@ const PortfolioLanding = () => {
         styleSheet.insertRule(keyframesStyle, styleSheet.cssRules.length);
     }, [color1, color2])
 
+    const inputStyleNo = {
+        color: "#000000",
+        borderRadius: 0,
+        borderColor: color1,
+        backgroundColor: 'white',
+    }
 
+    const inputStyle = {
+        color: "#000000",
+        borderRadius: 0,
+        borderColor: color1,
+        backgroundColor: 'white',
+    }
+
+    const handleCloseLogin = () => {
+        setShowLogin(false)
+    }
+
+    const handleShowLogin = () => {
+        setShowLogin(true)
+    }
+
+    const onLogin = async (e) => {
+        e.preventDefault();
+        setMessage({ message: { display: false, msg: "", type: '' } })
+        const loginData = {
+            number: number,
+            password: password
+        }
+        const service = new UserDataService();
+
+        try {
+            let dbUser = {};
+            // console.log(loginData);
+            let user = await service.queryUserByPhone(loginData.number);
+
+            console.log(user.size);
+            user.forEach((doc) => {
+                // console.log(doc.id, " => ", doc.data());
+                if (doc.id) {
+                    dbUser = {
+                        userId: doc.id,
+                        email: doc.data().email,
+                        fullName: doc.data()?.fullName,
+                        password: doc.data().password,
+                        number: doc.data()?.number,
+                    }
+
+                    if (loginData.password != dbUser.password) {
+                        setMessage({ display: true, msg: "Invalid password", type: 'danger' })
+                        return;
+                    }
+
+                    localStorage.setItem('currentUser', JSON.stringify({
+                        userId: doc.id,
+                        email: doc.data().email,
+                        fullName: doc.data().fullName,
+                        password: doc.data().password,
+                        number: doc.data().number,
+                    }))
+                    setShowLogin(false)
+                    if (dbUser.email == "admin@betlights.com") {
+                        window.location.replace('/admin/');
+                        localStorage.setItem('isAdmin', 'true');
+                        return
+                    }
+                    window.location.replace('/dashboard')
+                    // console.log("navigation");
+                }
+            });
+            // console.log(">>>>>>", dbUser)
+            if (!message.display)
+                setMessage({ display: true, msg: "User Doesn't Exist!", type: 'danger' })
+
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
 
     return (
         <div className="active-light">
@@ -316,10 +428,10 @@ const PortfolioLanding = () => {
                 </div>
                 <div className="row" style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <button style={{
-                        backgroundColor: {color1},
+                        backgroundColor: { color1 },
                         height: 90,
                         boxShadow: `0 0 20px 1px ${color1}`,
-                        color: {color1},
+                        color: { color1 },
                         animation: `color-change 1s infinite`,
                     }} type="button" className="rj-btn mt-3 changeColor" onClick={() => {
                         window.open(`https://api.whatsapp.com/send?phone=${phone1}&text=Hi I want to get ID!`, "_blank");
@@ -388,7 +500,7 @@ const PortfolioLanding = () => {
             </div>
             {/* End Service Area  */}
 
-            <div id='home1' style={{ position: 'relative', }}>
+            <div id='deal' style={{ position: 'relative', }}>
                 <div id='video-container' style={{ zIndex: -1 }}>
 
                     <video autoPlay loop muted style={{ width: '100%', height: '50%' }} src={siteVideo}>
@@ -447,18 +559,68 @@ const PortfolioLanding = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
-                            <BrandOne color1={color1} color2={color2} branstyle="branstyle--2" />
+                            <BrandOne showLogin={handleShowLogin} color1={color1} color2={color2} branstyle="branstyle--2" />
                         </div>
                     </div>
                 </div>
             </div>
             {/* End Brand Area  */}
 
+            <Modal centered show={showLogin} onHide={() => handleCloseLogin()}>
+                <Modal.Header style={{
+                    backgroundImage: `linear-gradient(${color2},${color1})`,
+                    borderBottomColor: color1,
+                    alignContent: 'center',
+                    justifyContent: 'center'
+                }} closeButton>
+                    <div className="text-center ml-7">
+                        <img style={{ justifyContent: "center", alignItems: "center", marginLeft: isMobileDevice ? 60 : 120 }} height={130} width={'auto'} src={logoImage} alt="Digital Agency" />
+                    </div>
+                </Modal.Header>
+                <form onSubmit={(e) => onLogin(e)}>
+                    <Modal.Body style={{ backgroundColor: color1, top: 0 }}>
+                        {message.display && <Alert variant={message.type}>
+                            {message.msg}
+                        </Alert>}
+                        <div className="rn-form-group" style={inputStyleNo}>
+                            <PhoneInput
+                                defaultCountry="IN"
+                                value={number}
+                                onChange={phone => setNumber(phone)}
+                                style={inputStyleNo}
+                                type="text"
+                                name="Number"
+                                placeholder="Mobile Number"
+                                required
+                            />
+                        </div>
+                        <div className="rn-form-group mt-3">
+                            <input
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                style={inputStyle}
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                required
+                            />
+                        </div>
+                        {/* <p className="mt-3" style={{ color: color3 }}>Don't Have an Account? <a style={{ color: color3, cursor: 'pointer' }} onClick={() => this.setState({ show: true, showLogin: false })}>Register</a> </p> */}
+                        {/* <p className="mt-3" style={{ color: color3 }}> <a style={{ color: color3, cursor: 'pointer' }} onClick={() => this.setState({ showFwp: true, showLogin: false })}>Forgot Password</a> </p> */}
+                    </Modal.Body>
+                    <Modal.Footer style={{ backgroundColor: color1, borderTopColor: color1, alignContent: 'center', justifyContent: 'center' }}>
+                        <button style={{ color: color3, borderColor: color3 }} type="submit" className="rn-btn">
+                            <span>Login</span>
+                        </button>
+                    </Modal.Footer>
+                </form>
+            </Modal>
+
 
 
 
             <Parallax className="rn-paralax-portfolio" bgImage={isMobileDevice ? image3 : image1} strength={200} >
-                <div id="deal" className="portfolio-area ptb--120" data-black-overlay="1">
+                <div id="support" className="portfolio-area ptb--120" data-black-overlay="1">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-12">
@@ -670,11 +832,11 @@ const PortfolioLanding = () => {
                                     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3" key={i}>
                                         <a className="text-center">
                                             <div className="service service__style--27">
-                                                <div style={{color: color1}} className="icon">
+                                                <div style={{ color: color1 }} className="icon">
                                                     {val.icon}
                                                 </div>
                                                 <div className="content">
-                                                    <h3 style={{color: color2}} className="title">{val.title}</h3>
+                                                    <h3 style={{ color: color2 }} className="title">{val.title}</h3>
                                                 </div>
                                             </div>
                                         </a>
@@ -695,11 +857,11 @@ const PortfolioLanding = () => {
                     <div className="text-center">
                         <button onClick={() => {
                             window.open(`${teleGramLink}`, "_blank");
-                        }} className='changeColor btn mr-5' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25,backgroundColor:{color1}, animation: `color-change 1s infinite`, }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
+                        }} className='changeColor btn mr-5' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25, backgroundColor: { color1 }, animation: `color-change 1s infinite`, }}>JOIN US ON TELEGRAM <FaTelegram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
 
                         <button onClick={() => {
                             window.open(`${instaLink}`, "_blank");
-                        }} className='changeColor btn' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25,animation: `color-change 1s infinite`,backgroundColor:{color1}, }}>JOIN US ON INSTAGRAM <FaInstagram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
+                        }} className='changeColor btn' id="myButton" style={{ height: 90, width: 600, fontWeight: 'bold', fontSize: 25, animation: `color-change 1s infinite`, backgroundColor: { color1 }, }}>JOIN US ON INSTAGRAM <FaInstagram className='ml-2' size={`${isMobileDevice ? 35 : 40}`} fill="white" /></button>
                     </div>
 
                 </div>}

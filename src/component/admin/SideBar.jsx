@@ -79,7 +79,7 @@ const SideBar = () => {
     const onLogout = () => {
         localStorage.clear();
         // this.setState({ isLoggedIn: false })
-        window.location.replace('/admin/login/MC4CAQAwBQYDK2VwBCIEIN8kTZl8xlCcJ9COZ5SUXUXR2QnZ8rCDUh')
+        window.location.replace('/admin/login')
     }
 
     useEffect(() => {
@@ -119,7 +119,7 @@ const SideBar = () => {
                     <MenuItem onClick={() => { setactiveTab("manageTheme") }} icon={<HelpOutlineOutlinedIcon />}>
                         MANAGE THEME
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem onClick={() => onLogout()}>
                         {/* <button onClick={() => onLogout()} type="button" className="rn-btn mt-3"> */}
                         <span onClick={() => onLogout()} >LOGOUT</span>
                         {/* </button> */}

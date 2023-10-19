@@ -18,7 +18,7 @@ class BrandTwo extends Component {
                     </div>
 
                     {!isMobileDevice && <div className="col-9 col-md-9" style={{ backgroundColor: '' }}>
-                        <ul className="brand-style-2">
+                        <ul className="brand-style-2" onClick={() => this.props.showLogin()}>
                             <li>
                                 <img style={{ maxHeight: 220, maxWidth: 300 }} src="/assets/images/brand/gpay.webp" alt="Logo Images" />
                             </li>
