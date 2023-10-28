@@ -379,7 +379,7 @@ class HeaderThree extends Component {
 
 
         // /assets/images/logo/betNew.png
-        let logoUrl = <img height={85} src={this.state.logoImage} alt="Digital Agency" />;
+        let logoUrl = <img height={100} src={this.state.logoImage} alt="Digital Agency" />;
 
         let details = navigator.userAgent;
 
@@ -774,7 +774,6 @@ class HeaderThree extends Component {
                 {isMobileDevice && <header style={{
                     backgroundColor: window.location.pathname != '/' ? this.state.color1 : this.state.color1,
                     top: -10, height: 100, backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
-                    borderBottom: '4px solid #42c2e2',
                     position: 'fixed',
                 }} className={`header-area header-style-two header--fixed ${color}`}>
 

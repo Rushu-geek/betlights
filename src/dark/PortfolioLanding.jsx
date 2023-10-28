@@ -330,7 +330,7 @@ const PortfolioLanding = () => {
 
     return (
         <div className="active-light">
-            <Helmet pageTitle="Vicky Club" />
+            <Helmet pageTitle="Thomas Gaming" />
 
             <HeaderThree phone={phone1} homeLink="/" logo="symbol-dark" color="color-black" />
             {/* Start Slider Area   */}

@@ -61,9 +61,9 @@ const Logo = () => {
 
                 console.log(img?.height, img?.width);
 
-                if ((img?.height == 60 && img?.width == 274)) {
+                if ((img?.height == 500 && img?.width == 500)) {
 
-                    if (image?.size * 0.001 <= 10) {
+                    if (image?.size * 0.001 >= 10) {
 
                         if (currentLogoId) {
                             const delData = await dbService.deleteData(db, 'logo', currentLogoId);
