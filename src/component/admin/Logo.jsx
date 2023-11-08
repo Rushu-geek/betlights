@@ -90,7 +90,7 @@ const Logo = () => {
                     }
 
                 } else {
-                    alert("Image width should be 274 pixels and height should be 60 pixels.");
+                    alert("Image width should be 500 pixels and height should be 500 pixels.");
                 }
             };
 
