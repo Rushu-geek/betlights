@@ -163,7 +163,7 @@ const FooterTwo = (props) => {
                     <div className="col-lg-4 col-md-12 col-sm-12 col-12">
                         <div className="inner text-lg-right text-center mt_md--20 mt_sm--20">
                             <div className="text">
-                                <p style={{ color: color3 }}>Copyright © 2022 Vicky Club. All Rights Reserved.</p>
+                                <p style={{ color: color3 }}>Copyright © 2022 Bet Lights. All Rights Reserved.</p>
                             </div>
                         </div>
                     </div>
