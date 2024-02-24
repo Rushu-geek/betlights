@@ -19,7 +19,6 @@ import { collection } from 'firebase/firestore';
 import UserDataService from '../../services/userService';
 import db from "../../firebase";
 
-
 class HeaderThree extends Component {
     constructor(props) {
         super(props);
@@ -129,6 +128,29 @@ class HeaderThree extends Component {
 
         getlogo()
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        const dbService = new UserDataService();
+
+        if (currentUser) {
+
+            try {
+                const userData = await dbService.getUser(currentUser?.userId);
+
+                console.log(userData.data())
+
+                if (userData.data().token != currentUser?.token)
+                    this.onLogout()
+               
+
+            } catch (err) {
+                console.error(err)
+                throw err;
+            }
+
+        }
+
+
+
         let admin = JSON.parse(localStorage.getItem('isAdmin'));
         // console.log('currentUser', window.location);
         currentUser ? this.setState({ isLoggedIn: true }) : this.setState({ isLoggedIn: false });
@@ -205,7 +227,8 @@ class HeaderThree extends Component {
                 fullName: this.state.fullName,
                 email: this.state.email.toLowerCase(),
                 password: this.state.password,
-                number: this.state.number
+                number: this.state.number,
+                token: ""
             }
             const service = new userService()
 
@@ -234,6 +257,7 @@ class HeaderThree extends Component {
         }
     }
 
+
     async onLogin(e) {
         e.preventDefault();
         this.setState({ message: { display: false, msg: "", type: '' } })
@@ -249,7 +273,7 @@ class HeaderThree extends Component {
             let user = await service.queryUserByPhone(loginData.number);
 
             console.log(user.size);
-            user.forEach((doc) => {
+            user.forEach(async (doc) => {
                 // console.log(doc.id, " => ", doc.data());
                 if (doc.id) {
                     dbUser = {
@@ -265,13 +289,29 @@ class HeaderThree extends Component {
                         return;
                     }
 
+                    const token = Math.random().toString(36).slice(2);
+
+                    console.log("token <<<");
+                    console.log(token);
+
+                    const dbService = new UserDataService();
+
+                    const data = await dbService.updateData(db, 'users', doc.id, {
+                        token
+                    });
+
+                    console.log("data <<<<<")
+                    console.log(data)
+
                     localStorage.setItem('currentUser', JSON.stringify({
                         userId: doc.id,
                         email: doc.data().email,
                         fullName: doc.data().fullName,
                         password: doc.data().password,
                         number: doc.data().number,
+                        token
                     }))
+
                     this.setState({ isLoggedIn: true, showLogin: false });
                     if (dbUser.email == "admin@betlights.com") {
                         window.location.replace('/admin/');
