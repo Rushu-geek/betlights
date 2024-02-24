@@ -65,7 +65,7 @@ class ServiceTwo extends Component {
 
     async sendDetailsToWhatsapp() {
         console.log(this.state);
-        window.open(`https://api.whatsapp.com/send?phone=${this.state.phone1}&text=website: ${this.state.selectedIdName} userName: ${this.state.userName} amount: ${this.state.amount}`, "_blank");
+        window.open(`https://api.whatsapp.com/send?phone=${this.state.phone1}&text=Website: ${this.state.selectedIdName} User Name: ${this.state.userName} Amount: ${this.state.amount}`, "_blank");
         const paymentReq = {
             requestStatus: false,
             userName: this.state.userName,

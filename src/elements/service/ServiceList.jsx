@@ -115,20 +115,21 @@ class ServiceThree extends Component {
 
         return (
             <React.Fragment>
-                {/* <div className={`row ${!isMobileDevice ? 'ml-5' : ''}`}> */}
-                <div className="row text-center">
+                <div className={`${!isMobileDevice ? 'ml-5' : ''}`}>
+                    <div className="row text-center">
 
-                    {this.state.sites?.map((val, i) => (
-                        <div className="col-lg-4 col-md-4 col-sm-12 col-12" key={i}>
-                            <a style={{ cursor: 'pointer' }}>
-                                <div style={{ width: 300, height: 200, boxShadow: `0 0 9px ${this.props.color1}`, backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})` }} className="service service__style--2 text-center">
-                                    <div className="">
-                                        <img style={{ height: i == 0 ? 60 : i == 3 ? 90 : i == 5 ? 80 : '' }} src={val?.url} />
+                        {this.state.sites?.map((val, i) => (
+                            <div className="col-lg-4 col-md-4 col-sm-12 col-12" key={i}>
+                                <a href={val?.redirectUrl} target="_blank" style={{ cursor: 'pointer' }}>
+                                    <div style={{ width: 300, height: 200, boxShadow: `0 0 9px ${this.props.color1}`, backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})` }} className="service service__style--2 text-center">
+                                        <div className="">
+                                            <img style={{ height: i == 0 ? 100 : i == 3 ? 90 : i == 5 ? 80 : '' }} src={val?.url} />
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                    ))}
+                                </a>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </React.Fragment>
         )

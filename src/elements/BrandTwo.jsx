@@ -26,7 +26,7 @@ class BrandTwo extends Component {
                                 <img src="/assets/images/brand/neft.png" alt="Logo Images" />
                             </li>
                             <li>
-                                <img src="/assets/images/brand/btc.png" alt="Logo Images" />
+                                <img src="/assets/images/brand/Paytm_logo.png" alt="Logo Images" />
                             </li>
                             <li>
                                 <img style={{ maxHeight: 220, maxWidth: 200 }} src="/assets/images/brand/phpay.png" alt="Logo Images" />

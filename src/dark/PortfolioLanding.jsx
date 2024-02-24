@@ -14,12 +14,13 @@ import BrandOne from "../elements/BrandTwo";
 import Slider from 'react-slick';
 import { slideSlick } from '../page-demo/script';
 import ModalVideo from 'react-modal-video';
-import { FaInstagram, FaTelegram } from 'react-icons/fa';
+import { FaInstagram, FaTelegram, FaWhatsapp } from 'react-icons/fa';
 import { collection } from 'firebase/firestore';
 import db from "../firebase";
 import { Alert, Modal } from 'react-bootstrap';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import VideoModal from '../blocks/VideoModal';
 
 const image1 = "/assets/images/bg/8.png";
 const image2 = "/assets/images/bg/7.png";
@@ -71,6 +72,12 @@ const PortfolioLanding = () => {
 
     const [password, setPassword] = useState("");
 
+    const [isVideoOpen, setIsVideoOpen] = useState(false);
+
+    const [howItWorks, setHowItWorks] = useState({});
+
+    const [youtubeId, setYoutubeId] = useState("");
+
     const getVideo = async () => {
         const videoRef = collection(db, 'video');
         const dbService = new UserDataService();
@@ -105,6 +112,17 @@ const PortfolioLanding = () => {
         });
         console.log(tmpArray);
         setOffers(tmpArray);
+    }
+
+    const getHowItWorks = async () => {
+        const dbService = new UserDataService();
+
+        const data = await dbService.getHowItWorks();
+
+        data.forEach((doc) => {
+            console.log("hiw >>> ", doc.data());
+            setHowItWorks(doc.data());
+        })
     }
 
     let details = navigator.userAgent;
@@ -215,6 +233,7 @@ const PortfolioLanding = () => {
         getSocialLinks();
         getColors();
         getlogo();
+        getHowItWorks();
     }, []);
 
     // useEffect(() => {
@@ -326,6 +345,19 @@ const PortfolioLanding = () => {
             console.log(e);
         }
 
+    }
+
+    const onVideoOpen = async (e) => {
+        console.log(e);
+        console.log(howItWorks);
+        if (e.title == "Deposit Money") {
+            setYoutubeId(howItWorks.deposit)
+        } else if (e.title == "Get Your ID") {
+            setYoutubeId(howItWorks.getid)
+        } else {
+            setYoutubeId(howItWorks.payment)
+        }
+        setIsVideoOpen(true)
     }
 
     return (
@@ -491,8 +523,8 @@ const PortfolioLanding = () => {
                             </div>
                         </div>
                         <div className="row creative-service">
-                            <div className="col-lg-12">
-                                <ServiceList color1={color1} item="9" column="col-lg-4 col-md-6 col-sm-6 col-12 text-left" />
+                            <div style={{backgroundColor: ''}} className="col-lg-12 text-center">
+                                <ServiceList color1={color1} item="21" column="col-lg-4 col-md-6 col-sm-6 col-12 text-center" />
                             </div>
                         </div>
                     </div>
@@ -828,10 +860,11 @@ const PortfolioLanding = () => {
                                 </div>
                             </div>
                             <div className="row service-one-wrapper">
+                            <ModalVideo channel='youtube' isOpen={isVideoOpen} videoId={youtubeId} onClose={() => setIsVideoOpen(false)} />
                                 {ServiceListOne.map((val, i) => (
                                     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-3" key={i}>
                                         <a className="text-center">
-                                            <div className="service service__style--27">
+                                            <div onClick={() => onVideoOpen(val)} style={{cursor: 'pointer'}} className="service service__style--27">
                                                 <div style={{ color: color1 }} className="icon">
                                                     {val.icon}
                                                 </div>
@@ -881,9 +914,9 @@ const PortfolioLanding = () => {
             {/* {alert(phone2)} */}
             <FooterTwo phone={phone2} />
             {/* Start Back To Top */}
-            <div className="backto-top">
-                <ScrollToTop showUnder={160}>
-                    <FiChevronUp />
+            <div className="backto-top" onClick={() => window.open(`https://api.whatsapp.com/send?phone=${phone2}&text=Hi I want to get ID!.`, "_blank")}>
+                <ScrollToTop showUnder={160} style={{backgroundColor: 'green'}}>
+                    <FaWhatsapp fill='white' />
                 </ScrollToTop>
             </div>
             {/* End Back To Top */}

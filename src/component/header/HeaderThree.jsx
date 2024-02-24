@@ -533,7 +533,7 @@ class HeaderThree extends Component {
                                                     required
                                                 />
                                             </div>
-                                            <div className="rn-form-group">
+                                            {/* <div className="rn-form-group">
                                                 <input
                                                     value={this.state.email}
                                                     onChange={(e) => this.setState({ email: e.target.value })}
@@ -542,9 +542,8 @@ class HeaderThree extends Component {
                                                     type="email"
                                                     name="email"
                                                     placeholder="Email (Optional)"
-                                                    required
                                                 />
-                                            </div>
+                                            </div> */}
                                             <div className="rn-form-group">
                                                 <input
                                                     value={this.state.password}
@@ -582,7 +581,7 @@ class HeaderThree extends Component {
                                                 />
                                             </div>
                                             <div id="recaptcha-container" />
-                                            <p className="mt-3" style={{ color: this.state.color3 }}>Already Have an Account? <a style={{ color: this.state.color3, cursor: 'pointer' }} onClick={() => this.setState({ show: false, showLogin: true })}>Login</a></p>
+                                            <p className="mt-3" style={{ color: this.state.color3 }}>Already Have an Account? <a className="rn-btn" style={{ color: this.state.color3, cursor: 'pointer', borderColor: this.state.color3 }} onClick={() => this.setState({ show: false, showLogin: true })}>Login</a></p>
                                         </Modal.Body>
                                         <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
                                             <button style={{ color: this.state.color3, borderColor: this.state.color3 }} type="submit" className="rn-btn">
@@ -632,8 +631,8 @@ class HeaderThree extends Component {
                                                     required
                                                 />
                                             </div>
-                                            <p className="mt-3" style={{ color: this.state.color3 }}>Don't Have an Account? <a style={{ color: this.state.color3, cursor: 'pointer' }} onClick={() => this.setState({ show: true, showLogin: false })}>Register</a> </p>
-                                            <p className="mt-3" style={{ color: this.state.color3 }}> <a style={{ color: this.state.color3, cursor: 'pointer' }} onClick={() => this.setState({ showFwp: true, showLogin: false })}>Forgot Password</a> </p>
+                                            <p className="mt-3" style={{ color: this.state.color3 }}>Don't Have an Account? <a className="rn-btn" style={{ color: this.state.color3, cursor: 'pointer', borderColor: this.state.color3 }} onClick={() => this.setState({ show: true, showLogin: false })}>Register</a> </p>
+                                            {/* <p className="mt-3" style={{ color: this.state.color3 }}> <a style={{ color: this.state.color3, cursor: 'pointer' }} onClick={() => this.setState({ showFwp: true, showLogin: false })}>Forgot Password</a> </p> */}
                                         </Modal.Body>
                                         <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
                                             <button style={{ color: this.state.color3, borderColor: this.state.color3 }} type="submit" className="rn-btn">
@@ -680,7 +679,7 @@ class HeaderThree extends Component {
                                     </form>
                                 </Modal>
 
-                                <Modal centered show={this.state.showFwp} onHide={() => this.handleCloseFwp()}>
+                                {/* <Modal centered show={this.state.showFwp} onHide={() => this.handleCloseFwp()}>
                                     <Modal.Header style={{
                                         backgroundImage: `linear-gradient(${this.state.color2},${this.state.color1})`,
                                         borderBottomColor: this.state.color1,
@@ -715,7 +714,7 @@ class HeaderThree extends Component {
                                             </button>
                                         </Modal.Footer>
                                     </form>
-                                </Modal>
+                                </Modal> */}
 
                                 <div className="header-right">
                                     {!this.state.isAdmin && !this.state.isLoggedIn && <div className="social-share-inner ml-5">
@@ -870,7 +869,7 @@ class HeaderThree extends Component {
                                                     required
                                                 />
                                             </div>
-                                            <div className="rn-form-group">
+                                            {/* <div className="rn-form-group">
                                                 <input
                                                     value={this.state.email}
                                                     onChange={(e) => this.setState({ email: e.target.value })}
@@ -881,7 +880,7 @@ class HeaderThree extends Component {
                                                     placeholder="Email"
                                                     required
                                                 />
-                                            </div>
+                                            </div> */}
                                             <div className="rn-form-group">
                                                 <input
                                                     value={this.state.password}
@@ -970,7 +969,7 @@ class HeaderThree extends Component {
                                                 />
                                             </div>
                                             <p className="mt-3" style={{ color: this.state.color3 }}>Don't Have an Account? <a style={{ color: '#fff', cursor: 'pointer' }} onClick={() => this.setState({ show: true, showLogin: false })}>Register</a> </p>
-                                            <p className="mt-3" style={{ color: this.state.color3 }}> <a style={{ color: this.state.color3, cursor: 'pointer' }} onClick={() => this.setState({ showFwp: true, showLogin: false })}>Forgot Password</a> </p>
+                                            {/* <p className="mt-3" style={{ color: this.state.color3 }}> <a style={{ color: this.state.color3, cursor: 'pointer' }} onClick={() => this.setState({ showFwp: true, showLogin: false })}>Forgot Password</a> </p> */}
                                         </Modal.Body>
                                         <Modal.Footer style={{ backgroundColor: this.state.color1, borderTopColor: this.state.color1, alignContent: 'center', justifyContent: 'center' }}>
                                             <button style={{ color: this.state.color3, borderColor: this.state.color3 }} type="submit" className="rn-btn">

@@ -22,6 +22,7 @@ const AvailableSites = () => {
 
     const [siteImageUpload, setSiteImageUpload] = useState();
     const [siteTextUpload, setSiteTextUpload] = useState("");
+    const [siteUrl, setSiteUrl] = useState("");
 
     const [siteImages, setSiteImages] = useState();
     const [sideBarState, setSideBarState] = useState("open");
@@ -78,7 +79,7 @@ const AvailableSites = () => {
                                 getDownloadURL(snapshot.ref).then(async (url) => {
                                     console.log(url);
                                     const dbService = new UserDataService()
-                                    let image = { url, name: siteTextUpload }
+                                    let image = { url, name: siteTextUpload, redirectUrl: siteUrl }
                                     const pushImage = await dbService.addData(image, sitesRef);
                                     console.log(pushImage);
                                     showSitesImages();
@@ -113,7 +114,9 @@ const AvailableSites = () => {
                 // -------------
             })
             showSitesImages();
-            setSiteImageUpload(undefined)
+            setSiteImageUpload(undefined);
+            setSiteTextUpload("");
+            setSiteUrl("");
 
         } catch (err) {
             console.log(err);
@@ -188,6 +191,9 @@ const AvailableSites = () => {
 
                     <div>
                         <input className='mt-2 col-4 col-xl-4 col-lg-4 col-md-4' placeholder='Enter Site Name' width="150px" type="text" name="siteName" onChange={((e) => { setSiteTextUpload(e.target.value) })} value={siteTextUpload} />
+
+                        <input className='mt-2 col-4 col-xl-4 col-lg-4 col-md-4' placeholder='Enter Site URL' width="150px" type="text" name="siteName" onChange={((e) => { setSiteUrl(e.target.value) })} value={siteUrl} />
+
                         {/* <input accept='image/*' type='file' multiple onChange={(e) => setSiteImageUpload(e.target.files)} /> */}
                     </div>
                     <button className='mt-3' onClick={addSitesImage}>Add Site</button>
@@ -204,6 +210,7 @@ const AvailableSites = () => {
 
                                         <div className='text-center'>
                                             <p>{imageObj?.name}</p>
+                                            {imageObj?.redirectUrl && <p>Site URL: {imageObj?.redirectUrl}</p>}
                                             <button onClick={() => { deleteSiteImage(imageObj?.id) }}>Delete</button>
                                         </div>
                                     </div>

@@ -10,6 +10,8 @@ const paymentDetailsRef = collection(db, 'paymentDetails');
 
 const websitesRef = collection(db, 'websites');
 
+const howItWorksRef = collection(db, 'howItWorks');
+
 class UserDataService {
 
     addData = async (data, collection) => {
@@ -76,6 +78,10 @@ class UserDataService {
     getUser = (userId) => {
         const user = doc(db, 'users', userId);
         return getDoc(user);
+    }
+
+    getHowItWorks = () => {
+        return getDocs(howItWorksRef);
     }
 
     queryUser = async (data) => {

@@ -6,6 +6,7 @@ import Counts from './Counts';
 import ThemeColor from './ThemeColor';
 import Logo from './Logo';
 import Video from './Video';
+import HowItWorks from './HowItWorks';
 
 const ManageTheme = () => {
 
@@ -51,6 +52,14 @@ const ManageTheme = () => {
 
                 <div className='m-2 col-lg-5 col-xl-5 col-md-5 col-sm-5 col-12'>
                     <Video />
+                </div>
+
+            </div>
+
+            <div className="row mt-2">
+
+                <div className='m-2 col-lg-5 col-xl-5 col-md-5 col-sm-5 col-12'>
+                    <HowItWorks />
                 </div>
 
             </div>
