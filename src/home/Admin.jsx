@@ -17,11 +17,20 @@ function Admin() {
     const [ifsc, setIfsc] = useState("");
     const [holder, setHolder] = useState("");
     const [bankName, setBankName] = useState("");
+
+    const [bankNo2, setBankNo2] = useState("");
+    const [ifsc2, setIfsc2] = useState("");
+    const [holder2, setHolder2] = useState("");
+    const [bankName2, setBankName2] = useState("");
+
     const [upi, setUpi] = useState("");
     const [phone1, setPhone1] = useState("");
     const [phone2, setPhone2] = useState("");
     const [paymentDetailId, setPaymentDetailId] = useState("");
+
     const [singleImage, setSingleImage] = useState("");
+    const [singleImage2, setSingleImage2] = useState("");
+
     const [sideBarState, setSideBarState] = useState("open");
     const [role, setRole] = useState("");
 
@@ -52,6 +61,10 @@ function Admin() {
             setIfsc(doc.data().ifscCode);
             setHolder(doc.data().accountHolder);
             setBankName(doc.data().bankName);
+            setBankNo2(doc.data().bankAccountNo2);
+            setIfsc2(doc.data().ifscCode2);
+            setHolder2(doc.data().accountHolder2);
+            setBankName2(doc.data().bankName2);
             setUpi(doc.data().upi);
             setPhone1(doc.data().phone1);
             setPhone2(doc.data().phone2);
@@ -82,6 +95,10 @@ function Admin() {
                             bankAccountNo: bankNo,
                             bankName: bankName,
                             ifscCode: ifsc,
+                            accountHolder2: holder2,
+                            bankAccountNo2: bankNo2,
+                            bankName2: bankName2,
+                            ifscCode2: ifsc2,
                             upi: upi,
                             qrImage: url,
                             phone1: phone1,
@@ -98,12 +115,59 @@ function Admin() {
                 }
             );
 
-        } else {
+        }
+        
+        if (singleImage2) {
+            const storageRef = ref(storage, `/files/${singleImage.name}`)
+            const uploadTask = uploadBytesResumable(storageRef, singleImage);
+
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    console.log("snapshot >>>> ", snapshot)
+                },
+                (err) => console.log(err),
+                () => {
+                    // download url
+                    getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+                        console.log("url >>>> ", url);
+                        let obj = {
+                            accountHolder: holder,
+                            bankAccountNo: bankNo,
+                            bankName: bankName,
+                            ifscCode: ifsc,
+                            accountHolder2: holder2,
+                            bankAccountNo2: bankNo2,
+                            bankName2: bankName2,
+                            ifscCode2: ifsc2,
+                            upi: upi,
+                            qrImage2: url,
+                            phone1: phone1,
+                            phone2: phone2
+                        }
+
+                        console.log("details >>>>> ", obj, paymentDetailId);
+                        const service = new UserDataService();
+                        const data = await service.updatePaymentDetaila(paymentDetailId, obj);
+
+                        console.log("update >>>> ", data);
+                        alert("Payment details updated!")
+                    });
+                }
+            );
+
+        }
+
+        if (!singleImage && !singleImage2) {
             let obj = {
                 accountHolder: holder,
                 bankAccountNo: bankNo,
                 bankName: bankName,
                 ifscCode: ifsc,
+                accountHolder2: holder2,
+                bankAccountNo2: bankNo2,
+                bankName2: bankName2,
+                ifscCode2: ifsc2,
                 upi: upi,
                 phone1: phone1,
                 phone2: phone2
@@ -127,6 +191,16 @@ function Admin() {
             file = e.target.files[0];
             console.log(file);
             setSingleImage(file);
+        }
+    }
+
+    const handleImage2 = (e) => {
+        e.preventDefault();
+        let file;
+        if (e.target.files && e.target.files.length > 0) {
+            file = e.target.files[0];
+            console.log(file);
+            setSingleImage2(file);
         }
     }
 
@@ -160,6 +234,7 @@ function Admin() {
                         <div style={{ overflow: "scroll", overflowX: "hidden", height: "87vh" }} className="row">
                             <div className={`${isMobileDevice ? 'col-12' : 'col-6'}`}>
                                 {role == "sadmin" && <div>
+                                    <h3>Bank 1</h3>
                                     <label>Bank Account Number</label>
                                     <input value={bankNo} onChange={(e) => setBankNo(e.target.value)} />
                                     <label>IFSC Code</label>
@@ -168,11 +243,25 @@ function Admin() {
                                     <input value={holder} onChange={(e) => setHolder(e.target.value)} />
                                     <label>Bank Name</label>
                                     <input value={bankName} onChange={(e) => setBankName(e.target.value)} />
+
+                                    <h3 className='mt-3'>Bank 2</h3>
+                                    <label>Bank Account Number</label>
+                                    <input value={bankNo2} onChange={(e) => setBankNo2(e.target.value)} />
+                                    <label>IFSC Code</label>
+                                    <input value={ifsc2} onChange={(e) => setIfsc2(e.target.value)} />
+                                    <label>Bank Account Holder Name</label>
+                                    <input value={holder2} onChange={(e) => setHolder2(e.target.value)} />
+                                    <label>Bank Name</label>
+                                    <input value={bankName2} onChange={(e) => setBankName2(e.target.value)} />
+
                                     <label>UPI ID</label>
                                     <input value={upi} onChange={(e) => setUpi(e.target.value)} />
 
-                                    <label>QR code</label>
+                                    <label>QR code 1</label>
                                     <input type='file' name='png' onChange={handleImage} />
+
+                                    <label>QR code 2</label>
+                                    <input type='file' name='png' onChange={handleImage2} />
                                 </div>}
                                 <label>Phone No 1</label>
                                 <input value={phone1} onChange={(e) => setPhone1(e.target.value)} />

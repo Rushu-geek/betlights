@@ -21,10 +21,18 @@ class ServiceTwo extends Component {
             ifsc: "",
             bankHolder: "",
             bankName: "",
+            bankNo2: "",
+            ifsc2: "",
+            bankHolder2: "",
+            bankName2: "",
             upi: "",
             qrImage: "",
+            qrImage2: "",
             userNameFlag: false,
-            phone1: ""
+            phone1: "",
+            selectedTab: "bank1",
+            seconds: 60,
+            utrNo: ""
         }
         console.log(props);
     }
@@ -39,11 +47,20 @@ class ServiceTwo extends Component {
                 ifsc: doc.data().ifscCode,
                 bankHolder: doc.data().accountHolder,
                 bankName: doc.data().bankName,
+                bankNo2: doc.data().bankAccountNo2,
+                ifsc2: doc.data().ifscCode2,
+                bankHolder2: doc.data().accountHolder2,
+                bankName2: doc.data().bankName2,
                 upi: doc.data().upi,
                 qrImage: doc.data().qrImage,
+                qrImage2: doc.data().qrImage2,
                 phone1: doc.data().phone1
             })
         })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerInterval);
     }
 
     handleClose() {
@@ -51,21 +68,34 @@ class ServiceTwo extends Component {
     }
 
     handleClosePaymentModal() {
-        this.setState({ showPaymentModal: false })
+        this.setState({ showPaymentModal: false });
+        clearInterval(this.timerInterval);
     }
 
     onCreateId(idName, userName, websiteUrl) {
-        this.setState({ show: true, selectedIdName: idName, userName: userName, amount: "", userNameFlag: userName ? true : false, selectedIdUrl: websiteUrl})
+        this.setState({ show: true, selectedIdName: idName, userName: userName, amount: "", userNameFlag: userName ? true : false, selectedIdUrl: websiteUrl })
     }
 
     sendIdDetails() {
         console.log(this.state);
+        clearInterval(this.timerInterval);
         this.setState({ show: false, showPaymentModal: true })
+        this.timerInterval = setInterval(() => {
+            this.setState(prevState => ({
+                seconds: prevState.seconds - 1
+            }), () => {
+                if (this.state.seconds === 0) {
+                    // Trigger your event here when timer completes
+                    console.log("Timer completed!");
+                    clearInterval(this.timerInterval);
+                }
+            });
+        }, 1000);
     }
 
     async sendDetailsToWhatsapp() {
         console.log(this.state);
-        window.open(`https://api.whatsapp.com/send?phone=${this.state.phone1}&text=Website: ${this.state.selectedIdName} User Name: ${this.state.userName} Amount: ${this.state.amount}`, "_blank");
+        window.open(`https://api.whatsapp.com/send?phone=${this.state.phone1}&text=Website: ${this.state.selectedIdName} User Name: ${this.state.userName} Amount: ${this.state.amount} UTR No: ${this.state.utrNo}`, "_blank");
         const paymentReq = {
             requestStatus: false,
             userName: this.state.userName,
@@ -78,6 +108,30 @@ class ServiceTwo extends Component {
         const request = await service.addPaymentReq(paymentReq);
         console.log("request >>> ", request);
         this.setState({ message: { display: true, msg: "Please wait we will verify your details and get back to you. You can whatsapp us at +916378934211", type: 'success' } })
+    }
+
+    onBank1Click() {
+        this.setState({
+            selectedTab: 'bank1'
+        })
+    }
+
+    onBank2Click() {
+        this.setState({
+            selectedTab: 'bank2'
+        })
+    }
+
+    onQr1Click() {
+        this.setState({
+            selectedTab: 'qr1'
+        })
+    }
+
+    onQr2Click() {
+        this.setState({
+            selectedTab: 'qr2'
+        })
     }
 
     render() {
@@ -93,6 +147,10 @@ class ServiceTwo extends Component {
         /* Using test() method to search regexp in details
         it returns boolean value*/
         let isMobileDevice = regexp.test(details);
+
+        const { seconds } = this.state;
+        const minutes = Math.floor(seconds / 60);
+        const remainderSeconds = seconds % 60;
 
         return (
             <React.Fragment>
@@ -119,8 +177,8 @@ class ServiceTwo extends Component {
                                 <div className="col-lg-4 col-md-6 col-sm-6 col-12" key={i}>
                                     <a>
                                         <div style={{ height: 320, backgroundImage: `linear-gradient(${this.props.color2},${this.props.color1})` }} className="service mb-4 service__style--27">
-                                            <div style={{height: 140}} className={`${i != 1 ? 'mb-3' : ''} text-center`}>
-                                                <img style={{ height: 100}} src={val.url} />
+                                            <div style={{ height: 140 }} className={`${i != 1 ? 'mb-3' : ''} text-center`}>
+                                                <img style={{ height: 100 }} src={val.url} />
                                             </div>
                                             <div className="content text-center">
                                                 <h3 style={{ color: 'white', height: val.name == 'SkyExch' ? 40 : 0 }} className="title">{val.name}</h3>
@@ -130,7 +188,7 @@ class ServiceTwo extends Component {
                                                     {val.userName && <span>Deposit money</span>}
                                                 </button>}
 
-                                                {!isMobileDevice && <button style={{color: this.props.color3, borderColor: this.props.color3, bottom: 0}}  onClick={() => this.onCreateId(val.name, val.userName, val.url)} type="button" className={`rn-btn ${i != 1 ? 'mt-4' : 'mt-4'}`}>
+                                                {!isMobileDevice && <button style={{ color: this.props.color3, borderColor: this.props.color3, bottom: 0 }} onClick={() => this.onCreateId(val.name, val.userName, val.url)} type="button" className={`rn-btn ${i != 1 ? 'mt-4' : 'mt-4'}`}>
                                                     {!val.userName && <span style={{ lineHeight: 0 }}>Create ID and deposit money</span>}
                                                     {val.userName && <span>Deposit money</span>}
                                                 </button>}
@@ -186,13 +244,36 @@ class ServiceTwo extends Component {
                 <Modal centered show={this.state.showPaymentModal} onHide={() => this.handleClosePaymentModal()}>
                     <Modal.Header style={{ height: 60 }} closeButton>
                         <Modal.Title className="text-center">{this.state.selectedIdName}</Modal.Title>
+                        <p className="ml-5">Timer: {minutes}:{remainderSeconds < 10 ? `0${remainderSeconds}` : remainderSeconds}</p>
                     </Modal.Header>
                     <Modal.Body style={{ lineHeight: 1.5 }}>
 
                         <small>Note: You can transfer money by scanning QR or UPI or Bank Transfer. </small>
                         <small>After payment you can send screenshot on our whatsapp number</small>
                         <hr />
-                        <div className="row mb-0">
+                        <div style={{ justifyContent: 'center', alignItems: 'center' }} className="row">
+                            <div onClick={() => this.onBank1Click()} class="card" style={{ cursor: 'pointer', color: this.state.selectedTab == 'bank1' ? 'white' : '', backgroundColor: this.state.selectedTab == 'bank1' ? 'ActiveBorder' : '' }}>
+                                <div class="card-body">
+                                    Bank 1
+                                </div>
+                            </div>
+                            <div onClick={() => this.onBank2Click()} class="card ml-3" style={{ cursor: 'pointer', color: this.state.selectedTab == 'bank2' ? 'white' : '', backgroundColor: this.state.selectedTab == 'bank2' ? 'ActiveBorder' : '' }}>
+                                <div class="card-body">
+                                    Bank 2
+                                </div>
+                            </div>
+                            <div onClick={() => this.onQr1Click()} class="card ml-3" style={{ cursor: 'pointer', color: this.state.selectedTab == 'qr1' ? 'white' : '', backgroundColor: this.state.selectedTab == 'qr1' ? 'ActiveBorder' : '' }}>
+                                <div class="card-body">
+                                    QR 1
+                                </div>
+                            </div>
+                            <div onClick={() => this.onQr2Click()} class="card ml-3" style={{ cursor: 'pointer', color: this.state.selectedTab == 'qr2' ? 'white' : '', backgroundColor: this.state.selectedTab == 'qr2' ? 'ActiveBorder' : '' }}>
+                                <div class="card-body">
+                                    QR 2
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row mb-0 mt-3">
                             <div className="col-12">
                                 <h5 className="mb-1">Selected Details</h5>
                             </div>
@@ -211,18 +292,33 @@ class ServiceTwo extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-6 text-center">
+                            {this.state.selectedTab == "qr1" && <div className="col-6 text-center">
                                 <p className="mb-0" style={pStyle}> <span style={{ fontWeight: 500 }}>Scan QR to do payment</span> </p>
                                 <img height={150} width={150} src={this.state.qrImage} />
                                 <p className="mb-0" style={pStyle}>OR</p>
                                 <p className="mb-0" style={pStyle}>UPI: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.upi}</span></p>
-                            </div>
-                            <div className="col-6">
+                            </div>}
+
+                            {this.state.selectedTab == "qr2" && <div className="col-6 text-center">
+                                <p className="mb-0" style={pStyle}> <span style={{ fontWeight: 500 }}>Scan QR to do payment</span> </p>
+                                <img height={150} width={150} src={this.state.qrImage} />
+                                <p className="mb-0" style={pStyle}>OR</p>
+                                <p className="mb-0" style={pStyle}>UPI: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.upi}</span></p>
+                            </div>}
+
+                            {this.state.selectedTab == "bank1" && <div className="col-12">
                                 <p className="mb-0" style={pStyle}>A/C No: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.bankNo}</span></p>
                                 <p className="mb-0" style={pStyle}>IFSC: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.ifsc}</span></p>
                                 <p className="mb-0" style={pStyle}>Name: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.bankHolder}</span></p>
                                 <p className="mb-0" style={pStyle}>Bank Name: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.bankName}</span></p>
-                            </div>
+                            </div>}
+
+                            {this.state.selectedTab == "bank2" && <div className="col-12">
+                                <p className="mb-0" style={pStyle}>A/C No: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.bankNo2}</span></p>
+                                <p className="mb-0" style={pStyle}>IFSC: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.ifsc2}</span></p>
+                                <p className="mb-0" style={pStyle}>Name: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.bankHolder2}</span></p>
+                                <p className="mb-0" style={pStyle}>Bank Name: <span style={{ fontWeight: 500, color: this.props.color2 }}>{this.state.bankName2}</span></p>
+                            </div>}
                         </div>
                         {/* <div className="row">
                             <div className="col-6">
@@ -234,6 +330,22 @@ class ServiceTwo extends Component {
                                 <p className="mb-0" style={pStyle}><b>Bank Name</b>: HDFC Bank</p>
                             </div>
                         </div> */}
+
+                        <div className="row mt-3">
+                            <div className="col-12">
+                                <h5 className="mb-1 mt-2">UTR Number: </h5>
+                            </div>
+                            <input
+                                value={this.state.utrNo}
+                                onChange={(e) => this.setState({ utrNo: e.target.value })}
+                                style={{ borderRadius: 10 }}
+                                className="mb-4"
+                                type="text"
+                                name="email"
+                                placeholder="Username"
+                                required
+                            />
+                        </div>
 
                     </Modal.Body>
                     <Modal.Footer style={{ backgroundColor: '', borderTopColor: '', alignContent: 'center', justifyContent: 'center' }}>
