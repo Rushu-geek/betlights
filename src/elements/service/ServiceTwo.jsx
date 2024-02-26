@@ -35,6 +35,7 @@ class ServiceTwo extends Component {
             utrNo: ""
         }
         console.log(props);
+        this.timerInterval = null;
     }
 
     async componentDidMount() {
@@ -80,17 +81,7 @@ class ServiceTwo extends Component {
         console.log(this.state);
         clearInterval(this.timerInterval);
         this.setState({ show: false, showPaymentModal: true })
-        this.timerInterval = setInterval(() => {
-            this.setState(prevState => ({
-                seconds: prevState.seconds - 1
-            }), () => {
-                if (this.state.seconds === 0) {
-                    // Trigger your event here when timer completes
-                    console.log("Timer completed!");
-                    clearInterval(this.timerInterval);
-                }
-            });
-        }, 1000);
+        this.resetTimer();
     }
 
     async sendDetailsToWhatsapp() {
@@ -133,6 +124,27 @@ class ServiceTwo extends Component {
             selectedTab: 'qr2'
         })
     }
+
+    startTimer = () => {
+        this.timerInterval = setInterval(() => {
+          this.setState(prevState => ({
+            seconds: prevState.seconds - 1
+          }), () => {
+            if (this.state.seconds === 0) {
+              // Trigger your event here when timer completes
+              console.log("Timer completed!");
+              this.resetTimer();
+            }
+          });
+        }, 1000);
+      }
+
+    resetTimer = () => {
+        clearInterval(this.timerInterval);
+        this.setState({ seconds: 60 }, () => {
+          this.startTimer();
+        });
+      }
 
     render() {
 
